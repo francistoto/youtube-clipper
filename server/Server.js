@@ -24,6 +24,8 @@ const babelify = require('babelify');
 const browserify = require('browserify-middleware');
 const google = require('googleapis');
 const _ = require('underscore');
+var passport = require('passport');
+var FacebookStrategy = require('passport-facebook').Strategy;
 
 const db = require('./db');
 
@@ -158,6 +160,20 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, '../client')));
 app.use(express.static(path.join(__dirname, '../assets')));
+passport.use(new FacebookStrategy({
+    clientID: 1183004398430348,
+    clientSecret: '84d23c4f605b77e675c2738c874f807d',
+    callbackURL: "/auth/facebook/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    /*
+    TODO: IMPLEMENT THIS CALLBACK
+    User.findOrCreate(..., function(err, user) {
+      if (err) { return done(err); }
+      done(null, user);
+    });*/
+  }
+));
 
 /*
   *******************
@@ -177,6 +193,17 @@ app.get('/app-bundle.js',
   })
 );
 
+/*
+  ******************************
+  Facebook authentication routes
+  ******************************
+*/
+
+app.get('/auth/facebook', passport.authenticate('facebook'));
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { successRedirect: '/',
+                                      failureRedirect: '/login' }));
 /*
   ***********************************************************************
   Initializes interface.
