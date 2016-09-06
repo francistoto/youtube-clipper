@@ -19,6 +19,7 @@ export default class NavBar extends React.Component {
   render() {
     return (
       <ul className="dropdown menu align-right" data-dropdown-menu>
+        <li><a href="/auth/facebook">Login with Facebook</a></li>
         <li><a href="/">Logout</a></li>
         <li className="is-dropdown-submenu-parent">
           <a>Channels</a>

@@ -26,6 +26,7 @@ const google = require('googleapis');
 const _ = require('underscore');
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
+var session = require('express-session');
 
 const db = require('./db');
 
@@ -160,6 +161,15 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, '../client')));
 app.use(express.static(path.join(__dirname, '../assets')));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(session({secret: "funnyMonkey"}));
+passport.serializeUser(function(user, done){
+  done(null, user);
+});
+passport.deserializeUser(function(user, done){
+  done(null, user);
+});
 passport.use(new FacebookStrategy({
     clientID: 1183004398430348,
     clientSecret: '84d23c4f605b77e675c2738c874f807d',
@@ -172,6 +182,10 @@ passport.use(new FacebookStrategy({
       if (err) { return done(err); }
       done(null, user);
     });*/
+    
+    console.log("profile: ", profile);
+    console.log("SessionId: ", accessToken)
+    done(null, profile);
   }
 ));
 
@@ -198,12 +212,29 @@ app.get('/app-bundle.js',
   Facebook authentication routes
   ******************************
 */
+// GIVES YOU BACK AN OBJECT LIKE THIS!
+// profile:  { id: '3619878134247',
+//   username: undefined,
+//   displayName: 'Kathryn Hansen',
+//   name: 
+//    { familyName: undefined,
+//      givenName: undefined,
+//      middleName: undefined },
+//   gender: undefined,
+//   profileUrl: undefined,
+//   provider: 'facebook',
+//   _raw: '{"name":"Kathryn Hansen","id":"3619878134247"}',
+//   _json: { name: 'Kathryn Hansen', id: '3619878134247' } }
 
 app.get('/auth/facebook', passport.authenticate('facebook'));
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { successRedirect: '/',
                                       failureRedirect: '/login' }));
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
 /*
   ***********************************************************************
   Initializes interface.
@@ -213,6 +244,11 @@ app.get('/auth/facebook/callback',
 */
 
 app.get('/', (req, res) => {
+  if(req.isAuthenticated()){
+    console.log("Authenticated as: ", req.user);
+  }else{
+    console.log("Not authenticated");
+  }
   res.sendFile(path.join(__dirname, '../client/public/Index.html'));
 });
 

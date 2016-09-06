@@ -1,5 +1,5 @@
 const keys = {};
 
-keys.CLIENT_ID = 'Paste Google API key here!';
+keys.CLIENT_ID = 'key here';
 
 module.exports = keys;
