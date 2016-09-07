@@ -418,18 +418,6 @@ app.get('/db_init', (req, res) => {
   });
 });
 
-// app.get('/db', function (request, response) {
-//   pg.connect('postgres://gmltxtufrgzihh:YEo-u1_EL2bJbAzgo-lwHcYEu4@ec2-50-17-237-148.compute-1.amazonaws.com:5432/d924kkqud63c96', function(err, client, done) {
-//     client.query('SELECT * FROM test_table', function(err, result) {
-//       done();
-//      if (err)
-//       { console.error(err); response.send("Error " + err); }
-//      else
-//       { response.render('pages/db', {results: result.rows} ); }
-//    });
-//  });
-// });
-
 /*
   ***********************************************************************
   Responds to requests to add more videos to a channel.
