@@ -357,11 +357,11 @@ app.get('/channel/:id/likes', (req, res) => {
   *********************************
 */ 
 
-app.get('/users/:userid/likes'){
+app.get('/users/:userid/likes', (req, res) => {
   db.getLikesByUser(req.params.userid).then(function(likes){
     res.send(likes);
   })
-}
+})
 
 /*
   ***********************************************************************
