@@ -3,8 +3,9 @@ import React from 'react';
 export default class NavBar extends React.Component {
   constructor(props) {
     super(props);
+    console.log("Navbar props: ", props);
     this.state = {
-      user: 'RubberDucky',
+      user: this.props.user,
     };
   }
 
@@ -16,11 +17,19 @@ export default class NavBar extends React.Component {
     this.props.changeChannel(value);
   }
 
+  facebookBtn(){
+    console.log("This state user: ", this.props.user);
+    if(this.props.user){
+      return <li><a href="/logout">Logout</a></li>;
+    }else{
+      return <li><a href="/auth/facebook">Login with Facebook</a></li>;
+    }
+  }
+
   render() {
     return (
       <ul className="dropdown menu align-right" data-dropdown-menu>
-        <li><a href="/auth/facebook">Login with Facebook</a></li>
-        <li><a href="/logout">Logout</a></li>
+        {this.facebookBtn()}      
         <li className="is-dropdown-submenu-parent">
           <a>Channels</a>
           <ul className="menu">

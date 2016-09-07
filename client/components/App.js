@@ -9,12 +9,12 @@ export default class App extends React.Component {
     super(props);
     var component = this;
     component.state = {
-      user: '',
+      user: 'Guest',
       background: '',
       videos: [],
       channel: '',
       channel_id: 'default',
-      id: null,
+      id: -1,
     };
   }
 
@@ -64,7 +64,7 @@ export default class App extends React.Component {
             <div className="row">
               <h1 className="medium-6 columns">The Toto Moto</h1>
               <div className="medium-6 columns">
-                <NavBar changeChannel={(channelId) => this.changeChannel(channelId)} />
+                <NavBar user={component.state.user === "Guest" ? null : component.state.user} changeChannel={(channelId) => this.changeChannel(channelId)} />
               </div>
             </div>
           </div>
