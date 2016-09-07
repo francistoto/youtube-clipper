@@ -233,6 +233,8 @@ app.get('/auth/facebook/callback',
                                       failureRedirect: '/login' }));
 app.get('/logout', function(req, res){
   req.logout();
+  req.session.passport.user = null
+  req.session.passport.id = null
   res.redirect('/');
 });
 /*
@@ -244,13 +246,29 @@ app.get('/logout', function(req, res){
 */
 
 app.get('/', (req, res) => {
+
   if(req.isAuthenticated()){
     console.log("Authenticated as: ", req.user);
   }else{
     console.log("Not authenticated");
   }
+  console.log("Req.session: ", req.session);
   res.sendFile(path.join(__dirname, '../client/public/Index.html'));
 });
+
+/*
+* Sends the current logged in user
+*/
+
+app.get('/currentUser', function(req, res){
+  console.log("REquest session: ", req.session);
+  console.log("Sending: ", req.session.passport.user || null);
+  if(req.session){
+    res.send(req.session.passport.user);
+  }else{
+    res.send(null);
+  }
+})
 
 /*
   ***********************************************************************

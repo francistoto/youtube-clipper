@@ -25,6 +25,7 @@
     "body-parser": "^1.15.2",
     "browserify": "^13.1.0",
     "browserify-middleware": "^7.0.0",
+    "ejs": "^2.5.1",
     "express": "^4.14.0",
     "express-session": "^1.14.1",
     "googleapis": "^12.4.0",

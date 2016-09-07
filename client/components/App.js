@@ -7,26 +7,37 @@ import $ from '../models/lib/jquery';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      user: 'Joe',
+    var component = this;
+    component.state = {
+      user: '',
       background: '',
       videos: [],
       channel: '',
       channel_id: 'default',
-      id: 0,
+      id: null,
     };
   }
 
   componentDidMount() {
-    NavModel.changeChannel(this.state.channel_id)
-    .then(channelObj => {
-      this.setState({
-        background: channelObj.background,
-        videos: channelObj.videos,
-        channel: channelObj.name,
-      });
-      $('body').css('background-image', `url(${this.state.background})`);
-    });
+    console.log("Component Mounted")
+    $.ajax({
+      url: '/currentUser',
+      method: 'GET'
+    }).then(user => {
+      console.log("Got user: ", user);
+      this.setState({user: user.displayName, id: user.id})
+    })
+    .then(x=>{
+        NavModel.changeChannel(this.state.channel_id)
+        .then(channelObj => {
+          this.setState({
+            background: channelObj.background,
+            videos: channelObj.videos,
+            channel: channelObj.name,
+          });
+          $('body').css('background-image', `url(${this.state.background})`);
+        });
+    })
   }
 
   changeChannel(channelId) {
@@ -43,9 +54,12 @@ export default class App extends React.Component {
   }
 
   render() {
+    var component = this;
+    console.log("Component: ", component);
     return (
       <div>
         <header>
+          <div>Current User: {component.state.user}</div>
           <div className="container">
             <div className="row">
               <h1 className="medium-6 columns">The Toto Moto</h1>
