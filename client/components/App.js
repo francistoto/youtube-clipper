@@ -25,7 +25,7 @@ export default class App extends React.Component {
       method: 'GET'
     }).then(user => {
       console.log("Got user: ", user);
-      this.setState({user: user.displayName, id: user.id})
+      this.setState({user: user.name, id: user.id})
     })
     .then(x=>{
         NavModel.changeChannel(this.state.channel_id)

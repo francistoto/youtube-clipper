@@ -78,6 +78,7 @@ knex.migrate.latest([config]);
   ***********************************************************************
 */
 
+
 knex.getVideosByChannel = (channelId) =>
   knex('videos').where('channel_id', channelId)
   .then(videos => {
@@ -445,5 +446,27 @@ knex.runInitDB = () =>
   knex.clear()
   .then(() => knex.initDB())
   .then(() => 'Database initialized!');
+
+/*
+  ***********************************************************************
+  creates or finds user
+  ***********************************************************************
+*/
+
+knex.findOrCreate = function(profile){
+  return knex('users').where('id', profile.id)
+  .then(function(user){
+    if(user.length){ //user should be an array
+      return user[0];
+    }else{
+      return knex('users').insert({name: profile.displayName, id: profile.id})
+      .then(function(id){
+        return {name: profile.displayName, id: profile.id}
+      })
+    }
+  })  
+}
+
+
 
 module.exports = knex;
