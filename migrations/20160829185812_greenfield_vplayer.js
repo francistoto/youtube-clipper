@@ -25,11 +25,11 @@ exports.up = (knex, Promise) => Promise.all([
     table.string('user_id');
     table.integer('likes_id');
   }),
-  knex.schema.createTableIfNotExist('likes_by_video', table => {
+  knex.schema.createTableIfNotExists('likes_by_video', table => {
     table.string('user_id');
     table.integer('video_id');
     table.integer('likes_id');
-  }
+  }),
   knex.schema.createTableIfNotExists('ignores', table => {
     table.string('user_id');
     table.integer('video_id');
