@@ -267,6 +267,18 @@ app.get('/currentUser', function(req, res){
 })
 
 /*
+* Sends the user
+*/
+
+app.get('/users/:userid', function(req, res){
+  db.findUser(req.params.userid)
+  .then(function(user){
+    console.log('User returned from get /users/:userid: ', user)
+    res.send(user);
+  })
+})
+
+/*
   ***********************************************************************
   Responds to requests for specific channel.
   Channels are:

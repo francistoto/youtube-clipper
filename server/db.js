@@ -487,6 +487,21 @@ knex.findOrCreate = function(profile){
   })  
 }
 
+/*
+  ***********************************************************************
+  finds the user
+  ***********************************************************************
+*/
+knex.findUser = function(id){
+  return knex('users').where('id', id)
+  .then(function(user){
+    return user[0];
+  })
+  .catch(function(err){
+    console.error('user does noe exist in db: ', err);
+  })
+};
+
 
 
 module.exports = knex;

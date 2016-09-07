@@ -20,7 +20,7 @@ export default class UsersPage extends React.Component {
         method: 'GET'
       }).then(likes => this.state.highlights = likes),
       $.ajax({
-        url: '/currentUser',
+        url: '/users/' + this.state.userId,
         method: 'Get'
       }).then(user => this.state.username = user.name)
       ]).then(() => this.forceUpdate());
