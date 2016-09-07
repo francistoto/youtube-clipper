@@ -48,7 +48,16 @@ const _ = require('underscore');
 const config = require('../knexfile');
 
 const env = 'development';
-const knex = require('knex')(config[env]);
+const knex = require('knex')({
+  client: 'pg',
+  connection: {
+    host: 'ec2-50-17-237-148.compute-1.amazonaws.com',
+    user: 'gmltxtufrgzihh',
+    password: 'YEo-u1_EL2bJbAzgo-lwHcYEu4',
+    database: 'd924kkqud63c96',
+    ssl: true
+  }
+}); 
 
 knex.migrate.latest([config]);
 
