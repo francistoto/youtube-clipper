@@ -3,7 +3,12 @@ import $ from '../models/lib/jquery';
 
 
 export default class UsersPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state
+  render() {
+    return (
+      <DocumentTitle title={`My Profile`}>
+      <div>
+        <h3>My Profile</h3>
+      </div>
+      );
+  }
 }

@@ -62,7 +62,7 @@ export default class App extends React.Component {
           <div>Current User: {component.state.user}</div>
           <div className="container">
             <div className="row">
-              <h1 className="medium-6 columns">The Toto Moto</h1>
+              <h1 className="medium-6 columns">The Hot Dog Aquarium</h1>
               <div className="medium-6 columns">
                 <NavBar user={component.state.user === "Guest" ? null : component.state.user} changeChannel={(channelId) => this.changeChannel(channelId)} />
               </div>
