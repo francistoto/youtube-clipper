@@ -176,12 +176,6 @@ passport.use(new FacebookStrategy({
     callbackURL: "/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    /*
-    TODO: IMPLEMENT THIS CALLBACK
-    User.findOrCreate(..., function(err, user) {
-      if (err) { return done(err); }
-      done(null, user);
-    });*/
     db.findOrCreate(profile)
       .then(function(user){
         console.log(user);
