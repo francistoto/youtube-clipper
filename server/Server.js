@@ -229,8 +229,10 @@ app.get('/auth/facebook/callback',
                                       failureRedirect: '/login' }));
 app.get('/logout', function(req, res){
   req.logout();
-  req.session.passport.user = null
-  req.session.passport.id = null
+  console.log("KATHRYN LOOK AT ME: ", req.session)
+  req.session.passport.user.name = null
+  req.session.passport.user.id = null
+  
   res.redirect('/');
 });
 /*
