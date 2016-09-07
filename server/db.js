@@ -103,6 +103,26 @@ knex.getUserLikesArray = (likeId) =>
   .then(userLikes => userLikes.map(element => element.user_id));
 
 /*
+  **********************************************
+  Returns an array of likes by a particular userId
+  **********************************************
+*/
+
+knex.getLikesByUser = (userId) =>
+  knex.select('likes_id').from('likes_by_user').where('user_id', userId)
+  .then(function(likeIds){
+    var promises = [];
+    likeIds.map(like=>{
+      promises.push(
+        knex('likes').where('id', like.likes_id)
+        .then(function(result){ //result is an array with one like object
+          return result[0];
+        })
+      )
+    })
+    return Promise.all(promises)
+  })
+/*
   ***********************************************************************
 
   Returns an array of all time-based likes objects for all channels.

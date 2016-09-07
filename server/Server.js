@@ -352,6 +352,18 @@ app.get('/channel/:id/likes', (req, res) => {
 });
 
 /*
+  *********************************
+  Gets the array of likes by userid
+  *********************************
+*/ 
+
+app.get('/users/:userid/likes'){
+  db.getLikesByUser(req.params.userid).then(function(likes){
+    res.send(likes);
+  })
+}
+
+/*
   ***********************************************************************
   Responds to requests to create time-based likes on user click.
 
