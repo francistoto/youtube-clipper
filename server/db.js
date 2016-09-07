@@ -122,6 +122,21 @@ knex.getLikesByUser = (userId) =>
     })
     return Promise.all(promises)
   })
+//get the ALL the likes in one video 
+  // knex.getLikesByVideo = (videoId) =>
+  //   knex.select("likes_id").from('likes_by_video').where('video_id', videoId)
+  //     .then(function(allLikes){
+  //       return allLikes.length //returns amount of likes of the video
+
+  //       })
+
+
+  //     })
+knex.getTotalLikesByVideoId = (videoId) =>
+    knex.select('id').from('likes').where('video_id', videoId)
+      .then(function(allLikes){
+        return allLikes.length
+      })
 /*
   ***********************************************************************
 
@@ -315,6 +330,7 @@ knex.createLike = (like) => {
   .then(id => {
     likeObj.id = id[0].id;
     likeObj.users = [userId];
+    //likeObj.video-id?? could this just be done here??? 
     return knex('likes_by_user').insert({ user_id: userId, likes_id: id[0].id });
   })
   .then(() => likeObj)
