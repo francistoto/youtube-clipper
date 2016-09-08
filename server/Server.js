@@ -228,13 +228,13 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { successRedirect: '/',
                                       failureRedirect: '/login' }));
 app.get('/logout', function(req, res){
-  req.logout();
-  console.log("KATHRYN LOOK AT ME: ", req.session)
-  req.session.passport.user.name = null
-  req.session.passport.user.id = null
-  
-  res.redirect('/');
+  req.session.passport = undefined;
+  req.session.destroy(function (err) {
+    req.logout();
+    res.redirect('/');
+  });
 });
+
 /*
   ***********************************************************************
   Initializes interface.
