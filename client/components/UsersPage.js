@@ -30,7 +30,23 @@ export default class UsersPage extends React.Component {
   render() {
     return (
       <div>
-        <h3>{this.state.username}'s Profile</h3>
+        <header>
+          <div className="container">
+            <div className="row">
+              <h1 className="medium-6 columns">{this.state.username}</h1>
+              <div className="medium-6 columns">
+                <ul className="dropdown menu align-right" data-dropdown-menu>
+                  <li value="/" onClick={(e) => e.currentTarget.value}>
+                    <a>Home</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </header>
+        <div className="container">
+          
+        </div>
       </div>
     );
   }
