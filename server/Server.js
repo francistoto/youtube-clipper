@@ -42,6 +42,7 @@ const app = express();
 const serverUrl = process.env.PORT || 3000;
 
 const serverMessage = `Listening on port: ${serverUrl}`;
+let currentUser = null;
 
 /*
   *****************************************************
@@ -251,6 +252,11 @@ app.get('/', (req, res) => {
     console.log("Not authenticated");
   }
   console.log("Req.session: ", req.session);
+  if(req.session.passport){
+    currentUser = req.session.passport.user;
+  } else{
+    currentUser = null;
+  }
   res.sendFile(path.join(__dirname, '../client/public/Index.html'));
 });
 
@@ -259,13 +265,9 @@ app.get('/', (req, res) => {
 */
 
 app.get('/currentUser', function(req, res){
-  console.log("Getting to current user, req.session.passport = ", req.session.passport);
-  if(req.session.passport){
-    res.send(req.session.passport.user);
-  }else{
-    res.send({name: 'Guest'});
-  }
-})
+    if(currentUser) res.send(currentUser);
+    else res.send({name: 'Guest'})
+});
 
 /*
 * Sends the user

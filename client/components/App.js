@@ -18,36 +18,15 @@ export default class App extends React.Component {
     };
 
     console.log("Making call to current user")
-    $.ajax({
-      url: '/currentUser',
-      method: 'GET'
-    }).then(user => {
-      console.log("Got user: ", user);
-      this.setState({user: user.name, id: user.id})
-    })
-    .then(x=>{
-        NavModel.changeChannel(this.state.channel_id)
-        .then(channelObj => {
-          this.setState({
-            background: channelObj.background,
-            videos: channelObj.videos,
-            channel: channelObj.name,
-          });
-          $('body').css('background-image', `url(${this.state.background})`);
-        });
-    })
-  }
-
-  componentDidMount() {
-    console.log("App Component Mounted")
     // $.ajax({
     //   url: '/currentUser',
     //   method: 'GET'
     // }).then(user => {
-    //   console.log("Got user: ", user);
+    //   console.log("1st, Got user: ", user);
     //   this.setState({user: user.name, id: user.id})
     // })
     // .then(x=>{
+    //   console.log("2nd")
     //     NavModel.changeChannel(this.state.channel_id)
     //     .then(channelObj => {
     //       this.setState({
@@ -58,6 +37,34 @@ export default class App extends React.Component {
     //       $('body').css('background-image', `url(${this.state.background})`);
     //     });
     // })
+  }
+
+  componentDidMount() {
+    var component = this;
+    console.log("App Component Mounted")
+    //console.log("wut", window.setTimeout);
+    //var callCurrentUser = function() {
+      console.log("CallingCurrentUser SetTimeout")
+      $.ajax({
+        url: '/currentUser',
+        method: 'GET'
+      }).then(user => {
+        console.log("Got user: ", user);
+        component.setState({user: user.name, id: user.id})
+      })
+      .then(x=>{
+          NavModel.changeChannel(component.state.channel_id)
+          .then(channelObj => {
+            component.setState({
+              background: channelObj.background,
+              videos: channelObj.videos,
+              channel: channelObj.name,
+            });
+            $('body').css('background-image', `url(${this.state.background})`);
+          });
+      })
+    //console.log("callCurrentUser: ", callCurrentUser);
+    //window.setTimeout(callCurrentUser,1000);
   }
 
   changeChannel(channelId) {

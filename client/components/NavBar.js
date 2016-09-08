@@ -4,7 +4,6 @@ import { returnAllUsers } from '../models/navModel';
 export default class NavBar extends React.Component {
   constructor(props) {
     super(props);
-    console.log("Navbar props: ", props);
     this.state = {
       user: this.props.user,
       allUsers: [],
@@ -12,16 +11,11 @@ export default class NavBar extends React.Component {
   }
 
   componentDidMount() {
-    console.log("COMPONENT MOUNTED IN NAVBAR.JS")
     var component = this;
-    console.log('THIS THIS THIS', this.state)
     $('.dropdown').foundation();
-    console.log('FUN FUN FUN', returnAllUsers)
     returnAllUsers().then(function(alltheusers){
-      console.log("NAVJS allusers", alltheusers);
       return component.state.allUsers = alltheusers.allUsers;
     })
-    console.log("COMPONENT MOUNT LOOK LOOK LOOK", component.state.allUsers);
   }
 
   handleChange(value) {
@@ -29,7 +23,6 @@ export default class NavBar extends React.Component {
   }
 
   facebookBtn(){
-    console.log("This state user: ", this.props.user);
     if(this.props.user){
       return <li><a href="/logout">Logout</a></li>;
     }else{
@@ -37,8 +30,7 @@ export default class NavBar extends React.Component {
     }
   }
   displayUsers(){
-        console.log('IS IT THIS OR COMP',this.state.allUsers)
-       return this.state.allUsers.map(x=> <li className="notwhite"><a href={'/#/users/'+x.id}>{x.name}</a></li>);
+       return this.state.allUsers.map(x=> <li className="notwhite">{x.name}</li>);
   }
   render() {
     return (
