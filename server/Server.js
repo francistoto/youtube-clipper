@@ -379,6 +379,18 @@ app.get('/users/:userid/likes', (req, res) => {
 })
 
 /*
+  *********************************
+  Gets the array of videos by userid
+  *********************************
+*/ 
+
+app.get('/users/:userid/videos', (req, res) => {
+  db.getVideosByUser(req.params.userid).then(function(videos){
+    res.send(videos);
+  })
+})
+
+/*
   ***********************************************************************
   Responds to requests to create time-based likes on user click.
 

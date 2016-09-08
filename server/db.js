@@ -103,6 +103,23 @@ knex.getUserLikesArray = (likeId) =>
   .then(userLikes => userLikes.map(element => element.user_id));
 
 /*
+  ********************************************************
+  Returns an array of videos a particular userId has liked
+  ********************************************************
+*/
+
+knex.getVideosByUser = (userId) => 
+  knex.getLikesByUser(userId)
+  .then(likes => {
+    return Promise.all(
+      likes.map(like => 
+      knex('videos').where('id', like.video_id)
+      )
+    )
+    .then( e => e.map(x => x[0]))
+  })
+
+/*
   **********************************************
   Returns an array of likes by a particular userId
   **********************************************
@@ -521,7 +538,7 @@ knex.findUser = function(id){
 
 knex.findAllUsers = function(){
   // console.log('LALALALALALALALA');
-  return knex.select('name').from('users')
+  return knex.select('*').from('users')
     .then(function(allUsers){
       console.log('DB FIND ALL USERS', allUsers)
       return allUsers;
