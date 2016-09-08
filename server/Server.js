@@ -39,7 +39,7 @@ const youtube = google.youtube({ version: 'v3', auth });
 
 const app = express();
 
-const serverUrl = process.env.PORT || 8000;
+const serverUrl = process.env.PORT || 3000;
 
 const serverMessage = `Listening on port: ${serverUrl}`;
 
