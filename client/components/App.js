@@ -16,10 +16,8 @@ export default class App extends React.Component {
       channel_id: 'default',
       id: -1,
     };
-  }
 
-  componentDidMount() {
-    console.log("Component Mounted")
+    console.log("Making call to current user")
     $.ajax({
       url: '/currentUser',
       method: 'GET'
@@ -38,6 +36,28 @@ export default class App extends React.Component {
           $('body').css('background-image', `url(${this.state.background})`);
         });
     })
+  }
+
+  componentDidMount() {
+    console.log("App Component Mounted")
+    // $.ajax({
+    //   url: '/currentUser',
+    //   method: 'GET'
+    // }).then(user => {
+    //   console.log("Got user: ", user);
+    //   this.setState({user: user.name, id: user.id})
+    // })
+    // .then(x=>{
+    //     NavModel.changeChannel(this.state.channel_id)
+    //     .then(channelObj => {
+    //       this.setState({
+    //         background: channelObj.background,
+    //         videos: channelObj.videos,
+    //         channel: channelObj.name,
+    //       });
+    //       $('body').css('background-image', `url(${this.state.background})`);
+    //     });
+    // })
   }
 
   changeChannel(channelId) {

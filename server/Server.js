@@ -259,10 +259,11 @@ app.get('/', (req, res) => {
 */
 
 app.get('/currentUser', function(req, res){
+  console.log("Getting to current user, req.session.passport = ", req.session.passport);
   if(req.session.passport){
     res.send(req.session.passport.user);
   }else{
-    res.send('Guest');
+    res.send({name: 'Guest'});
   }
 })
 
