@@ -37,9 +37,22 @@ export default class UsersPage extends React.Component {
 
   };
 
+  followme(){
+    $.ajax({
+      url: '/follow/' + this.state.userId,
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+        },
+    }).then(function(){console.log('posted following in userspage')})
+  }
+
   render() {
     return (
+      
+      
       <div>
+      <button onClick={(e) => this.followme()}>follow me</button>
         <header>
           <div className="container">
             <div className="row">

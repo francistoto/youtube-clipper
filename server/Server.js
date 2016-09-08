@@ -385,6 +385,12 @@ app.get('/users/:userid/likes', (req, res) => {
   Gets the array of videos by userid
   *********************************
 */ 
+app.post('/follow/:userid', (req, res) => {
+  
+  db.followSomeone(req.session.passport.user.id, req.params.userid).then(function(resp){
+      res.status(200).send(console.log('server added following'))
+    })
+})
 
 app.get('/users/:userid/videos', (req, res) => {
   db.getVideosByUser(req.params.userid).then(function(videos){

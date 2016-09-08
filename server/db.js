@@ -510,6 +510,21 @@ knex.runInitDB = () =>
   creates or finds user
   ***********************************************************************
 */
+knex.followSomeone = function(myId, theirId){
+  knex.select('*').from('following').where({user_id_follower: myId, user_id_followee: theirId})
+      .then(function(results){
+        if(!results.length){
+          knex('following').insert({user_id_follower: myId, user_id_followee: theirId})
+            .then(function(){
+              console.log('entered in the following table');
+        });
+          
+        }
+        else{
+          console.log('already following');
+        }
+      });
+}
 
 knex.findOrCreate = function(profile){
   return knex('users').where('id', profile.id)

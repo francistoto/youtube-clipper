@@ -34,6 +34,10 @@ exports.up = (knex, Promise) => Promise.all([
     table.string('user_id');
     table.integer('video_id');
   }),
+  knex.schema.createTableIfNotExists('following', table => {
+    table.string('user_id_follower');
+    table.string('user_id_followee');
+  }),
 ]);
 
 exports.down = (knex, Promise) => Promise.all([
@@ -43,4 +47,5 @@ exports.down = (knex, Promise) => Promise.all([
   knex.schema.dropTableIfExists('videos'),
   knex.schema.dropTableIfExists('users'),
   knex.schema.dropTableIfExists('channels'),
+  knex.schema.dropTableIfExists('following'),
 ]);

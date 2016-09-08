@@ -50,7 +50,7 @@ export default class NavBar extends React.Component {
           </ul>
         </li>
         <li value="'default'" onClick={(e) => this.handleChange(e.currentTarget.value)}>
-          <a>Home</a>
+          <a href='/'>Home</a>
         </li>
       </ul>
     );
