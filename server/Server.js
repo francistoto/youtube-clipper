@@ -477,6 +477,13 @@ app.get('/db_init', (req, res) => {
     }
   ***********************************************************************
 */
+app.get('/videos/:id/likes', (req,res)=>{
+  db.getTotalLikesByVideoId(req.params.id)
+    .then(function(numOfLikes){
+      console.log('numOfLikes',numOfLikes);
+      return numOfLikes;
+    })
+})
 
 app.get('/videos/:id', (req, res) => {
   if (req.params.id === '1' || req.params.id === '2' || req.params.id === '3') {

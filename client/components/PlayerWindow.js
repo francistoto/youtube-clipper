@@ -2,6 +2,7 @@ import React from 'react';
 import YouTube from 'react-youtube';
 import { sendLike, Moment, getMoreVideos } from '../models/videoModel.js';
 import $ from '../models/lib/jquery';
+import returnAmountOfLikes from '../models/videoModel';
 
 export default class PlayerWindow extends React.Component {
   constructor(props) {
@@ -43,10 +44,16 @@ export default class PlayerWindow extends React.Component {
 
   componentDidMount() {
     console.log('component mounted');
-
+    var videoId = this.props.currentVideo;
+    console.log('this.currentVideo', this.videoList)
+    console.log('VID ID', videoId);
+    console.log('this.state.currentVideo', this.state.videoList)
+    this.totalLikes = returnAmountOfLikes(this.state.currentVideo)
+      .then(function(){console.log('TOTAL LIKES GOT')});
     this.playHead = document.getElementById('playHead');
     this.timeline = document.getElementById('timeline');
     this.controls = document.getElementById('playerControls');
+    console.log("COMPONENTDIDMOUNT TOTAL LIKES",this.totalLikes);
   }
 
   componentDidUpdate() {
@@ -337,6 +344,7 @@ export default class PlayerWindow extends React.Component {
           <i className="fa fa-thumbs-down" />
           Lame
         </button>
+        <h3>Total Likes: {this.state.totalLikes}</h3>
       </div>;
   }
 

@@ -62,7 +62,15 @@ export const sendLike = (newLike) => {
     data: JSON.stringify(newLike),
   });
 };
-
+export function returnAmountOfLikes(videoId){
+  return $.ajax({
+    url:`videos/${videoId}/likes`,
+    method: 'GET',
+     headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+}
 // get more videos from DB
 export const getMoreVideos = (channelId) =>
   $.ajax({
