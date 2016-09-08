@@ -9,6 +9,7 @@ export default class UsersPage extends React.Component {
       userId : this.props.params.userid,
       username: null,
       highlights : [],
+      videos : []
     };
     console.log('props.params.userid : ', this.props.params.userid);
     console.log('this.state.highlights: ', this.state.highlights);
@@ -22,6 +23,12 @@ export default class UsersPage extends React.Component {
       }).then(likes => {
         console.log("this is the likes: ", likes);
         this.state.highlights = likes}),
+      $.ajax({
+        url: '/users/' + this.state.userId + '/videos',
+        method: 'GET'
+      }).then(videos => {
+        console.log('these are the videos: ', videos);
+        this.state.videos = videos}),
       $.ajax({
         url: '/users/' + this.state.userId,
         method: 'Get'
@@ -39,8 +46,8 @@ export default class UsersPage extends React.Component {
               <h1 className="medium-6 columns">{this.state.username}</h1>
               <div className="medium-6 columns">
                 <ul className="dropdown menu align-right" data-dropdown-menu>
-                  <li value="/" onClick={(e) => e.currentTarget.value}>
-                    <a>Home</a>
+                  <li>
+                    <a href="/">Home</a>
                   </li>
                 </ul>
               </div>
@@ -53,7 +60,7 @@ export default class UsersPage extends React.Component {
               <p>
               {this.state.highlights.map(e => e.id)}
               </p>
-              <PlayerWindow videos={this.state.highlights}  user_id={this.state.userId} />
+              <PlayerWindow videos={this.state.videos} channel_id="1" user_id={this.state.userId} />
             </div>
           </div>
       </div>
