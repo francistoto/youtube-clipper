@@ -10,34 +10,13 @@ export default class App extends React.Component {
     super(props);
     var component = this;
     component.state = {
-      user: 'Guest',
+      user: '',
       background: '',
       videos: [],
       channel: '',
       channel_id: 'default',
       id: -1,
     };
-
-    console.log("Making call to current user")
-    // $.ajax({
-    //   url: '/currentUser',
-    //   method: 'GET'
-    // }).then(user => {
-    //   console.log("1st, Got user: ", user);
-    //   this.setState({user: user.name, id: user.id})
-    // })
-    // .then(x=>{
-    //   console.log("2nd")
-    //     NavModel.changeChannel(this.state.channel_id)
-    //     .then(channelObj => {
-    //       this.setState({
-    //         background: channelObj.background,
-    //         videos: channelObj.videos,
-    //         channel: channelObj.name,
-    //       });
-    //       $('body').css('background-image', `url(${this.state.background})`);
-    //     });
-    // })
   }
 
   componentDidMount() {

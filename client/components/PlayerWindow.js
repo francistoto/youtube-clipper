@@ -350,6 +350,7 @@ export default class PlayerWindow extends React.Component {
           <i className="fa fa-thumbs-down" />
           Lame
         </button>
+        <h3 className="totLike">Total Likes: {this.state.totalLikes} </h3>
       </div>
       : <div className="player-buttons small-6 columns">
         <button
