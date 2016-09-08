@@ -30,7 +30,7 @@ export default class NavBar extends React.Component {
     }
   }
   displayUsers(){
-       return this.state.allUsers.map(x=> <li className="notwhite">{x.name}</li>);
+       return this.state.allUsers.map(x=> <li className="notwhite"><a href={'/#/users/' + x.id}>{x.name}</a></li>);
   }
   render() {
     return (

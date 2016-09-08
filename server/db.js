@@ -513,9 +513,12 @@ knex.runInitDB = () =>
 knex.followSomeone = function(myId, theirId){
   knex.select('*').from('following').where({user_id_follower: myId, user_id_followee: theirId})
       .then(function(results){
-        if(!results.length){
-          knex('following').insert({user_id_follower: myId, user_id_followee: theirId})
-            .then(function(){
+        console.log('ELLIOT ELLIOT ELLIOT', results);
+        if(Object.keys(results).length){
+          knex('following').insert({user_id_follower: results.user_id_follower, user_id_followee: results.user_id_followee})
+            .then(function(result){
+              console.log('CHAD CHAD CHAD', result)
+              return result;
               console.log('entered in the following table');
         });
           

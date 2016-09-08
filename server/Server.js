@@ -386,7 +386,8 @@ app.get('/users/:userid/likes', (req, res) => {
   *********************************
 */ 
 app.post('/follow/:userid', (req, res) => {
-  
+  console.log('KATHRYN KATHRYN KATHRYN',req.session)
+  console.log('HANSEN HANSEN HANSEN', req.params.userid)
   db.followSomeone(req.session.passport.user.id, req.params.userid).then(function(resp){
       res.status(200).send(console.log('server added following'))
     })
