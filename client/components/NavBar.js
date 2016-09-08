@@ -1,4 +1,5 @@
 import React from 'react';
+import { returnAllUsers } from '../models/navModel';
 
 export default class NavBar extends React.Component {
   constructor(props) {
@@ -6,11 +7,21 @@ export default class NavBar extends React.Component {
     console.log("Navbar props: ", props);
     this.state = {
       user: this.props.user,
+      allUsers: [],
     };
   }
 
   componentDidMount() {
+    console.log("COMPONENT MOUNTED IN NAVBAR.JS")
+    var component = this;
+    console.log('THIS THIS THIS', this.state)
     $('.dropdown').foundation();
+    console.log('FUN FUN FUN', returnAllUsers)
+    returnAllUsers().then(function(alltheusers){
+      console.log("NAVJS allusers", alltheusers);
+      return component.state.allUsers = alltheusers.allUsers;
+    })
+    console.log("COMPONENT MOUNT LOOK LOOK LOOK", component.state.allUsers);
   }
 
   handleChange(value) {
@@ -25,11 +36,19 @@ export default class NavBar extends React.Component {
       return <li><a href="/auth/facebook">Login with Facebook</a></li>;
     }
   }
-
+  displayUsers(){
+        console.log('IS IT THIS OR COMP',this.state.allUsers)
+       return this.state.allUsers.map(x=> <li className="notwhite">{x.name}</li>);
+  }
   render() {
     return (
+
       <ul className="dropdown menu align-right" data-dropdown-menu>
-        {this.facebookBtn()}      
+        {this.facebookBtn()} 
+        <li>
+          <a>Users</a>
+          <ul className="menu"> {this.displayUsers()} </ul>  
+          </li> 
         <li className="is-dropdown-submenu-parent">
           <a>Channels</a>
           <ul className="menu">

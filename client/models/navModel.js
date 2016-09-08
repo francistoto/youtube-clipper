@@ -20,4 +20,16 @@ NavModel.changeChannel = (channelId) => {
   });
 };
 
+export function returnAllUsers(){
+    console.log("i get to returnAllUsers");
+   return $.ajax({
+    url:'/allusers',
+    method: 'GET',
+     headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+}
+
 export default NavModel;

@@ -171,6 +171,9 @@ h1, h2 {
   display: inline-block;
   margin-right: 10px;
 }
+.notwhite{
+  color: cornflowerblue;
+}
 
 @keyframes bounceInDown {
   from, 60%, 75%, 90%, to {

@@ -457,6 +457,19 @@ app.get('/db_init', (req, res) => {
   });
 });
 
+app.get('/allusers', (req, res) => {
+  console.log('I GET HERE I HOPE')
+  db.findAllUsers()
+    .then(function(allUsers){
+      console.log("ALL USERS", allUsers)
+      res.send({allUsers: allUsers})
+    })
+    .catch(err => {
+      console.log('GETTING ALL USERS FAILED IN SERVER')
+    })
+  // res.send("Test");
+})
+
 /*
   ***********************************************************************
   Responds to requests to add more videos to a channel.

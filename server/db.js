@@ -519,6 +519,18 @@ knex.findUser = function(id){
   })
 };
 
+knex.findAllUsers = function(){
+  // console.log('LALALALALALALALA');
+  return knex.select('name').from('users')
+    .then(function(allUsers){
+      console.log('DB FIND ALL USERS', allUsers)
+      return allUsers;
+    })
+    .catch(function(err){
+      console.log('failed to get all users: ', err);
+    })
+}
+
 
 
 module.exports = knex;
