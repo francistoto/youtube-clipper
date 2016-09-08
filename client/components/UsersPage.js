@@ -1,6 +1,6 @@
 import React from 'react';
 import $ from '../models/lib/jquery';
-
+import PlayerWindow from './PlayerWindow';
 
 export default class UsersPage extends React.Component {
   constructor(props) {
@@ -8,9 +8,10 @@ export default class UsersPage extends React.Component {
     this.state = {
       userId : this.props.params.userid,
       username: null,
-      highlights : []
+      highlights : [],
     };
-    console.log('props.params.userid : ', this.props.params.userid)
+    console.log('props.params.userid : ', this.props.params.userid);
+    console.log('this.state.highlights: ', this.state.highlights);
   };
 
   componentDidMount() {
@@ -18,7 +19,9 @@ export default class UsersPage extends React.Component {
       $.ajax({
         url: '/users/' + this.state.userId + '/likes',
         method: 'GET'
-      }).then(likes => this.state.highlights = likes),
+      }).then(likes => {
+        console.log("this is the likes: ", likes);
+        this.state.highlights = likes}),
       $.ajax({
         url: '/users/' + this.state.userId,
         method: 'Get'
@@ -44,9 +47,15 @@ export default class UsersPage extends React.Component {
             </div>
           </div>
         </header>
-        <div className="container">
-          
-        </div>
+          <div className="container">
+            <div className="row column">
+              <h3>Favorite Highlights</h3>
+              <p>
+              {this.state.highlights.map(e => e.id)}
+              </p>
+              <PlayerWindow videos={this.state.highlights}  user_id={this.state.userId} />
+            </div>
+          </div>
       </div>
     );
   }
