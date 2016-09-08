@@ -2,7 +2,7 @@ import React from 'react';
 import YouTube from 'react-youtube';
 import { sendLike, Moment, getMoreVideos } from '../models/videoModel.js';
 import $ from '../models/lib/jquery';
-import returnAmountOfLikes from '../models/videoModel';
+import { returnAmountOfLikes } from '../models/videoModel';
 
 export default class PlayerWindow extends React.Component {
   constructor(props) {
@@ -19,7 +19,10 @@ export default class PlayerWindow extends React.Component {
       extremeStart: 0,
       extremeStop: 0,
       channel_id: 0,
+      totalLikes: 0
     };
+     
+
 
     // references to dom elements
     this.player = '';
@@ -43,26 +46,33 @@ export default class PlayerWindow extends React.Component {
   }
 
   componentDidMount() {
-    console.log('component mounted');
-    var videoId = this.props.currentVideo;
-    console.log('this.currentVideo', this.videoList)
-    console.log('VID ID', videoId);
-    console.log('this.state.currentVideo', this.state.videoList)
-    this.totalLikes = returnAmountOfLikes(this.state.currentVideo)
-      .then(function(){console.log('TOTAL LIKES GOT')});
     this.playHead = document.getElementById('playHead');
     this.timeline = document.getElementById('timeline');
     this.controls = document.getElementById('playerControls');
-    console.log("COMPONENTDIDMOUNT TOTAL LIKES",this.totalLikes);
+    
   }
 
   componentDidUpdate() {
-    console.log('component updating');
-
+    var component = this;
     if (this.props.channel_id !== this.state.channel_id) {
       this.updateVideoList(this.props.videos);
     }
+    console.log('GAHHHHH', this.state.currentVideo)
+    console.log('I MAKE IT')
+    console.log('returnAmountOfLikes', returnAmountOfLikes);
+    returnAmountOfLikes(this.state.currentVideo.id)
+      .then(function(results){
+        console.log("Got back from returnAmountOfLikes: ", results);
+        component.setState({totalLikes : results.numOfLikes});
+        console.log("Total likes after set: ", component.state.totalLikes)
+      })
+      .fail(function(err){
+        console.log("Error: ", err);
+      })
+    console.log('WHAT IS GOING ON', this.state.totalLikes)
+    // console.log('WHY AARON WHY', this.totalLikes)
   }
+
 
   // new videos are added if video list reaches a specific length
   checkVideoListLength(list) {
@@ -344,7 +354,7 @@ export default class PlayerWindow extends React.Component {
           <i className="fa fa-thumbs-down" />
           Lame
         </button>
-        <h3>Total Likes: {this.state.totalLikes}</h3>
+        <h3 className="totLike">Total Likes: {this.state.totalLikes} </h3>
       </div>;
   }
 

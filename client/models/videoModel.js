@@ -63,8 +63,9 @@ export const sendLike = (newLike) => {
   });
 };
 export function returnAmountOfLikes(videoId){
+  console.log("Making ajax calls for number of likes");
   return $.ajax({
-    url:`videos/${videoId}/likes`,
+    url:`/videos/${videoId}/likes`,
     method: 'GET',
      headers: {
       'Content-Type': 'application/json',

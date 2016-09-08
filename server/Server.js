@@ -482,7 +482,7 @@ app.get('/videos/:id/likes', (req,res)=>{
   db.getTotalLikesByVideoId(req.params.id)
     .then(function(numOfLikes){
       console.log('numOfLikes',numOfLikes);
-      return numOfLikes;
+      res.send({numOfLikes: numOfLikes});
     })
 })
 
