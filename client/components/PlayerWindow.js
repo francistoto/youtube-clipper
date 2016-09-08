@@ -335,7 +335,7 @@ export default class PlayerWindow extends React.Component {
 
   // chooses whether to render the "Extreme" button or not
   renderButtons() {
-    return (this.state.channel_id === 0 || this.state.channel_id === 'default')
+    return (this.state.channel_id === 0 || this.state.channel_id === 'default' || this.props.user_id === null)
       ? <div className="player-buttons small-6 columns">
         <button className="button alert" onClick={this.handleLame}>
           <i className="fa fa-thumbs-down" />

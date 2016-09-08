@@ -12,22 +12,24 @@ export const Moment = (element, moment, player, userId) => {
   element.append(likeWindow);
 
   likeWindow.click((e) => {
-    console.log('RIGHT BEFORE AJAX CALL')
-    $.ajax({
-      url: '/likes/update',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      data: JSON.stringify({
-        user_id: userId,
-        likes_id: momentObj.id,
-      }),
-    })
-    .done((data) => {
-      likeWindow.children('.likeCount').html(data.users.length);
-      console.log('like count updated');
-    });
+    if(userId){
+      console.log('RIGHT BEFORE AJAX CALL')
+      $.ajax({
+        url: '/likes/update',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: JSON.stringify({
+          user_id: userId,
+          likes_id: momentObj.id,
+        }),
+      })
+      .done((data) => {
+        likeWindow.children('.likeCount').html(data.users.length);
+        console.log('like count updated');
+      });
+    }
     e.stopPropagation();
   });
 
