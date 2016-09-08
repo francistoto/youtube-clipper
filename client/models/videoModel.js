@@ -12,6 +12,7 @@ export const Moment = (element, moment, player, userId) => {
   element.append(likeWindow);
 
   likeWindow.click((e) => {
+    console.log('RIGHT BEFORE AJAX CALL')
     $.ajax({
       url: '/likes/update',
       method: 'POST',
@@ -63,7 +64,7 @@ export const sendLike = (newLike) => {
   });
 };
 export function returnAmountOfLikes(videoId){
-  console.log("Making ajax calls for number of likes");
+  // console.log("Making ajax calls for number of likes");
   return $.ajax({
     url:`/videos/${videoId}/likes`,
     method: 'GET',

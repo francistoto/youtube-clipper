@@ -135,7 +135,7 @@ knex.getLikesByUser = (userId) =>
 knex.getTotalLikesByVideoId = (videoId) =>
     knex.select('id').from('likes').where('video_id', videoId)
       .then(function(allLikes){
-        console.log("ALL LIKES IN DATABASE", allLikes, allLikes.length);
+        // console.log("ALL LIKES IN DATABASE", allLikes, allLikes.length);
         return allLikes.length
       })
 /*

@@ -57,19 +57,19 @@ export default class PlayerWindow extends React.Component {
     if (this.props.channel_id !== this.state.channel_id) {
       this.updateVideoList(this.props.videos);
     }
-    console.log('GAHHHHH', this.state.currentVideo)
-    console.log('I MAKE IT')
-    console.log('returnAmountOfLikes', returnAmountOfLikes);
+    // console.log('GAHHHHH', this.state.currentVideo)
+    // console.log('I MAKE IT')
+    // console.log('returnAmountOfLikes', returnAmountOfLikes);
     returnAmountOfLikes(this.state.currentVideo.id)
       .then(function(results){
-        console.log("Got back from returnAmountOfLikes: ", results);
+        // console.log("Got back from returnAmountOfLikes: ", results);
         component.setState({totalLikes : results.numOfLikes});
-        console.log("Total likes after set: ", component.state.totalLikes)
+        // console.log("Total likes after set: ", component.state.totalLikes)
       })
       .fail(function(err){
         console.log("Error: ", err);
       })
-    console.log('WHAT IS GOING ON', this.state.totalLikes)
+    // console.log('WHAT IS GOING ON', this.state.totalLikes)
     // console.log('WHY AARON WHY', this.totalLikes)
   }
 
@@ -359,7 +359,7 @@ export default class PlayerWindow extends React.Component {
   }
 
   render() {
-    console.log('Current channel: ', this.state.channel_id);
+    
     return (
       <div>
         <div className="flex-video widescreen">
