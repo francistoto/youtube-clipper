@@ -8,7 +8,7 @@ export default class CommentsArea extends React.Component {
    this.state ={
      comment: "",
      comments: [],
-     input: "",
+     inputz: "",
      commentCounter: 0
    }
  }
@@ -24,7 +24,7 @@ export default class CommentsArea extends React.Component {
  3 ways to get comments:
   - First comment is rendered upon load of video
   - Clicking on "Previous Comment" and "Next comment" buttons will move one position forward or backwards
-  from the current position in the array and load up that comment as the this.state.comment
+  from the current position in the array and load up that comment as the this.state.comment 
   - Clicking on the like highlighted area will bring up that comment
  */
 
@@ -34,7 +34,7 @@ export default class CommentsArea extends React.Component {
  */
  componentDidMount(){
    return $.ajax({
-     url: 'comments/get',
+     url: '/videos/${videoId}/comments/get',
      method: 'GET',
      headers: {
        'Content-Type': 'application/json',
@@ -72,53 +72,111 @@ export default class CommentsArea extends React.Component {
    start time of the like, and end point of the like.
  */
 
- postComment(newComment) {
+ postComment(newComment, userID, likeID) {
+  console.log('about to use post comment')
+  var newCommentObj = {
+    userID: userID,
+    comment: newComment,
+    likeID: likeID
+  }
    return $.ajax({
-     url: 'comment/create',
+     url: '/videos/${videoId}/comment/create',
      method: 'POST',
      headers: {
        'Content-Type': 'application/json',
      },
      // dataType: 'application/json',
-     data: JSON.stringify(newComment),
+     data: JSON.stringify(newCommentObj)
+     
+   })
+   .then(function(){
+    console.log("The comment has been posted to the database: ", data);
+    return $.ajax({
+     url: '/videos/${videoId}/comments/get',
+     method: 'GET',
+     headers: {
+       'Content-Type': 'application/json',
+     }
+     // dataType: 'application/json',
+     //data: JSON.stringify(newLike),
    })
    .done(function(data){
-     console.log("This comment has been posted to the database: ", data)
+     console.log("This comment has been retrieved: ", data);
+     this.state.comment = data.body[0];
+     this.state.comments = data.body;
      this.state.input = ""
+     this.forceUpdate();
    })
- };
+  })
+}
+//need to do a get request and this.forceUpdate() to make the state include the comment that was 
+//posted
+
+
+/*
+Function on button click that will highlight the previous like zone with comment attachment and display 
+that like zone's comment. 
+*/
  
  goToPreviousComment(){
+
    this.state.commentCounter--;
    this.state.comment = this.state.comments[this.state.commentCounter];
+   //need to update the current comment's moment class div color to something other than yellow
+   // or "background: rgba(255, 209, 0, 0.5);" as is the current norm.
+   this.forceUpdate();
  }
+
+/*
+Function on button click that will highlight the next like zone with comment attachment and display 
+that like zone's comment. 
+*/
 
  goToNextComment(){
    this.state.commentCounter++;
    this.state.comment = this.state.comments[this.state.commentCounter];
+   //need to update the current comment's moment class div color to something other than yellow
+   // or "background: rgba(255, 209, 0, 0.5);" as is the current norm.
+   this.forceUpdate();
  }
  
- clickLikeForComment(){
-   
- }
+/*
+Function upon the click of a likezone that will set the this.state.comment to that particular comment
+as well as highlight the zone.  
+*/
+
+ // clickLikeForComment(event){
+ //   event.currentTarget.style.backgroundColor = '#7eb64a';
+ // }
+ //moved to PlayerWindow.js
+
+
+//onClick={CommentsArea.clickLikeForComment()}
+//import CommentsArea from './videoComments';
+/*
+Renders an input bar which updates the this.state.input via two way databinding and
+a submitt button for comments. Underneath is a div that displays the current comment in this.state.comment.
+Under that are two buttons that will set the comment display to the next or previous comment in the 
+this.state.comments array.
+*/
 
  render(){
    return (
      <div>
        <input 
-       class="commentInputs" placeholder="Comment Here!" type="text" 
-       defaultValue={this.state.input} maxlength="144" 
+       className="commentInputs" placeholder="Comment Here!" type="text" 
+       defaultValue={this.state.inputz} maxLength="144" 
        onChange = {e => {
-          this.state.input = e.currentTarget.value;
+          this.state.inputz = e.currentTarget.value;
           this.forceUpdate();
         }}
        />
-       <button class="commentSubmitButton" onClick={postComment(this.state.input)}>Submit!</button>
-       <div class='currentComment'>
+       <button className="commentSubmitButton" onClick={() => this.postComment(this.state.inputz, userID, likeID)}>Submit!</button>
+       <div className='currentComment'>
         {this.state.comment}
        </div>
-       <button onClick={goToPreviousComment()}>Previous Comment</button>
-       <button onClick={goToNextComment()}>Next Comment</button>
+       <button className="previousComment" onClick={() => this.goToPreviousComment()}>Previous Comment</button>
+       <button className="nextComment" onClick={() => this.goToNextComment()}>Next Comment</button>
      </div>
    )
  }

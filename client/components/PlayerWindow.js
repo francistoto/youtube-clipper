@@ -21,8 +21,6 @@ export default class PlayerWindow extends React.Component {
       channel_id: 0,
       totalLikes: 0
     };
-     
-
 
     // references to dom elements
     this.player = '';
@@ -46,13 +44,25 @@ export default class PlayerWindow extends React.Component {
   }
 
   componentDidMount() {
+    console.log('component mounted');
+
     this.playHead = document.getElementById('playHead');
     this.timeline = document.getElementById('timeline');
     this.controls = document.getElementById('playerControls');
-    
+    // $('.moment').on('click', function(){
+    //   console.log("Clicked moment");
+    //   console.log("What was clicked: ", $(this));
+    //   $(this).css('background-color', '#7eb64a')
+    // })
   }
 
   componentDidUpdate() {
+    console.log('component updating');
+    $('.moment').on('click', function(){
+      console.log("Clicked moment");
+      console.log("What was clicked: ", $(this));
+      $(this).css('background-color', '#7eb64a')
+    })
     var component = this;
     if (this.props.channel_id !== this.state.channel_id) {
       this.updateVideoList(this.props.videos);
@@ -72,7 +82,6 @@ export default class PlayerWindow extends React.Component {
     // console.log('WHAT IS GOING ON', this.state.totalLikes)
     // console.log('WHY AARON WHY', this.totalLikes)
   }
-
 
   // new videos are added if video list reaches a specific length
   checkVideoListLength(list) {
@@ -367,7 +376,7 @@ export default class PlayerWindow extends React.Component {
         </div>
         <section className="player-controls" id="playerControls" onMouseMove={this.handleMouseMove}>
           <div className="timeline" id="timeline">
-            <div id="moments" />
+            <div id="moments" onClick={this.clickLikeForComment}/>
             <div
               className="playHead"
               id="playHead"

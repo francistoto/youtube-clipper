@@ -2,6 +2,7 @@ import React from 'react';
 import PlayerWindow from './PlayerWindow';
 import NavBar from './NavBar';
 import NavModel from '../models/navModel';
+import CommentsArea from './VideoComments';
 import $ from '../models/lib/jquery';
 
 export default class App extends React.Component {
@@ -101,6 +102,13 @@ export default class App extends React.Component {
           <div className="row column">
             <h2>{this.state.channel}</h2>
             <PlayerWindow videos={this.state.videos} channel_id={this.state.channel_id} user_id={component.state.user === "Guest" ? null : this.state.id} />
+          </div>
+        </div>
+
+        <div className="container">
+          <div className="row column">
+            <h2>Comments</h2>
+            <CommentsArea />
           </div>
         </div>
       </div>
