@@ -9,8 +9,8 @@ export default class CommentsArea extends React.Component {
      comment: "",
      comments: [],
      inputz: "",
-     commentCounter: 0
-     currentLike: "";
+     commentCounter: 0,
+     currentLike: ""
    }
  }
  
