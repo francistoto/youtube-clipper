@@ -388,10 +388,19 @@ app.get('/users/:userid/likes', (req, res) => {
 app.post('/follow/:userid', (req, res) => {
   console.log('KATHRYN KATHRYN KATHRYN',req.session)
   console.log('HANSEN HANSEN HANSEN', req.params.userid)
-  db.followSomeone(req.session.passport.user.id, req.params.userid).then(function(resp){
+  db.followSomeone(currentUser.id, req.params.userid).then(function(resp){
       res.status(200).send(console.log('server added following'))
     })
 })
+
+app.get('/followers/:myId', (req,res) => {
+  db.findAllFollowers(req.params.myId)
+    .then(function(allFollowers){
+      console.log("BUDDY BUDDY", allFollowers)
+      res.send({allFollowers: allFollowers});
+    })
+
+});
 
 app.get('/users/:userid/videos', (req, res) => {
   db.getVideosByUser(req.params.userid).then(function(videos){

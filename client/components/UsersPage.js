@@ -9,7 +9,8 @@ export default class UsersPage extends React.Component {
       userId : this.props.params.userid,
       username: null,
       highlights : [],
-      videos : []
+      videos : [],
+      followers : [],
     };
     console.log('props.params.userid : ', this.props.params.userid);
     console.log('this.state.highlights: ', this.state.highlights);
@@ -23,28 +24,79 @@ export default class UsersPage extends React.Component {
       }).then(likes => {
         console.log("this is the likes: ", likes);
         this.state.highlights = likes}),
+
       $.ajax({
         url: '/users/' + this.state.userId + '/videos',
         method: 'GET'
       }).then(videos => {
         console.log('these are the videos: ', videos);
         this.state.videos = videos}),
+
       $.ajax({
         url: '/users/' + this.state.userId,
         method: 'Get'
-      }).then(user => this.state.username = user.name)
+      }).then(user => this.state.username = user.name),
+
+      this.getFollowers(),
+
       ]).then(() => this.forceUpdate());
 
   };
 
+  componentWillReceiveProps() {
+    this.state.userId = this.props.params.userid;
+    Promise.all([
+      $.ajax({
+        url: '/users/' + this.state.userId + '/likes',
+        method: 'GET'
+      }).then(likes => {
+        console.log("this is the likes: ", likes);
+        this.state.highlights = likes}),
+
+      $.ajax({
+        url: '/users/' + this.state.userId + '/videos',
+        method: 'GET'
+      }).then(videos => {
+        console.log('these are the videos: ', videos);
+        this.state.videos = videos}),
+
+      $.ajax({
+        url: '/users/' + this.state.userId,
+        method: 'Get'
+      }).then(user => this.state.username = user.name),
+
+      this.getFollowers(),
+
+      ]).then(() => this.forceUpdate());    
+  }
+
   followme(){
-    $.ajax({
+    return $.ajax({
       url: '/follow/' + this.state.userId,
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
         },
     }).then(function(){console.log('posted following in userspage')})
+  }
+
+  getFollowers(){
+    var component = this;
+    return $.ajax({
+      url: '/followers/' +this.state.userId,
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+        },
+    }).then(function(allData){
+      console.log('ALLDATA ALLDATA', allData.allFollowers);
+      component.state.followers = allData.allFollowers;
+      console.log('JUST MAKING SURE', component.state.followers)
+    })
+  }
+
+ displayFollowees(){
+       return this.state.followers.map(x=> <li className="notwhite"><a href={'/#/users/' + x.id}>{x.name}</a></li>);
   }
 
   render() {
@@ -76,6 +128,8 @@ export default class UsersPage extends React.Component {
               <PlayerWindow videos={this.state.videos} channel_id="1" user_id={this.state.userId} />
             </div>
           </div>
+           <a>Followees</a>
+          <ul className="followees"> {this.displayFollowees()} </ul>  
       </div>
     );
   }

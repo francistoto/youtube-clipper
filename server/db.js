@@ -513,14 +513,12 @@ knex.runInitDB = () =>
 knex.followSomeone = function(myId, theirId){
   knex.select('*').from('following').where({user_id_follower: myId, user_id_followee: theirId})
       .then(function(results){
-        console.log('ELLIOT ELLIOT ELLIOT', results);
-        if(Object.keys(results).length){
-          knex('following').insert({user_id_follower: results.user_id_follower, user_id_followee: results.user_id_followee})
+        if(!results.length){
+          knex('following').insert({user_id_follower: myId, user_id_followee: theirId})
             .then(function(result){
-              console.log('CHAD CHAD CHAD', result)
               return result;
               console.log('entered in the following table');
-        });
+        })
           
         }
         else{
@@ -570,6 +568,28 @@ knex.findAllUsers = function(){
     })
 }
 
+knex.findAllFollowers = function(currUserId){
+  return knex.select('user_id_followee').from('following').where('user_id_follower', currUserId)
+    .then(function(followeesIds){
+      var promises = [];
+        followeesIds.map(like=>{
+          promises.push(
+            knex.select('*').from('users').where('id',like.user_id_followee)
+              .then(function(results){
+                console.log('IM RESULTS', results);
+                return results
+              })
+            )
+        })
+      return Promise.all(promises)
+             .then(function(followers){
+              return followers.map(f=>f[0]);
+             })
+    })
+    .catch(function(err){
+      console.log('failed to get all users: ', err);
+    })
+}
 
 
 module.exports = knex;
