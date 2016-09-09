@@ -34,22 +34,27 @@ export default class CommentsArea extends React.Component {
  this.state.comment the first comment in for that video.
  */
  componentDidMount(){
+  var component = this;
    return $.ajax({
-     url: '/comments/get/${videoId}',
+     url: '/comments/get/' + component.props.videoId,
      method: 'GET',
      headers: {
        'Content-Type': 'application/json',
-     }
-     // dataType: 'application/json',
+     }, 
+     dataType: 'json',
      //data: JSON.stringify(newLike),
    })
-   .done(function(data){
+   .then(function(data){
      console.log("This comment has been retrieved: ", data);
-     this.state.comment = data.body[0];
-     this.state.comments = data.body;
-     this.forceUpdate();
+     component.state.comment = data[0];
+     component.state.comments = data;
+     component.forceUpdate();
+   })
+   .fail(function(err){
+    console.log("Error: ", err);
    })
  }
+
  
  // getComment(videoID, time) {
  //   return $.ajax({
@@ -74,11 +79,12 @@ export default class CommentsArea extends React.Component {
  */
 
  postComment(newComment, likeId) {
+  var component = this;
   console.log('about to use post comment')
   var newCommentObj = {
     user_id: this.props.userId,
     text: newComment,
-    like_id: likeId
+    video_id: this.props.videoId
   }
   console.log("newCommentObj: ", newCommentObj)
    return $.ajax({
@@ -87,27 +93,31 @@ export default class CommentsArea extends React.Component {
      headers: {
        'Content-Type': 'application/json',
      },
-     // dataType: 'application/json',
+     dataType: 'json',
      data: JSON.stringify(newCommentObj)
      
    })
-   .then(function(){
+   .then(function(data){
     console.log("The comment has been posted to the database: ", data);
     return $.ajax({
-     url: '/comments/get/'+this.props.videoId,  // retrieves all comments tied to a particular video
+     url: '/comments/get/'+component.props.videoId,  // retrieves all comments tied to a particular video
      method: 'GET',
      headers: {
-       'Content-Type': 'application/json',
-     }
-     // dataType: 'application/json',
+       'Content-Type': 'text',
+     },
+     dataType: 'json',
      //data: JSON.stringify(newLike),
    })
-   .done(function(data){
+   .then(function(data){
      console.log("This comment has been retrieved: ", data);
-     this.state.comment = data.body[0];
-     this.state.comments = data.body;
-     this.state.input = ""
-     this.forceUpdate();
+     if(data.length === 1) component.state.comment = data[0];
+     component.state.comments = data;
+     component.state.inputz = "";
+     console.log("The component's comment has been updated to: ", component.state.comment);
+     component.forceUpdate();
+   })
+   .fail(function(err){
+      console.log("Error fetching comments: ", err);
    })
   })
 }
@@ -123,6 +133,7 @@ that like zone's comment.
  goToPreviousComment(){
 
    this.state.commentCounter--;
+   if(this.state.commentCounter < 0){this.state.commentCounter += this.state.comments.length;}
    this.state.comment = this.state.comments[this.state.commentCounter];
    //need to update the current comment's moment class div color to something other than yellow
    // or "background: rgba(255, 209, 0, 0.5);" as is the current norm.
@@ -136,6 +147,7 @@ that like zone's comment.
 
  goToNextComment(){
    this.state.commentCounter++;
+   this.state.commentCounter = this.state.commentCounter % this.state.comments.length;
    this.state.comment = this.state.comments[this.state.commentCounter];
    //need to update the current comment's moment class div color to something other than yellow
    // or "background: rgba(255, 209, 0, 0.5);" as is the current norm.
@@ -173,10 +185,10 @@ this.state.comments array.
           this.forceUpdate();
         }}
        />
-       <button className="commentSubmitButton" onClick={() => this.postComment(this.state.inputz, likeID)}>Submit!</button>
-       <div>Comment creator username to be put here</div>
+       <button className="commentSubmitButton" onClick={() => this.postComment(this.state.inputz, this.props.videoId)}>Submit!</button>
+       <div>{this.state.comment.username}</div>
        <div className='currentComment'>
-        {this.state.comment}
+        {this.state.comment.text}
        </div>
        <button className="previousComment" onClick={() => this.goToPreviousComment()}>Previous Comment</button>
        <button className="nextComment" onClick={() => this.goToNextComment()}>Next Comment</button>

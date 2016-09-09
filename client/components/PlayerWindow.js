@@ -397,7 +397,7 @@ export default class PlayerWindow extends React.Component {
           { this.renderButtons() }
         </section>
 
-        <CommentsArea userId={this.props.user_id} videoId={this.state.currentVideo.url}/>
+        <CommentsArea userId={this.props.user_id} videoId={this.state.currentVideo.id}/>
       </div>
     );
   }

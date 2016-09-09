@@ -494,6 +494,7 @@ app.post('/likes/update', (req, res) => {
 */
 
 app.get('/comments/get/:videoId', (req, res) => {
+  console.log("Making DB call for: ", req.params.videoId);
   db.getCommentsByVideo(req.params.videoId)
   .then(comments => {
     res.send(comments);
