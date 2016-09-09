@@ -121,7 +121,7 @@ export default class UsersPage extends React.Component {
         </header>
           <div className="container">
             <div className="row column">
-              <h3>Favorite Highlights</h3>
+              <h2>Favorite Highlights</h2>
               <p>
               {this.state.highlights.map(e => e.id)}
               </p>
