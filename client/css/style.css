@@ -131,10 +131,6 @@ h1, h2 {
   animation-name: bounceInDown;
 }
 
-.commentsInput {
-  color: black;
-}
-
 .likeWindow:before {
     content: '';
     display: inline-block;
@@ -173,6 +169,69 @@ h1, h2 {
 }
 .notwhite{
   color: cornflowerblue;
+}
+
+.commentsInput {
+  color: black;
+}
+
+.currentComment {
+  background-color: #e6e600;
+  height: 10em;
+  width: 48em;
+}
+
+button.commentSubmitButton {
+    display: inline-block;
+    text-align: center;
+    line-height: 1;
+    cursor: pointer;
+    -webkit-appearance: none;
+    transition: background-color .25s ease-out,color .25s ease-out;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    border-radius: 0;
+    padding: .85em 1em;
+    margin: 0 0 1rem;
+    font-size: .9rem;
+    background-color: #2199e8;
+    color: #fefefe;
+}
+
+
+button.previousComment {
+  display: inline-block;
+  text-align: center;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-appearance: none;
+  transition: background-color .25s ease-out,color .25s ease-out;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  border-radius: 0;
+  padding: .85em 1em;
+  margin: 0 0 1rem;
+  font-size: .9rem;
+  background-color: #2199e8;
+  color: #fefefe;
+}
+
+button.nextComment {
+  float: right;
+  display: inline-block;
+  text-align: center;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-appearance: none;
+  transition: background-color .25s ease-out,color .25s ease-out;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  border-radius: 0;
+  padding: .85em 1em;
+  margin: 0 0 1rem;
+  font-size: .9rem;
+  background-color: #2199e8;
+  color: #fefefe;
 }
 
 @keyframes bounceInDown {
