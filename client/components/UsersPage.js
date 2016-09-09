@@ -43,8 +43,8 @@ export default class UsersPage extends React.Component {
 
   };
 
-  componentWillReceiveProps() {
-    this.state.userId = this.props.params.userid;
+  componentWillReceiveProps(newProps) {
+    this.state.userId = newProps.params.userid;
     Promise.all([
       $.ajax({
         url: '/users/' + this.state.userId + '/likes',
