@@ -10,6 +10,7 @@ export default class CommentsArea extends React.Component {
      comments: [],
      inputz: "",
      commentCounter: 0
+     currentLike: "";
    }
  }
  
@@ -34,7 +35,7 @@ export default class CommentsArea extends React.Component {
  */
  componentDidMount(){
    return $.ajax({
-     url: '/videos/${videoId}/comments/get',
+     url: '/comments/get/${videoId}',
      method: 'GET',
      headers: {
        'Content-Type': 'application/json',
@@ -72,15 +73,16 @@ export default class CommentsArea extends React.Component {
    start time of the like, and end point of the like.
  */
 
- postComment(newComment, userID, likeID) {
+ postComment(newComment, likeId) {
   console.log('about to use post comment')
   var newCommentObj = {
-    userID: userID,
-    comment: newComment,
-    likeID: likeID
+    user_id: this.props.userId,
+    text: newComment,
+    like_id: likeId
   }
+  console.log("newCommentObj: ", newCommentObj)
    return $.ajax({
-     url: '/videos/${videoId}/comment/create',
+     url: '/comments/create', //posts a comment tied to a like on a video
      method: 'POST',
      headers: {
        'Content-Type': 'application/json',
@@ -92,7 +94,7 @@ export default class CommentsArea extends React.Component {
    .then(function(){
     console.log("The comment has been posted to the database: ", data);
     return $.ajax({
-     url: '/videos/${videoId}/comments/get',
+     url: '/comments/get/'+this.props.videoId,  // retrieves all comments tied to a particular video
      method: 'GET',
      headers: {
        'Content-Type': 'application/json',
@@ -171,7 +173,8 @@ this.state.comments array.
           this.forceUpdate();
         }}
        />
-       <button className="commentSubmitButton" onClick={() => this.postComment(this.state.inputz, userID, likeID)}>Submit!</button>
+       <button className="commentSubmitButton" onClick={() => this.postComment(this.state.inputz, likeID)}>Submit!</button>
+       <div>Comment creator username to be put here</div>
        <div className='currentComment'>
         {this.state.comment}
        </div>

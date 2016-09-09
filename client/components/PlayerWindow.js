@@ -3,6 +3,7 @@ import YouTube from 'react-youtube';
 import { sendLike, Moment, getMoreVideos } from '../models/videoModel.js';
 import $ from '../models/lib/jquery';
 import { returnAmountOfLikes } from '../models/videoModel';
+import CommentsArea from './videoComments.js';
 
 export default class PlayerWindow extends React.Component {
   constructor(props) {
@@ -395,6 +396,8 @@ export default class PlayerWindow extends React.Component {
           </div>
           { this.renderButtons() }
         </section>
+
+        <CommentsArea userId={this.props.user_id} videoId={this.state.currentVideo.url}/>
       </div>
     );
   }

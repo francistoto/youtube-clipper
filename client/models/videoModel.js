@@ -35,6 +35,7 @@ export const Moment = (element, moment, player, userId) => {
 
   element.click(() => {
     player.seekTo(momentObj.start_time);
+    this.style.backgroundColor = '#7eb64a';
   });
 
   function hitLikeTest(time) {
