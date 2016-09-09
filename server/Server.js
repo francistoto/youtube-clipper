@@ -403,9 +403,12 @@ app.get('/followers/:myId', (req,res) => {
 });
 
 app.get('/follow/:userid', (req,res)=> {
+  console.log('CURRENT USER CURRENT', currentUser)
+  if(currentUser){
   db.areFollowing(currentUser.id, req.params.userid).then(function(result){
     res.send({result: result});
   })
+}
 })
 
 app.delete('/follow/:userid', (req,res)=>{

@@ -163,6 +163,7 @@ renderfollowbtn(){
       
       <div>
         <header>
+        
           <p>{this.renderfollowbtn()}</p>
           <div className="container">
             <div className="row">

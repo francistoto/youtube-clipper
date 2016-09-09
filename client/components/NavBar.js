@@ -26,11 +26,19 @@ export default class NavBar extends React.Component {
     if(this.props.user){
       return <li><a href="/logout">Logout</a></li>;
     }else{
-      return <li><a href="/auth/facebook">Login with Facebook</a></li>;
+      return <li><a href="/auth/facebook">Login</a></li>;
+    }
+  }
+  displayheaderUser(){
+    if(this.props.user){
+      return <a className='menu dropdown'>Users</a>
     }
   }
   displayUsers(){
+        console.log('LOOK AT ME PLEASE PLEASE', this.props.user)
+        if(this.props.user){
        return this.state.allUsers.map(x=> <li className="notwhite"><a href={'/#/users/' + x.id}>{x.name}</a></li>);
+        }
   }
   render() {
     return (
@@ -38,7 +46,7 @@ export default class NavBar extends React.Component {
       <ul className="dropdown menu align-right" data-dropdown-menu>
         {this.facebookBtn()} 
         <li>
-          <a>Users</a>
+          <p>{this.displayheaderUser()}</p>
           <ul className="menu"> {this.displayUsers()} </ul>  
           </li> 
         <li className="is-dropdown-submenu-parent">

@@ -180,6 +180,11 @@ h1, h2 {
   height: 10em;
   width: 48em;
 }
+a.menu.dropdown {
+    padding: .7rem 1rem;
+    line-height: 1;
+    display: block;
+}
 
 button.commentSubmitButton {
     display: inline-block;
