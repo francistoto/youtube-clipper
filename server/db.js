@@ -225,8 +225,8 @@ knex.getLikesByChannel = (channelId) => {
   *******************************************************
 */
 
-knex.getCommentsByLike = (likeId) => {
-  return knex('comments').where('like_id', likeId)
+knex.getCommentsByVideo = (videoId) => {
+  return knex('comments').where('video_id', videoId)
   .then(function(commentsByLike){
     return Promise.all(commentsByLike.map(comment =>
       knex('users').where('id', comment.user_id)
@@ -243,7 +243,7 @@ knex.getCommentsByLike = (likeId) => {
   *******************************************************
   Returns all comments associated with a particular video
   *******************************************************
-*/
+
 
 knex.getCommentsByVideo = (videoId) => {
   return knex('likes').where('video_id', videoId)
@@ -256,6 +256,8 @@ knex.getCommentsByVideo = (videoId) => {
       commentsByLike.reduce((flattened, byLike) => flattened.concat(byLike), []))
   })
 }
+
+*/
 
 /*
   ***************************
