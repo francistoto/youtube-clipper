@@ -104,7 +104,6 @@ export default class UsersPage extends React.Component {
       
       
       <div>
-      <button onClick={(e) => this.followme()}>follow me</button>
         <header>
           <div className="container">
             <div className="row">
@@ -118,6 +117,7 @@ export default class UsersPage extends React.Component {
               </div>
             </div>
           </div>
+      <button onClick={(e) => this.followme()}>follow me</button>
         </header>
           <div className="container">
             <div className="row column">
