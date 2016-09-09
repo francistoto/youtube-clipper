@@ -402,6 +402,19 @@ app.get('/followers/:myId', (req,res) => {
 
 });
 
+app.get('/follow/:userid', (req,res)=> {
+  db.areFollowing(currentUser.id, req.params.userid).then(function(result){
+    res.send({result: result});
+  })
+})
+
+app.delete('/follow/:userid', (req,res)=>{
+  db.unfollow(currentUser.id, req.params.userid).then(function(resp){
+    console.log(resp)
+    res.status(200).send({resp: resp});
+  })
+})
+
 app.get('/users/:userid/videos', (req, res) => {
   db.getVideosByUser(req.params.userid).then(function(videos){
     res.send(videos);

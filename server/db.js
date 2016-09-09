@@ -553,10 +553,10 @@ knex.runInitDB = () =>
   ***********************************************************************
 */
 knex.followSomeone = function(myId, theirId){
-  knex.select('*').from('following').where({user_id_follower: myId, user_id_followee: theirId})
+  return knex.select('*').from('following').where({user_id_follower: myId, user_id_followee: theirId})
       .then(function(results){
         if(!results.length){
-          knex('following').insert({user_id_follower: myId, user_id_followee: theirId})
+          return knex('following').insert({user_id_follower: myId, user_id_followee: theirId})
             .then(function(result){
               return result;
               console.log('entered in the following table');
@@ -632,6 +632,18 @@ knex.findAllFollowers = function(currUserId){
       console.log('failed to get all users: ', err);
     })
 }
+knex.unfollow= function(myId, theirId){
+  return knex.delete('*').from('following').where({'user_id_follower': myId, 'user_id_followee': theirId})
+    .then(function(results){
+      console.log("following removed from database")
+    })
+}
 
+knex.areFollowing = function(myId, theirId){
+  return knex.select('*').from('following').where({'user_id_follower': myId, 'user_id_followee': theirId})
+    .then(function(result){
+      return result;
+    })
+}
 
 module.exports = knex;
