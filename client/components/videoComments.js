@@ -110,7 +110,10 @@ export default class CommentsArea extends React.Component {
    })
    .then(function(data){
      console.log("This comment has been retrieved: ", data);
-     if(data.length === 1) component.state.comment = data[0];
+     if(!component.state.comment || data[0].video_id !== component.state.comment.video_id){
+      component.state.comment = data[0];
+      component.state.commentCounter = 0;
+     } 
      component.state.comments = data;
      component.state.inputz = "";
      console.log("The component's comment has been updated to: ", component.state.comment);
@@ -174,27 +177,29 @@ Under that are two buttons that will set the comment display to the next or prev
 this.state.comments array.
 */
 
- render(){
-   return (
-     <div>
-       <input 
-       className="commentInputs" placeholder="Comment Here!" type="text" 
-       defaultValue={this.state.inputz} maxLength="144" 
-       onChange = {e => {
-          this.state.inputz = e.currentTarget.value;
-          this.forceUpdate();
-        }}
-       />
-       <button className="commentSubmitButton" onClick={() => this.postComment(this.state.inputz, this.props.videoId)}>Submit!</button>
-       <div>{this.state.comment.username}</div>
-       <div className='currentComment'>
-        {this.state.comment.text}
-       </div>
-       <button className="previousComment" onClick={() => this.goToPreviousComment()}>Previous Comment</button>
-       <button className="nextComment" onClick={() => this.goToNextComment()}>Next Comment</button>
-     </div>
-   )
- }
-
+render(){
+ if(this.props.userId !== null){
+  return (
+    <div>
+      <input 
+      className="commentInputs" placeholder="Comment Here!" type="text" 
+      defaultValue={this.state.inputz} maxLength="144" 
+      onChange = {e => {
+         this.state.inputz = e.currentTarget.value;
+         this.forceUpdate();
+       }}
+      />
+      <button className="commentSubmitButton" onClick={() => this.postComment(this.state.inputz, this.props.videoId)}>Submit!</button>
+      <div>{this.state.comment.username}</div>
+      <div className='currentComment'>
+       {this.state.comment.text}
+      </div>
+      <button className="previousComment" onClick={() => this.goToPreviousComment()}>Previous Comment</button>
+      <button className="nextComment" onClick={() => this.goToNextComment()}>Next Comment</button>
+    </div>
+  )
+  }else{
+    return null;
+  }
 }
-
+}
