@@ -57,7 +57,6 @@ export default class PlayerWindow extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log('component updating');
     $('.moment').on('click', function(){
       console.log("Clicked moment");
       console.log("What was clicked: ", $(this));

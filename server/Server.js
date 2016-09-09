@@ -472,6 +472,32 @@ app.post('/likes/update', (req, res) => {
 });
 
 /*
+  **************************************
+  Gets the comments for a specific video
+  **************************************
+*/
+
+app.get('/comments/get/:videoId', (req, res) => {
+  db.getCommentsByVideo(req.params.videoId)
+  .then(comments => {
+    res.send(comments);
+  })
+})
+
+/*
+  *****************
+  Creates a comment
+  *****************
+*/
+
+app.post('/comments/create', (req, res) => {
+  db.createComment(req.body)
+  .then(newComment => {
+    res.send(newComment);
+  })
+})
+
+/*
   ***********************************************************************
   Provides an endpoint to initialize the database with dummy information
   ***********************************************************************

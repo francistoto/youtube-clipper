@@ -211,6 +211,48 @@ knex.getLikesByChannel = (channelId) => {
 };
 
 /*
+  *******************************************************
+  Returns all comments associated with a particular like
+  *******************************************************
+*/
+
+knex.getCommentsByLike = (likeId) => {
+  return knex('comments').where('like_id', likeId)
+}
+
+/*
+  *******************************************************
+  Returns all comments associated with a particular video
+  *******************************************************
+*/
+
+knex.getCommentsByVideo = (videoId) => {
+  return knex('likes').where('video_id', videoId)
+  .then(likes => {
+    console.log("In getCommentsByVideo, likes: ", likes);
+    return Promise.all(likes.map(like =>
+      knex.getCommentsByLike(like.id)
+    ))
+    .then(commentsByLike =>
+      commentsByLike.reduce((flattened, byLike) => flattened.concat(byLike), []))
+  })
+}
+
+/*
+  ***************************
+  Creates a comment in the db
+  ***************************
+*/
+
+knex.createComment = (commentObj) => {
+  return knex('comments').insert(commentObj)
+  .then(newId => {
+    commentObj.dbId = newId;
+    return commentObj;
+  })
+}
+
+/*
   ***********************************************************************
 
   Return a channel object for the default channel.  All video objects are
