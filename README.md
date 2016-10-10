@@ -1,105 +1,41 @@
-# To-Do Checklist
+# The Frank Tank
 
-## General
-- [ ] ESLint - AirBnB
+By [RubberDuckies](https://github.com/rubber-duckies)
 
-## Front End
-- [ ] Basic HTML
-- [ ] Video Player
+Forked and extended by [HackmeCo](https://github.com/hackmeco)
 
-## Back End
-- [ ] Map server endpoints
-- [ ] Map database structure
+**The Frank Tank** is a service for discovering and streaming extreme sports videos using the YouTube API, initially developed by [RubberDuckies Dev Team](https://github.com/rubber-duckies). The original repo can be found [here](https://github.com/rubber-duckies/greenfield)
 
-----
-# Git Flow
+This fork of the project expands upon the project by adding Facebook OAuth login and the creation of persistent user profiles, which save each user's favorite video clips. Along with the user profiles, we also added a comments section to each video.
 
-1. When working on new local machine(if machine already set-up, skip to step 2)
-  * git remote add upstream <<url of organization's repo>>
-  * git remote -v
+## Setup
+To contribute to the Frank Tank, there are a few steps you'll need to take:
 
-2.
-  * git pull upstream master
-  * git rebase
+Clone the repository:
+```
+$ git clone https://github.com/hackmeco/frank-tank
+```
+Install dependencies:
+```
+$ npm install
+```
 
-2. When done working for the day
-  * git push origin master   // to push to your own github
-  * // if you are ready to push to organizations's repo, create pull request on your own github to the organization's repo
+To run the local server:
+```
+$ npm start
+```
 
-----
-# Development Map
+## Tech Stack
+The Frank Tank employs:
+  - ReactJS
+  - PostgreSQL
+  - Node
+  - Express
+  - Passport OAuth
 
-1. Stage 1:
-  * Watch random stream of stored videos
-  * Play main channel
-  * See time-based liked moments w/ emoji
-
-2. Stage 2
-  * Account-based login
-  * User access to:
-    * channel functionality
-    * ignore functionality
-
-3. Stage 3
-  * Mixtape functionality
-  * Gamify - create channels to user with most likes (>20)
-
-----
-# Basic Requirements (MVP):
-
-1. Play video
-  * client
-
-2. Apply filters
-  * server
-  * HD standard
-  * Most viewed
-  * Time limit?
-  * add "extreme" to search
-
-3. Create channels
-  * client, server
-  * restrict channels
-    * elements
-      * land:
-        * mountain biking
-        * motorcross
-        * skateboarding
-        * stunt biking
-        * snowboarding
-        * skiing
-      * sea
-        * surfing
-        * jet ski
-        * wakeboarding
-        * water skiing
-      * air
-        * skydiving
-        * base jumping
-        * bungee jumping
-        * wingsuit
-  * database schema
-
-4. Time-based likes
-  * client, server
-  * get current timestamp from user on toggle on
-  * get current timestamp from user on toggle off
-  * pause player
-  * display modal for tagging
-  * grab current user information
-  * on modal accept, send information to database
-  * resume player
-  * cross-user functionality
-    * user should have the option to like other user's time-based likes
-
-
-----
-# Extra Credit (non-MVP):
-
-1. Skins
-  * change based on element
-
-2. Ignore video
-  * by user
-
-3. Gamify - unlock the ability to create channels based on "time-based likes" count
+## HackmeCo Dev Team
+  - [Elliot Cheung](https://github.com/ezcheung)
+  - [Kathryn Hansen](https://github.com/kathrynmhansen)
+  - [Chad Griffis](https://github.com/gryffs)
+  - [Aaron Ventura](https://github.com/macabre1)
+  - [Mitchell Deane](https://github.com/gmdiv)
