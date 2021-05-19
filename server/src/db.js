@@ -45,7 +45,7 @@ Some background URLs for the default channel:
 */
 
 const _ = require('underscore');
-const config = require('../knexfile');
+const config = require('../../knexfile');
 
 const env = 'development';
 const knex = require('knex')({

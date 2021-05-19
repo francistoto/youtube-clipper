@@ -158,33 +158,33 @@ const searchCriteria = {
   ****************
 */
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.use(express.static(path.join(__dirname, '../client')));
 app.use(express.static(path.join(__dirname, '../assets')));
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 app.use(session({secret: "funnyMonkey"}));
-passport.serializeUser(function(user, done){
-  done(null, user);
-});
-passport.deserializeUser(function(user, done){
-  done(null, user);
-});
-passport.use(new FacebookStrategy({
-    clientID: 1183004398430348,
-    clientSecret: '84d23c4f605b77e675c2738c874f807d',
-    callbackURL: "/auth/facebook/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    db.findOrCreate(profile)
-      .then(function(user){
-        console.log(user);
-        done(null, user)
-      })
+// passport.serializeUser(function(user, done){
+//   done(null, user);
+// });
+// passport.deserializeUser(function(user, done){
+//   done(null, user);
+// });
+// passport.use(new FacebookStrategy({
+//     clientID: 1183004398430348,
+//     clientSecret: '84d23c4f605b77e675c2738c874f807d',
+//     callbackURL: "/auth/facebook/callback"
+//   },
+//   function(accessToken, refreshToken, profile, done) {
+//     db.findOrCreate(profile)
+//       .then(function(user){
+//         console.log(user);
+//         done(null, user)
+//       })
 
-  }
-));
+//   }
+// ));
 
 /*
   *******************
@@ -198,11 +198,11 @@ passport.use(new FacebookStrategy({
   *******************************************
 */
 
-app.get('/app-bundle.js',
-  browserify(path.join(__dirname, '../client/main.js'), {
-    transform: [[babelify, { presets: ['es2015', 'react'] }]],
-  })
-);
+// app.get('/app-bundle.js',
+//   browserify(path.join(__dirname, '../client/src/index.js'), {
+//     transform: [[babelify, { presets: ['es2015', 'react'] }]],
+//   })
+// );
 
 /*
   ******************************
@@ -223,18 +223,18 @@ app.get('/app-bundle.js',
 //   _raw: '{"name":"Kathryn Hansen","id":"3619878134247"}',
 //   _json: { name: 'Kathryn Hansen', id: '3619878134247' } }
 
-app.get('/auth/facebook', passport.authenticate('facebook'));
+// app.get('/auth/facebook', passport.authenticate('facebook'));
 
-app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { successRedirect: '/',
-                                      failureRedirect: '/login' }));
-app.get('/logout', function(req, res){
-  req.session.passport = undefined;
-  req.session.destroy(function (err) {
-    req.logout();
-    res.redirect('/');
-  });
-});
+// app.get('/auth/facebook/callback',
+//   passport.authenticate('facebook', { successRedirect: '/',
+//                                       failureRedirect: '/login' }));
+// app.get('/logout', function(req, res){
+//   req.session.passport = undefined;
+//   req.session.destroy(function (err) {
+//     req.logout();
+//     res.redirect('/');
+//   });
+// });
 
 /*
   ***********************************************************************
@@ -244,21 +244,21 @@ app.get('/logout', function(req, res){
   ***********************************************************************
 */
 
-app.get('/', (req, res) => {
+// app.get('/', (req, res) => {
 
-  if(req.isAuthenticated()){
-    console.log("Authenticated as: ", req.user);
-  }else{
-    console.log("Not authenticated");
-  }
-  console.log("Req.session: ", req.session);
-  if(req.session.passport){
-    currentUser = req.session.passport.user;
-  } else{
-    currentUser = null;
-  }
-  res.sendFile(path.join(__dirname, '../client/public/Index.html'));
-});
+//   if(req.isAuthenticated()){
+//     console.log("Authenticated as: ", req.user);
+//   }else{
+//     console.log("Not authenticated");
+//   }
+//   console.log("Req.session: ", req.session);
+//   if(req.session.passport){
+//     currentUser = req.session.passport.user;
+//   } else{
+//     currentUser = null;
+//   }
+//   res.sendFile(path.join(__dirname, '../client/public/Index.html'));
+// });
 
 /*
 * Sends the current logged in user
