@@ -2,9 +2,9 @@ const { Router } = require('express');
 
 const { User } = require('../models');
 
-const router = new Router();
+const usersRouter = new Router();
 
-router.get('/:id', async (req, res) => {
+usersRouter.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const user = await User.findAll({
@@ -24,7 +24,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/create', async (req, res) => {
+usersRouter.post('/create', async (req, res) => {
     const newUser = req.body;
     const user = await User.create(newUser);
 
@@ -35,4 +35,4 @@ router.post('/create', async (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = usersRouter;
