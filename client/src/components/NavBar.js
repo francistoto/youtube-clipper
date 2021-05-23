@@ -1,5 +1,5 @@
 import React from 'react';
-import { returnAllUsers } from '../models/navModel';
+import { returnAllUsers } from '../api/navModel';
 
 export default class NavBar extends React.Component {
   constructor(props) {

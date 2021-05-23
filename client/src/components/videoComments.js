@@ -1,4 +1,4 @@
-import $ from '../models/lib/jquery';
+import $ from '../api/lib/jquery';
 import React from 'react';
 // moments are highlight clips within a currently playing video
 

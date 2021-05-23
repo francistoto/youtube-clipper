@@ -2,6 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
+const channelsRouter = require('./routes/channels');
 const usersRouter = require('./routes/users');
 
 class App {
@@ -35,6 +36,7 @@ class App {
 
         this.app.use('/api', rootRouter);
         this.app.use('/api/users', usersRouter);
+        this.app.use('/api/channels', channelsRouter);
     }
 }
 

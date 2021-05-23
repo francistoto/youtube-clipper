@@ -1,8 +1,8 @@
 import React from 'react';
 import PlayerWindow from './PlayerWindow';
 import NavBar from './NavBar';
-import NavModel from '../models/navModel';
-import $ from '../models/lib/jquery';
+import NavModel from '../api/navModel';
+import $ from '../api/lib/jquery';
 
 export default class App extends React.Component {
   constructor(props) {

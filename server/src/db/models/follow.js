@@ -2,7 +2,7 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Ignore extends Model {
+  class Follow extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,14 +13,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
 
-  Ignore.init({
-    userId: DataTypes.INTEGER,
-    videoId: DataTypes.INTEGER
+  Follow.init({
+    userIdFollower: DataTypes.INTEGER,
+    userIdFollowee: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Ignore',
-    tableName: 'ignores'
+    modelName: 'follow',
+    tableName: 'follows'
   });
 
-  return Ignore;
+  return Follow;
 };

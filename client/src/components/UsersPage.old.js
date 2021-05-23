@@ -1,5 +1,5 @@
 import React from 'react';
-import $ from '../models/lib/jquery';
+import $ from '../api/lib/jquery';
 import PlayerWindow from './PlayerWindow';
 
 export default class UsersPage extends React.Component {

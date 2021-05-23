@@ -11,7 +11,8 @@
     "start": "nodemon",
     "test": "jest",
     "db:migrate": "sequelize --options-path ./.sequelizerc db:migrate",
-    "db:migrate:undo": "sequelize --options-path ./.sequelizerc db:migrate:undo"
+    "db:migrate:undo": "sequelize --options-path ./.sequelizerc db:migrate:undo",
+    "seed:all": "sequelize --options-path ./.sequelizerc db:seed:all"
   },
   "dependencies": {
     "cookie-parser": "^1.4.5",
@@ -20,6 +21,7 @@
     "googleapis": "^73.0.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.6",
+    "lodash": "^4.17.21",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
     "pg": "^8.6.0",

@@ -9,7 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Like.belongsToMany(models.user, { through: 'userLikes' });
+      Like.belongsTo(models.video, { targetKey: 'id', foreignKey: 'videoId' });
+      Like.belongsTo(models.channel, { targetKey: 'id', foreignKey: 'channelId' });
     }
   };
 
@@ -20,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     channelId: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Like',
+    modelName: 'like',
     tableName: 'likes'
   });
 
