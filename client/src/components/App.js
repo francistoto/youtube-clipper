@@ -4,7 +4,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <h1>Welcome to YouTube Clipper!</h1>
+                <h1>Welcome to YouTube Mashup!</h1>
             </div>
         );
     }

@@ -4,7 +4,7 @@ class UsersPage extends React.Component {
     render() {
         return (
             <div>
-                <h1>Welcome to your YouTube Clipper profile, User {this.props.match.params.userid}!</h1>
+                <h1>Welcome to your YouTube Mashup profile, User {this.props.match.params.userid}!</h1>
             </div>
         );
     }

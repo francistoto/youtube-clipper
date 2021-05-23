@@ -2,21 +2,21 @@
     "development": {
       "username": "postgres",
       "password": "postgres",
-      "database": "youtube-clipper-dev",
+      "database": "youtube-mashup-dev",
       "host": "database",
       "dialect": "postgres"
     },
     "test": {
       "username": "postgres",
       "password": "postgres",
-      "database": "youtube-clipper-test",
+      "database": "youtube-mashup-test",
       "host": "127.0.0.1",
       "dialect": "postgres"
     },
     "production": {
       "username": "postgres",
       "password": "postgres",
-      "database": "youtube-clipper-prod",
+      "database": "youtube-mashup-prod",
       "host": "127.0.0.1",
       "dialect": "postgres"
     }
