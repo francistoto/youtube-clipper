@@ -19,7 +19,7 @@ export default class PlayerWindow extends React.Component {
       extreme: false,
       extremeStart: 0,
       extremeStop: 0,
-      channel_id: 0,
+      channelId: 0,
       totalLikes: 0
     };
 
@@ -64,7 +64,7 @@ export default class PlayerWindow extends React.Component {
       $(this).css('background-color', '#7eb64a')
     })
     var component = this;
-    if (this.props.channel_id !== this.state.channel_id) {
+    if (this.props.channel_id !== this.state.channelId) {
       this.updateVideoList(this.props.videos);
     }
     // console.log('GAHHHHH', this.state.currentVideo)
@@ -344,7 +344,7 @@ export default class PlayerWindow extends React.Component {
 
   // chooses whether to render the "Extreme" button or not
   renderButtons() {
-    return (this.state.channel_id === 0 || this.state.channel_id === 'default' || this.props.user_id === null)
+    return (this.state.channelId === 0 || this.state.channelId === 'default' || this.props.user_id === null)
       ? <div className="player-buttons small-6 columns">
         <button className="button alert" onClick={this.handleLame}>
           <i className="fa fa-thumbs-down" />

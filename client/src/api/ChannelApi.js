@@ -5,7 +5,7 @@ const ChannelApi = {
         return axios.get('/api/channels/default');
     },
     getChannelsByUser: (userId) => {
-        return axios.get(`/api/users/${userId}`);
+        return axios.get(`/api/channels/user/${userId}`);
     },
     getChannelById: (channelId) => {
         return axios.get(`/api/channels/${channelId}`);

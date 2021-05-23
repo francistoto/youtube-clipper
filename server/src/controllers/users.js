@@ -28,14 +28,13 @@ module.exports = {
             });
 
             if (user) {
-                res.status(200).send({ message: 'success', data: user });
+                res.status(200).send(user);
             } else {
                 res.status(404);
                 throw new Error(`User not found!`);
             }
         } catch(error) {
-            const { message } = error;
-            res.send({ message });
+            res.send(error);
         }
     },
     createUser: async (req, res) => {
@@ -45,14 +44,13 @@ module.exports = {
             const user = await User.create(newUser);
         
             if (user) {
-                res.status(200).send({ message: 'success', data: user });
+                res.status(200).send(user);
             } else {
                 res.status(404);
                 throw new Error('Failed to create user.');
             }
         } catch (error) {
-            const { message } = error;
-            res.send({ message });
+            res.send(error);
         }
     }
 }

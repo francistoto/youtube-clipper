@@ -13,7 +13,7 @@ export default class App extends React.Component {
       background: '',
       videos: [],
       channel: '',
-      channel_id: 'default',
+      channelId: 'default',
       id: -1,
     };
   }
@@ -53,7 +53,7 @@ export default class App extends React.Component {
         background: channelObj.background,
         videos: channelObj.videos,
         channel: channelObj.name,
-        channel_id: channelId,
+        channelId: channelId,
       });
       $('body').css('background-image', `url(${this.state.background})`);
     });
@@ -79,7 +79,7 @@ export default class App extends React.Component {
         <div className="container">
           <div className="row column">
             <h2>{this.state.channel}</h2>
-            <PlayerWindow videos={this.state.videos} channel_id={this.state.channel_id} user_id={component.state.user === "Guest" ? null : this.state.id} />
+            <PlayerWindow videos={this.state.videos} channelId={this.state.channelId} userId={component.state.user === "Guest" ? null : this.state.id} />
           </div>
         </div>
       </div>

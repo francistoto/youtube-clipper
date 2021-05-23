@@ -39,14 +39,41 @@ module.exports = {
             });
 
             if (channel) {
-                res.status(200).send({ message: 'success', data: channel });
+                res.status(200).send(channel);
             } else {
                 res.status(404);
                 throw new Error(`Channel not found!`);
             }
         } catch(error) {
-            const { message } = error;
-            res.send({ message });
+            res.send(error);
+        }
+    },
+    getChannelsByUserId: async (req, res) => {
+        const { userId } = req.params;
+        try {
+            const channel = await Channel.findAll({
+                where: {
+                    userId
+                },
+                include: [
+                    {
+                        model: Video,
+                        attributes: [
+                            'id',
+                            'url'
+                        ]
+                    }
+                ]
+            });
+
+            if (channel) {
+                res.status(200).send(channel);
+            } else {
+                res.status(404);
+                throw new Error(`Channel not found!`);
+            }
+        } catch(error) {
+            res.send(error);
         }
     },
     createChannel: async (req, res) => {
@@ -56,14 +83,13 @@ module.exports = {
             const channel = await Channel.create(newChannel);
         
             if (channel) {
-                res.status(200).send({ message: `success`, data: channel });
+                res.status(200).send(channel);
             } else {
                 res.status(404);
                 throw new Error('Failed to create Channel');
             }
         } catch (error) {
-            const { message } = error;
-            res.send({ message });
+            res.send(error);
         }
     }
 };
