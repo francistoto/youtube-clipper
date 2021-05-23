@@ -1,41 +1,33 @@
-# The Frank Tank
+# YouTube Clipper
 
-By [RubberDuckies](https://github.com/rubber-duckies)
+**YouTube Clipper** is a service for creating custom channels and video mashups using the YouTube API.
 
-Forked and extended by [HackmeCo](https://github.com/hackmeco)
-
-**The Frank Tank** is a service for discovering and streaming extreme sports videos using the YouTube API, initially developed by [RubberDuckies Dev Team](https://github.com/rubber-duckies). The original repo can be found [here](https://github.com/rubber-duckies/greenfield)
-
-This fork of the project expands upon the project by adding Facebook OAuth login and the creation of persistent user profiles, which save each user's favorite video clips. Along with the user profiles, we also added a comments section to each video.
+Originally dubbed The Frank Tank, created by [RubberDuckies](https://github.com/rubber-duckies) as an extreme sports streaming platform, then forked and extended by [HackmeCo](https://github.com/hackmeco). The original repositories can be found [here](https://github.com/rubber-duckies/the-frank-tank) and [here](https://github.com/HackmeCo/Frank-Tank).
 
 ## Setup
-To contribute to the Frank Tank, there are a few steps you'll need to take:
+To contribute to YouTube Clipper, there are a few steps you'll need to take:
+
+Install and run [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 Clone the repository:
 ```
-$ git clone https://github.com/hackmeco/frank-tank
+$ git clone https://github.com/francistoto/youtube-clipper
 ```
-Install dependencies:
+Run docker compose:
 ```
-$ npm install
+$ docker-compose up
 ```
-
-To run the local server:
-```
-$ npm start
-```
+Navigate to [localhost](http://localhost) to view the application.
 
 ## Tech Stack
-The Frank Tank employs:
-  - ReactJS
+YouTube Clipper is powered by:
+  - React
+  - React-Router
+  - Material-UI
   - PostgreSQL
+  - Sequelize
   - Node
   - Express
-  - Passport OAuth
+  - Passport Google-OAuth20
 
-## HackmeCo Dev Team
-  - [Elliot Cheung](https://github.com/ezcheung)
-  - [Kathryn Hansen](https://github.com/kathrynmhansen)
-  - [Chad Griffis](https://github.com/gryffs)
-  - [Aaron Ventura](https://github.com/macabre1)
-  - [Mitchell Deane](https://github.com/gmdiv)
+And the efforts of many developers along the way.

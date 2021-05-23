@@ -2,9 +2,15 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
+/**
+ * Import routes
+ */
 const channelsRouter = require('./routes/channels');
 const usersRouter = require('./routes/users');
 
+/**
+ * Main server app
+ */
 class App {
     constructor() {
         this.app = express();
@@ -30,6 +36,7 @@ class App {
     mountRoutes() {
         const rootRouter = express.Router();
 
+        // Default route for testing basic server health
         rootRouter.get('/', (req, res) => {
             res.status(200).send({ message: 'Hello World!' });
         });
