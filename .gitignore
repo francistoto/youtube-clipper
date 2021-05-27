@@ -2,3 +2,4 @@ node_modules/
 .DS_Store
 /server/keys.js
 **/dist
+/server/src/config/env

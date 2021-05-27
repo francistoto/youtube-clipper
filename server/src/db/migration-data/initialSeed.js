@@ -17,11 +17,11 @@ module.exports = {
         { name: 'air', background: 'https://i.ytimg.com/vi/apYEQlGlUAY/maxresdefault.jpg', userId: 5, createdAt: new Date(), updatedAt: new Date() },
     ],
     users: [
-        { firstName: 'Joe', lastName: 'Cool', email: 'joe_cool@gmail.com', createdAt: new Date(), updatedAt: new Date() },
-        { firstName: 'Jane', lastName: 'Doe', email: 'jane_doe@gmail.com', createdAt: new Date(), updatedAt: new Date() },
-        { firstName: 'Frank', lastName: 'TheTank', email: 'frank_thetank@gmail.com', createdAt: new Date(), updatedAt: new Date() },
-        { firstName: 'John', lastName: 'Reese', email: 'john_reese@gmail.com', createdAt: new Date(), updatedAt: new Date() },
-        { firstName: 'Harold', lastName: 'Finch', email: 'harold_finch@gmail.com', createdAt: new Date(), updatedAt: new Date() },
+        { authId: '1', displayName: 'joe cool', firstName: 'Joe', lastName: 'Cool', email: 'joe_cool@gmail.com', createdAt: new Date(), updatedAt: new Date() },
+        { authId: '2', displayName: 'jane doe', firstName: 'Jane', lastName: 'Doe', email: 'jane_doe@gmail.com', createdAt: new Date(), updatedAt: new Date() },
+        { authId: '3', displayName: 'frank thetank', firstName: 'Frank', lastName: 'TheTank', email: 'frank_thetank@gmail.com', createdAt: new Date(), updatedAt: new Date() },
+        { authId: '4', displayName: 'john reese', firstName: 'John', lastName: 'Reese', email: 'john_reese@gmail.com', createdAt: new Date(), updatedAt: new Date() },
+        { authId: '5', displayName: 'harold finch', firstName: 'Harold', lastName: 'Finch', email: 'harold_finch@gmail.com', createdAt: new Date(), updatedAt: new Date() },
     ],
     videos: [
         { url: 'OMflBAXJJKc', channelId: 1, createdAt: new Date(), updatedAt: new Date() },

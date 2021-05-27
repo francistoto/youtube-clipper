@@ -2,9 +2,14 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
+const passport = require('./controllers/passport');
+
+const { checkAuthentication } = require('./lib/middleware');
+
 /**
  * Import routes
  */
+const loginRouter = require('./routes/login');
 const channelsRouter = require('./routes/channels');
 const usersRouter = require('./routes/users');
 
@@ -22,13 +27,16 @@ class App {
     config() {
         this.app.use(express.json());
         this.app.use(cookieParser());
-        this.app.use(express.urlencoded({ extended: false }));
+        this.app.use(express.urlencoded({ extended: true }));
 
         this.app.use(session({
-            secret: 'funnyMonkey',
+            secret: process.env.SESSION_SECRET || 'funnyMonkey',
             resave: false,
             saveUninitialized: true
         }));
+
+        this.app.use(passport.initialize());
+        this.app.use(passport.session());
 
         this.app.set('trust_proxy', 1);
     }
@@ -42,8 +50,9 @@ class App {
         });
 
         this.app.use('/api', rootRouter);
-        this.app.use('/api/users', usersRouter);
-        this.app.use('/api/channels', channelsRouter);
+        this.app.use('/api/auth', loginRouter);
+        this.app.use('/api/users', checkAuthentication, usersRouter);
+        this.app.use('/api/channels', checkAuthentication, channelsRouter);
     }
 }
 

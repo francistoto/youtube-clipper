@@ -1,15 +1,11 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core';
-// import AppBar from '@material-ui/core/AppBar';
-// import Button from '@material-ui/core/Button';
-// import IconButton from '@material-ui/core/IconButton';
-// import Toolbar from '@material-ui/core/Toolbar';
-// import Typography from '@material-ui/core/Typography';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
-// import { MenuIcon } from '@material-ui/icons';
 
 import ChannelApi from '../api/ChannelApi';
+import UserApi from '../api/UserApi';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,12 +21,25 @@ const useStyles = makeStyles((theme) => ({
 
 const App = () => {
     const classes = useStyles();
+    const [authenticated, setAuthenticated] = React.useState(false)
+    const [currentUser, setCurrentUser] = React.useState({});
 
+    const handleLoginClick = (e) => {
+        e.preventDefault();
+        window.location.replace('/api/auth/login');
+    }
+    
     useEffect(async () => {
+        if (!authenticated) {
+            const { user, authenticated } = await UserApi.getCurrentUser();
+            
+            setAuthenticated(authenticated);
+            setCurrentUser(user);
+        }
+        
         const channels = await ChannelApi.getChannelsByUser(1);
-        console.log('channels: ', channels);
-    });
-
+    }, []);
+    
     return (
         <div>
             <AppBar>
@@ -46,9 +55,17 @@ const App = () => {
                     <Typography variant='h5' className={classes.title}>
                         Welcome to YouTube Mashup!
                     </Typography>
-                    <Button color='inherit'>Login</Button>
+                    {!authenticated
+                        ? <Button onClick={handleLoginClick} color='inherit'>Login</Button>
+                        : <IconButton color='inherit'><AccountCircleIcon /></IconButton>
+                    }
                 </Toolbar>
             </AppBar>
+            {authenticated && 
+                <Typography variant='h5' className={classes.title}>
+                    {`You are logged in as ${currentUser.firstName} ${currentUser.lastName}`}
+                </Typography>
+            }
         </div>
     );
 }
