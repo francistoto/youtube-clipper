@@ -1,8 +1,9 @@
-const { channel: Channel, like: Like, user: User, video: Video } = require('../db/models');
+const { channel: Channel, moment: Moment, user: User, video: Video } = require('../db/models');
 
 module.exports = {
     getChannel: async (req, res) => {
         const { id } = req.params;
+        console.log('id: ', id);
         try {
             const channel = await Channel.findOne({
                 where: {
@@ -16,7 +17,7 @@ module.exports = {
                             'url'
                         ],
                         include: {
-                            model: Like,
+                            model: Moment,
                             attributes: [
                                 'id',
                                 'startTime',
@@ -38,14 +39,10 @@ module.exports = {
                 ]
             });
 
-            if (channel) {
-                res.status(200).send(channel);
-            } else {
-                res.status(404);
-                throw new Error(`Channel not found!`);
-            }
+            res.status(200).send(channel);
         } catch(error) {
-            res.send(error);
+            console.error('error: ', error);
+            res.status(404).send(error);
         }
     },
     getChannelsByUserId: async (req, res) => {

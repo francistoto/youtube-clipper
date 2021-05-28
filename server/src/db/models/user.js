@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       User.hasMany(models.channel);
-      User.belongsToMany(models.like, { through: 'userLikes' });
+      User.belongsToMany(models.moment, { through: 'userMoments' });
     }
   };
 

@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
 
-import ChannelApi from '../api/ChannelApi';
-import UserApi from '../api/UserApi';
+import ChannelAPI from '../api/ChannelAPI';
+import AuthContext from '../contexts/auth';
+
+import Channel from './Channel';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,24 +23,30 @@ const useStyles = makeStyles((theme) => ({
 
 const App = () => {
     const classes = useStyles();
-    const [authenticated, setAuthenticated] = React.useState(false)
-    const [currentUser, setCurrentUser] = React.useState({});
+    const [channels, setChannels] = React.useState();
+    const [isLoadingChannels, setIsLoadingChannels] = React.useState(true);
+
+    const { authenticated, user: currentUser } = useContext(AuthContext);
 
     const handleLoginClick = (e) => {
         e.preventDefault();
         window.location.replace('/api/auth/login');
     }
-    
+
+    console.log('currentUser: ', currentUser);
+    console.log('authenticated: ', authenticated);
+    console.log('channels: ', channels);
+
     useEffect(async () => {
-        if (!authenticated) {
-            const { user, authenticated } = await UserApi.getCurrentUser();
+        if (isLoadingChannels && authenticated && currentUser.id) {
+            const userChannels = await ChannelAPI.getChannelsByUser(currentUser.id);
             
-            setAuthenticated(authenticated);
-            setCurrentUser(user);
+            console.log('userChannels: ', userChannels);
+            
+            setChannels(userChannels);
+            setIsLoadingChannels(false);
         }
-        
-        const channels = await ChannelApi.getChannelsByUser(1);
-    }, []);
+    }, [authenticated, isLoadingChannels, currentUser]);
     
     return (
         <div>
@@ -61,10 +69,8 @@ const App = () => {
                     }
                 </Toolbar>
             </AppBar>
-            {authenticated && 
-                <Typography variant='h5' className={classes.title}>
-                    {`You are logged in as ${currentUser.firstName} ${currentUser.lastName}`}
-                </Typography>
+            {!isLoadingChannels &&
+                <Channel channelId={7} />
             }
         </div>
     );

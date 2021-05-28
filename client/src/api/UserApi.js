@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const UserApi = {
+const UserAPI = {
     getCurrentUser: async () => {
         const response = await axios.get('/api/users/current');
 
@@ -8,4 +8,4 @@ const UserApi = {
     }
 };
 
-export default UserApi;
+export default UserAPI;

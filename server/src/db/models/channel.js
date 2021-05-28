@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Channel.belongsTo(models.user, { targetKey: 'id', foreignKey: 'userId' });
       Channel.hasMany(models.video);
-      Channel.hasMany(models.like)
+      Channel.hasMany(models.moment)
     }
   };
   
