@@ -3,7 +3,7 @@ import YouTube from 'react-youtube';
 import { sendMoment, Moment, getMoreVideos } from '../api/videoModel.js';
 import $ from '../api/lib/jquery';
 import { returnAmountOfLikes } from '../api/videoModel';
-import CommentsArea from './videoComments.js';
+import CommentsArea from './CommentsArea.js';
 
 export default class PlayerWindow extends React.Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const PlayerControls = ({ handleSeekTo, offset, setOffset, player, playHead, seek, setSeek, totalTime }) => {
+const PlayerControlsOld = ({ handleSeekTo, offset, setOffset, player, playHead, seeking, setSeeking, totalTime }) => {
     // const playHead = document.getElementById('playHead');
     const timeline = document.getElementById('timeline');
     const controls = document.getElementById('playerControls');
@@ -17,7 +17,7 @@ const PlayerControls = ({ handleSeekTo, offset, setOffset, player, playHead, see
             setOffset(0);
         }
     
-        if (seek) {
+        if (seeking) {
             const offsetString = `${(userOffset * 100)}%`;
             playHead.style.left = offsetString;
             setOffset(userOffset);
@@ -26,13 +26,13 @@ const PlayerControls = ({ handleSeekTo, offset, setOffset, player, playHead, see
 
     // enable playhead drag
     const handleMouseDown = () => {
-        setSeek(true);
+        setSeeking(true);
     }
 
     // disable playhead drag
     const handleMouseUp = () => {
         const { current: { internalPlayer } } = player;
-        setSeek(false);
+        setSeeking(false);
 
         const seekTime = totalTime * offset;
 
@@ -56,4 +56,4 @@ const PlayerControls = ({ handleSeekTo, offset, setOffset, player, playHead, see
     );
 };
 
-export default PlayerControls;
+export default PlayerControlsOld;

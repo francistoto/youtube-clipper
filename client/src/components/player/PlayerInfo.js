@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { sendMoment, Moment } from '../api/videoModel.js';
-import $ from '../api/lib/jquery';
-import AuthContext from '../contexts/auth';
+import { sendMoment, Moment } from '../../api/videoModel.js';
+import $ from '../../api/lib/jquery';
+import AuthContext from '../../contexts/auth';
 
 const PlayerInfo = ({ channelId, currentVideo, player, totalTime }) => {
     const { user } = useContext(AuthContext);

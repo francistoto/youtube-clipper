@@ -1,21 +1,20 @@
 import React, { createRef, useContext, useEffect, useRef, useState } from 'react';
 import { CircularProgress, Container, Typography } from '@material-ui/core';
-import YouTubePlayer from 'youtube-player';
-import $ from '../api/lib/jquery';
+import $ from '../../api/lib/jquery';
 
 import YouTube from 'react-youtube';
 
-import PlayerControls from './PlayerControls';
+import PlayerControlsOld from './PlayerControlsOld';
 
-import { sendMoment, Moment, getMoreVideos } from '../api/videoModel.js';
+import { sendMoment, Moment, getMoreVideos } from '../../api/videoModel.js';
 
-import AuthContext from '../contexts/auth';
+import AuthContext from '../../contexts/auth';
 import PlayerInfo from './PlayerInfo';
 
-const PlayerWrapper = ({ channelId, currentVideo, handleEnd }) => {
+const PlayerWrapperOld = ({ channelId, currentVideo, handleEnd }) => {
     const { user } = useContext(AuthContext);
     const [offset, setOffset] = useState(0);
-    const [seek, setSeek] = useState(false);
+    const [seeking, setSeeking] = useState(false);
     const [totalTime, setTotalTime] = useState(0);
     const [momentList, setMomentList] = useState([]);
     const [extremeStart, setExtremeStart] = useState(0);
@@ -97,7 +96,7 @@ const PlayerWrapper = ({ channelId, currentVideo, handleEnd }) => {
                     });
                 }
         
-                if (!seek) {
+                if (!seeking) {
                     playHead.style.left = `${percent}%`;
                 }
             }, 1000);
@@ -116,7 +115,7 @@ const PlayerWrapper = ({ channelId, currentVideo, handleEnd }) => {
             height: '450',
             width: '100%',
             playerVars: { // https://developers.google.com/youtube/player_parameters
-                controls: 0, // hide player controls
+                controls: 1, // hide player controls
                 // start: 10, // set player start time
                 // end: 20, // set player end time
                 iv_load_policy: 3, // hide annotations
@@ -146,13 +145,13 @@ const PlayerWrapper = ({ channelId, currentVideo, handleEnd }) => {
     return (
         <div>
             {renderVideo()}
-            <PlayerControls
+            <PlayerControlsOld
                 offset={offset}
                 setOffset={setOffset}
                 player={player}
                 playHead={playHead}
-                seek={seek}
-                setSeek={setSeek}
+                seeking={seeking}
+                setSeeking={setSeeking}
                 totalTime={totalTime}
             />
             <PlayerInfo
@@ -165,4 +164,4 @@ const PlayerWrapper = ({ channelId, currentVideo, handleEnd }) => {
     )
 };
 
-export default PlayerWrapper;
+export default PlayerWrapperOld;
