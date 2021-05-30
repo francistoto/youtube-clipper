@@ -1,30 +1,27 @@
 import React, { useState } from 'react';
 
-const PlayerControls = ({ player }) => {
-    const [seek, setSeek] = useState(false);
-    const [totalTime, setTotalTime] = useState(0);
-    const [offset, setOffset] = useState(0);
-
-    const playHead = document.getElementById('playHead');
+const PlayerControls = ({ handleSeekTo, offset, setOffset, player, playHead, seek, setSeek, totalTime }) => {
+    // const playHead = document.getElementById('playHead');
     const timeline = document.getElementById('timeline');
     const controls = document.getElementById('playerControls');
 
     // drag playhead left and right
     const handleMouseMove = (e) => {
-      const userOffset = (e.clientX - (timeline.offsetLeft + controls.offsetLeft));
-      offset = (userOffset) / timeline.offsetWidth;
-      if (offset > 1) {
-        setOffset(1);
-      }
-  
-      if (offset < 0) {
-        setOffset(0);
-      }
-  
-      if (seek) {
-        const offsetString = `${(offset * 100)}%`;
-        playHead.style.left = offsetString;
-      }
+        const userOffset = (e.clientX - (timeline.offsetLeft + controls.offsetLeft)) / timeline.offsetWidth;
+
+        if (userOffset > 1) {
+            setOffset(1);
+        }
+    
+        if (userOffset < 0) {
+            setOffset(0);
+        }
+    
+        if (seek) {
+            const offsetString = `${(userOffset * 100)}%`;
+            playHead.style.left = offsetString;
+            setOffset(userOffset);
+        }
     }
 
     // enable playhead drag
@@ -34,10 +31,12 @@ const PlayerControls = ({ player }) => {
 
     // disable playhead drag
     const handleMouseUp = () => {
+        const { current: { internalPlayer } } = player;
         setSeek(false);
 
         const seekTime = totalTime * offset;
-        player.seekTo(seekTime, true);
+
+        internalPlayer.seekTo(seekTime, true);
     }
 
     return (

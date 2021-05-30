@@ -1,6 +1,6 @@
 import React from 'react';
 import YouTube from 'react-youtube';
-import { sendLike, Moment, getMoreVideos } from '../api/videoModel.js';
+import { sendMoment, Moment, getMoreVideos } from '../api/videoModel.js';
 import $ from '../api/lib/jquery';
 import { returnAmountOfLikes } from '../api/videoModel';
 import CommentsArea from './videoComments.js';
@@ -198,7 +198,7 @@ export default class PlayerWindow extends React.Component {
       newLike.user_id = this.props.user_id;
       newLike.video_id = this.state.currentVideo.id;
       newLike.channel_id = this.state.currentVideo.channel_id;
-      sendLike(newLike)
+      sendMoment(newLike)
         .then((resp) => {
           const newMoment = new Moment($('<div>').html(''), resp, this.player, this.props.user_id);
           const mWidth = (resp.stop_time - resp.start_time) / this.state.totalTime;
@@ -394,17 +394,17 @@ export default class PlayerWindow extends React.Component {
             </div>
             <div id="percentageComplete" />
           </div>
-          { this.renderButtons() }
+          {/* { this.renderButtons() } */}
         </section>
 
-        <CommentsArea userId={this.props.user_id} videoId={this.state.currentVideo.id}/>
+        {/* <CommentsArea userId={this.props.user_id} videoId={this.state.currentVideo.id}/> */}
       </div>
     );
   }
 }
 
-PlayerWindow.propTypes = {
-  videos: React.PropTypes.array,
-  channel_id: React.PropTypes.any,
-  user_id: React.PropTypes.any,
-};
+// PlayerWindow.propTypes = {
+//   videos: React.PropTypes.array,
+//   channel_id: React.PropTypes.any,
+//   user_id: React.PropTypes.any,
+// };

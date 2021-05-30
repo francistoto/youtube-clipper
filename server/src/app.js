@@ -12,6 +12,7 @@ const { checkAuthentication } = require('./lib/middleware');
 const loginRouter = require('./routes/login');
 const channelsRouter = require('./routes/channels');
 const usersRouter = require('./routes/users');
+const momentsRouter = require('./routes/moments');
 
 /**
  * Main server app
@@ -53,6 +54,7 @@ class App {
         this.app.use('/api/auth', loginRouter);
         this.app.use('/api/users', checkAuthentication, usersRouter);
         this.app.use('/api/channels', checkAuthentication, channelsRouter);
+        this.app.use('/api/moments', checkAuthentication, momentsRouter);
     }
 }
 

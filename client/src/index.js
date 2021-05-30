@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
 
+import './css/style.css';
+
 import App from './components/App';
 import UsersPage from './components/UsersPage';
 import UserAPI from './api/UserAPI';

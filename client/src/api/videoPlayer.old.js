@@ -88,7 +88,7 @@ function onPlayerReady(event) {
   event.target.mute();
   totalTime = event.target.getDuration();
 
-  data.videos[0].moments.forEach(moment => {
+  data.videos[0].time_based_likes.forEach(moment => {
     let newMoment = new Moment($('<div>').html(moment.likes), moment);
     let mWidth = (moment.stop - moment.start) / totalTime;
     let mLeft = moment.start / totalTime;

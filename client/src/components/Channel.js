@@ -1,17 +1,29 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { CircularProgress, Container, Typography } from '@material-ui/core';
 
 import YouTube from 'react-youtube';
 
 import ChannelAPI from '../api/ChannelAPI';
 import PlayerControls from './PlayerControls';
+import PlayerWindow from './PlayerWindow';
+import PlayerWrapper from './PlayerWrapper';
 
 const Channel = ({ channelId }) => {
     const [channel, setChannel] = useState({});
     const [videos, setVideos] = useState([]);
+    const [videoIndex, setVideoIndex] = useState(0);
     const [currentVideo, setCurrentVideo] = useState({});
     const [isLoadingChannel, setIsLoadingChannel] = useState(true);
-    let player = '';
+
+    const handleEnd = useCallback(() => {
+        if (videoIndex < videos.length) {
+            // Go to next video
+            setVideoIndex(videoIndex + 1);
+        } else {
+            // Reset playlist
+            setVideoIndex(0);
+        }
+    })
 
     useEffect(async () => {
         if (isLoadingChannel) {
@@ -22,7 +34,7 @@ const Channel = ({ channelId }) => {
     
             setChannel(channelResponse);
             setVideos(channelResponse.videos);
-            setCurrentVideo(channelResponse.videos[0])
+            setCurrentVideo(channelResponse.videos[videoIndex])
             setIsLoadingChannel(false);
         }
     }, [channel, isLoadingChannel]);
@@ -52,7 +64,7 @@ const Channel = ({ channelId }) => {
                 opts={opts}
                 //   onReady={this.handleReadyState}
                 //   onStateChange={this.handleStateChange}
-                //   onEnd={this.handleEnd}
+                onEnd={handleEnd}
                 //   onPlay={this.handlePlay}
                 className="player"
             />
@@ -62,8 +74,10 @@ const Channel = ({ channelId }) => {
     return (
         <Container>
             <Typography variant='h4'>{`Welcome to the ${channel.name} channel!`}</Typography>
-            { renderVideo() }
+            {/* { renderVideo() } */}
             {/* <PlayerControls /> */}
+            <PlayerWrapper channelId={channelId} currentVideo={currentVideo} handleEnd={handleEnd} />
+            {/* <PlayerWindow videos={videos} channelId={channelId} userId={3}/> */}
         </Container>
     )
 }
