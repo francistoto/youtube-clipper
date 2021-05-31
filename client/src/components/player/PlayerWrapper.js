@@ -131,9 +131,6 @@ const PlayerWrapper = ({ currentVideo, videos }) => {
         screenfull.request(findDOMNode(player.current))
     };
 
-    console.log('currentVideo: ', currentVideo);
-    console.log('url: ', url);
-
     return (
         <div>
             <div className='player-wrapper'>
@@ -170,9 +167,10 @@ const PlayerWrapper = ({ currentVideo, videos }) => {
                 <PlayerControls
                     played={played}
                     player={player}
-                    seeking={seeking}
+                    playing={playing}
                     setSeeking={setSeeking}
                     setPlayed={setPlayed}
+                    setPlaying={setPlaying}
                 />
             </div>
         </div>
