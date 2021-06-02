@@ -35,8 +35,6 @@ const Channel = ({ channelId }) => {
         }
     }, [channel, currentVideo, isLoadingChannel]);
 
-    console.log('channel: ', channel);
-
     return (
         <Container>
             <Grid container justify='center'>

@@ -16,10 +16,11 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   Moment.init({
-    startTime: DataTypes.INTEGER,
-    stopTime: DataTypes.INTEGER,
+    startTime: DataTypes.FLOAT,
+    stopTime: DataTypes.FLOAT,
     videoId: DataTypes.INTEGER,
-    channelId: DataTypes.INTEGER
+    channelId: DataTypes.INTEGER,
+    createdByUser: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'moment',

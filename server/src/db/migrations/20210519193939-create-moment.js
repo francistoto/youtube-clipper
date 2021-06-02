@@ -9,10 +9,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       startTime: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       stopTime: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       videoId: {
         type: Sequelize.INTEGER

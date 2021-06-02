@@ -1,11 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { findDOMNode } from 'react-dom'
-
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { findDOMNode } from 'react-dom';
+import screenfull from 'screenfull';
 import ReactPlayer from 'react-player';
 
 import PlayerControls from './PlayerControls';
 
+import MomentAPI from '../../api/MomentAPI';
 import useStateCallback from '../../api/lib/useStateCallback';
+
+import AuthContext from '../../contexts/auth';
 
 const YOUTUBE_CONFIG = {
     playerVars: {
@@ -15,9 +18,9 @@ const YOUTUBE_CONFIG = {
     }
 }
 
-const PlayerWrapper = ({ currentVideo, videos }) => {
-    const [url, setUrl] = useState(null);
-    const [pip, setPip] = useState(false);
+const PlayerWrapper = ({ channelId, videos }) => {
+    const [videoList, setVideoList] = useState(null);
+    const [videoIndex, setVideoIndex] = useState(0);
     const [playing, setPlaying] = useState(false);
     const [controls, setControls] = useStateCallback(false);
     const [light, setLight] = useState(false);
@@ -32,10 +35,12 @@ const PlayerWrapper = ({ currentVideo, videos }) => {
     const [loop, setLoop] = useState(false);
     const [seeking, setSeeking] = useState(false);
 
-    useEffect(() => {
-        const videoList = videos.map((video) => `https://www.youtube.com/watch?v=${video.url}`);
+    const { user: currentUser } = useContext(AuthContext);
 
-        setUrl(videoList);
+    useEffect(() => {
+        const videoUrls = videos.map((video) => `https://www.youtube.com/watch?v=${video.url}`);
+
+        setVideoList(videoUrls);
     }, [videos])
 
     const player = useRef(null);
@@ -45,19 +50,18 @@ const PlayerWrapper = ({ currentVideo, videos }) => {
     };
 
     const handleStop = () => {
-        setUrl(null);
+        setVideoList(null);
         setPlaying(false);
     };
 
     const handleToggleControls = () => {
         const url = state.url
         setControls(controls => !controls, () => {
-            setUrl(url);
+            setVideoList(url);
             setPlayed(0);
             setLoaded(0);
-            setPip(false);
         });
-        setUrl(null);
+        setVideoList(null);
     };
 
     const handleToggleLight = () => {
@@ -80,23 +84,9 @@ const PlayerWrapper = ({ currentVideo, videos }) => {
         setPlaybackRate(e.target.value);
     };
 
-    const handleTogglePIP = () => {
-        setPip(!pip);
-    };
-
     const handlePlay = () => {
         console.log('onPlay');
         setPlaying(true);
-    };
-
-    const handleEnablePIP = () => {
-        console.log('onEnablePIP');
-        setPip(true);
-    };
-
-    const handleDisablePIP = () => {
-        console.log('onDisablePIP');
-        setPip(false);
     };
 
     const handlePause = () => {
@@ -119,13 +109,31 @@ const PlayerWrapper = ({ currentVideo, videos }) => {
 
     const handleEnded = () => {
         console.log('onEnded');
-        setPlaying(loop);
+        if (videoIndex < videoList.length - 1) {
+            setVideoIndex(videoIndex + 1);
+        } else {
+            setVideoIndex(0);
+        }
+        setPlaying(true);
     };
 
     const handleDuration = (duration) => {
         console.log('onDuration', duration);
         setDuration(duration);
     };
+
+    const handleCreateMoment = async (startTime, stopTime) => {
+        const newMoment = {
+            startTime,
+            stopTime,
+            videoId: videos[videoIndex].id,
+            channelId,
+            createdByUser: currentUser.id
+        };
+        const createdMoment = await MomentAPI.createMoment(newMoment);
+
+        console.log('createdMoment: ', createdMoment);
+    }
 
     const handleClickFullscreen = () => {
         screenfull.request(findDOMNode(player.current))
@@ -142,8 +150,7 @@ const PlayerWrapper = ({ currentVideo, videos }) => {
                     config={{
                         youtube: YOUTUBE_CONFIG
                     }}
-                    url={url}
-                    pip={pip}
+                    url={videoList && videoList[videoIndex]}
                     playing={playing}
                     controls={controls}
                     light={light}
@@ -154,8 +161,6 @@ const PlayerWrapper = ({ currentVideo, videos }) => {
                     onReady={() => console.log('onReady')}
                     onStart={() => console.log('onStart')}
                     onPlay={handlePlay}
-                    onEnablePIP={handleEnablePIP}
-                    onDisablePIP={handleDisablePIP}
                     onPause={handlePause}
                     onBuffer={() => console.log('onBuffer')}
                     onSeek={e => console.log('onSeek', e)}
@@ -168,9 +173,13 @@ const PlayerWrapper = ({ currentVideo, videos }) => {
                     played={played}
                     player={player}
                     playing={playing}
+                    videoList={videoList}
+                    videoIndex={videoIndex}
                     setSeeking={setSeeking}
                     setPlayed={setPlayed}
                     setPlaying={setPlaying}
+                    setVideoIndex={setVideoIndex}
+                    handleCreateMoment={handleCreateMoment}
                 />
             </div>
         </div>

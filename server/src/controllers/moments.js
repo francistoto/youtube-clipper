@@ -2,11 +2,13 @@ const { channel: Channel, moment: Moment, user: User, video: Video } = require('
 
 module.exports = {
     createMoment: async (req, res) => {
-        const { moment: newMoment, user: { id } } = req.body;
+        const { newMoment } = req.body;
+
+        console.log('newMoment: ', newMoment);
 
         try {
             const moment = await Moment.create(newMoment);
-            await moment.addUser(user.id);
+            await moment.addUser(newMoment.createdByUser);
         
             res.status(200).send(moment);
         } catch (error) {

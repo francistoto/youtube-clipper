@@ -34,10 +34,6 @@ const App = () => {
         window.location.replace('/api/auth/login');
     }
 
-    console.log('currentUser: ', currentUser);
-    console.log('authenticated: ', authenticated);
-    console.log('channels: ', channels);
-
     useEffect(async () => {
         if (isLoadingChannels && authenticated && currentUser.id) {
             const userChannels = await ChannelAPI.getChannelsByUser(currentUser.id);

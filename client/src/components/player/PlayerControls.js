@@ -11,10 +11,18 @@ const PlayerControls = ({
     played,
     player,
     playing,
+    videoList,
+    videoIndex,
     setPlayed,
     setPlaying,
-    setSeeking
+    setSeeking,
+    setVideoIndex,
+    handleCreateMoment
 }) => {
+    const [momentStart, setMomentStart] = useState(0);
+    const [momentStop, setMomentStop] = useState(0);
+    const [recording, setRecording] = useState(false);
+
     const handlePlayPause = () => {
         setPlaying((playing) => !playing);
     };
@@ -31,6 +39,41 @@ const PlayerControls = ({
         setSeeking(false);
         player.current.seekTo(e.target.value);
     };
+    
+    const handleSkipForward = () => {
+        if (videoIndex < videoList.length - 1) {
+            setVideoIndex(videoIndex + 1);
+        } else {
+            setVideoIndex(0);
+        }
+        setPlaying(true);
+    };
+    
+    const handleSkipPrevious = () => {
+        if (videoIndex > 0) {
+            setVideoIndex(videoIndex - 1);
+        } else {
+            setVideoIndex(videoList.length - 1);
+        }
+        setPlaying(true);
+    };
+
+    const handleStartMoment = () => {
+        const start = player.current.getCurrentTime();
+        console.log('start: ', start);
+        setMomentStart(start);
+        setRecording(true);
+    }
+
+    const handleStopMoment = () => {
+        const stop = player.current.getCurrentTime();
+        console.log('stop: ', stop);
+        console.log('moment: ', momentStart, stop);
+        handleCreateMoment(momentStart, stop);
+        setMomentStop(stop);
+        setMomentStart(0);
+        setRecording(false);
+    }
 
     const renderPlayPauseButton = () => {
         if (!playing) {
@@ -73,16 +116,27 @@ const PlayerControls = ({
             </div>
             <Grid container justify='center' align='center'>
                 <Grid item xs={1} align='center'>
-                    <Button color='secondary' onClick={handlePlayPause}><SkipPreviousIcon color='secondary' fontSize='large' /></Button>
+                    <Button color='secondary' onClick={handleSkipPrevious}><SkipPreviousIcon color='secondary' fontSize='large' /></Button>
                 </Grid>
                 <Grid item xs={1} align='center'>
                     <Button color='secondary' onClick={handlePlayPause}>{renderPlayPauseButton()}</Button>
                 </Grid>
                 <Grid item xs={1} align='center'>
-                    <Button color='secondary' onClick={handlePlayPause}>{renderRecordButton()}</Button>
+                    <Button color='secondary' onClick={handleSkipForward}><SkipNextIcon color='secondary' fontSize='large' /></Button>
                 </Grid>
                 <Grid item xs={1} align='center'>
-                    <Button color='secondary' onClick={handlePlayPause}><SkipNextIcon color='secondary' fontSize='large' /></Button>
+                    {!recording
+                        ? <Button 
+                            color='secondary'
+                            onClick={handleStartMoment}>
+                                <PlayCircleOutlineIcon color='secondary' fontSize='large'/>
+                        </Button>
+                        :  <Button 
+                            color='secondary'
+                            onClick={handleStopMoment}>
+                                <PlayCircleFilledIcon color='secondary' fontSize='large'/>
+                        </Button>
+                    }
                 </Grid>
             </Grid>
         </div>
