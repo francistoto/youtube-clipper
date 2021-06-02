@@ -8,6 +8,7 @@ import ChannelAPI from '../api/ChannelAPI';
 import AuthContext from '../contexts/auth';
 
 import Channel from './Channel';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     root: {

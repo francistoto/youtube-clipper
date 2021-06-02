@@ -1,8 +1,11 @@
-import axios from 'axios';
+import { axiosGET } from './utilities/fetching';
+// import axios from 'axios';
+
+// const token = localStorage.getItem('token') || null;
 
 const UserAPI = {
     getCurrentUser: async () => {
-        const response = await axios.get('/api/users/current');
+        const response = await axiosGET('/users/current');
 
         return response.data;
     }

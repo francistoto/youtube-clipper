@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
+import axios from 'axios';
 
 import './css/style.css';
 
 import App from './components/App';
 import UsersPage from './components/UsersPage';
+
 import UserAPI from './api/UserAPI';
+
 import AuthContext from './contexts/auth';
 
 const Index = () => {
@@ -15,20 +18,27 @@ const Index = () => {
 
   useEffect(async () => {
     if (!authenticated) {
-      const { authenticated, user } = await UserAPI.getCurrentUser();
+      const { data: { token } } = await axios.get('/api/auth/token');
+      if (token) {
+        localStorage.setItem('token', token);
+        const { authenticated, user } = await UserAPI.getCurrentUser();
+  
+        setAuthenticated(authenticated);
+      }
+    }
+  }, []);
 
-      setAuthenticated(authenticated);
+  useEffect(async () => {
+    if (authenticated) {
+      const { user } = await UserAPI.getCurrentUser();
+
       setUser(user);
     }
-  });
+  }, [authenticated]);
 
   return (
     <AuthContext.Provider value={{ authenticated, user }}>
       <Router>
-        <ul>
-          <li><Link to={'/users/1'}>Users Page</Link></li>
-          <li><Link to={'/'}>Home</Link></li>
-        </ul>
         <Switch>
           <Route exact path='/users/:userid' component={UsersPage} />
           <Route path='*' component={App} />

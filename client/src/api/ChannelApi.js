@@ -1,16 +1,16 @@
-import axios from 'axios';
+import { axiosGET } from './utilities/fetching';
 
 const ChannelAPI = {
     getDefaultChannel: () => {
-        return axios.get('/api/channels/default');
+        return axiosGET('/channels/default');
     },
     getChannelsByUser: async (userId) => {
-        const response = await axios.get(`/api/channels/user/${userId}`);
+        const response = await axiosGET(`/channels/user/${userId}`);
 
         return response.data;
     },
     getChannelById: async (channelId) => {
-        const response = await axios.get(`/api/channels/${channelId}`);
+        const response = await axiosGET(`/channels/${channelId}`);
 
         return response.data;
     }
