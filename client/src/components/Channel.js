@@ -1,14 +1,8 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { CircularProgress, Container, Grid, Typography } from '@material-ui/core';
-
-import YouTube from 'react-youtube';
+import { Container, Grid, Typography } from '@material-ui/core';
 
 import ChannelAPI from '../api/ChannelAPI';
-import PlayerControlsOld from './player/PlayerControlsOld';
-import PlayerWindow from './player/PlayerWindow';
-import PlayerWrapperOld from './player/PlayerWrapperOld';
 import PlayerWrapper from './player/PlayerWrapper';
-import ReactPlayerDemo from './player/ReactPlayerDemo';
 
 const Channel = ({ channelId }) => {
     const [channel, setChannel] = useState({});
@@ -27,7 +21,7 @@ const Channel = ({ channelId }) => {
     useEffect(async () => {
         if (isLoadingChannel) {
             const channelResponse = await ChannelAPI.getChannelById(channelId);
-    
+
             setChannel(channelResponse);
             setVideos(channelResponse.videos);
             setCurrentVideo(channelResponse.videos[videoIndex])

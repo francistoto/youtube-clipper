@@ -148,14 +148,21 @@ h1, h2 {
   top: calc(50% - 3px);
 }
 
+#moments {
+  position: absolute;
+  top: 15px;
+  left: 17px;
+  right: 13px;
+}
+
 .moment {
   position: absolute;
   top: 6px;
   height: 8px;
   z-index: 5;
-  background: rgba(253, 211, 22, 0.733);
+  background: rgba(253, 22, 22, 0.733);
   cursor: pointer;
-  margin: 15px;
+  /* margin: 15px; */
 }
 
 .likeWindow {

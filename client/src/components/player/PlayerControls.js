@@ -22,9 +22,7 @@ const PlayerControls = ({
     setVideoIndex,
     handleCreateMoment
 }) => {
-    const [moments, setMoments] = useState([]);
-    const [momentStart, setMomentStart] = useState(0);
-    const [momentStop, setMomentStop] = useState(0);
+    const [momentStart, setMomentStart] = useState({});
     const [recording, setRecording] = useState(false);
 
     const handlePlayPause = () => {
@@ -42,6 +40,7 @@ const PlayerControls = ({
     const handleSeekMouseUp = e => {
         setSeeking(false);
         player.current.seekTo(e.target.value);
+        setPlaying(true);
     };
     
     const handleSkipForward = () => {
@@ -64,18 +63,17 @@ const PlayerControls = ({
     };
 
     const handleStartMoment = () => {
-        const start = player.current.getCurrentTime();
+        const startTime = player.current.getCurrentTime();
 
-        setMomentStart(start);
+        setMomentStart({ startTime, videoId: currentVideo.id });
         setRecording(true);
     }
 
     const handleStopMoment = () => {
-        const stop = player.current.getCurrentTime();
+        const stopTime = player.current.getCurrentTime();
 
-        handleCreateMoment(momentStart, stop);
-        setMomentStop(stop);
-        setMomentStart(0);
+        handleCreateMoment(momentStart, { stopTime, videoId: currentVideo.id });
+        setMomentStart({});
         setRecording(false);
     }
 
@@ -125,7 +123,9 @@ const PlayerControls = ({
     return (
         <div className='player-controls'>
             <div className='timeline-slider'>
-                {renderMoments()}
+                <div id='moments'>
+                    {renderMoments()}
+                </div>
                 <input
                     type='range'
                     min={0}

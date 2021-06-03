@@ -3,7 +3,7 @@ const { channel: Channel, moment: Moment, user: User, video: Video } = require('
 module.exports = {
     getChannel: async (req, res) => {
         const { id } = req.params;
-        console.log('id: ', id);
+
         try {
             const channel = await Channel.findOne({
                 where: {

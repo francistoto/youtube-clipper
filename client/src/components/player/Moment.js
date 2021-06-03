@@ -87,11 +87,6 @@ const Moment = ({ moment, player}) => {
         setOpen(true);
     };
 
-    const handleClosePopper = () => {
-        setAnchorEl(null);
-        setOpen(false);
-    };
-
     const handleClickAway = () => {
         setOpen(false);
     };

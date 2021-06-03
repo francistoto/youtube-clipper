@@ -4,8 +4,6 @@ module.exports = {
     createMoment: async (req, res) => {
         const { newMoment } = req.body;
 
-        console.log('newMoment: ', newMoment);
-
         try {
             const moment = await Moment.create(newMoment);
             await moment.addUser(newMoment.createdByUser);
