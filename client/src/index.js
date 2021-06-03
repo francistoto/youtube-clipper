@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
+import ReactNotification from 'react-notifications-component'
 import axios from 'axios';
 
+import 'react-notifications-component/dist/theme.css'
 import './css/style.css';
 
 import App from './components/App';
@@ -38,6 +40,7 @@ const Index = () => {
 
   return (
     <AuthContext.Provider value={{ authenticated, user }}>
+      <ReactNotification />
       <Router>
         <Switch>
           <Route exact path='/users/:userid' component={UsersPage} />

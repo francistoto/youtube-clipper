@@ -35,11 +35,21 @@ const Channel = ({ channelId }) => {
         }
     }, [channel, currentVideo, isLoadingChannel]);
 
+    const refreshChannel = useCallback(() => {
+        setIsLoadingChannel(true);
+    }, [isLoadingChannel])
+
     return (
         <Container>
             <Grid container justify='center'>
                 <Grid item xs={10}>
-                    <PlayerWrapper channelId={channelId} videos={videos} currentVideo={currentVideo} handleEnded={handleEnded} />
+                    <PlayerWrapper
+                        channelId={channelId}
+                        videos={videos}
+                        currentVideo={currentVideo}
+                        handleEnded={handleEnded}
+                        refreshChannel={refreshChannel}
+                    />
                 </Grid>
             </Grid>
             {/* <PlayerWindow videos={videos} channelId={channelId} userId={3}/> */}

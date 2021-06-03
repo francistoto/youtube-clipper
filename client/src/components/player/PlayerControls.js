@@ -7,10 +7,13 @@ import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 
+import Moment from './Moment';
+
 const PlayerControls = ({
     played,
     player,
     playing,
+    currentVideo,
     videoList,
     videoIndex,
     setPlayed,
@@ -19,6 +22,7 @@ const PlayerControls = ({
     setVideoIndex,
     handleCreateMoment
 }) => {
+    const [moments, setMoments] = useState([]);
     const [momentStart, setMomentStart] = useState(0);
     const [momentStop, setMomentStop] = useState(0);
     const [recording, setRecording] = useState(false);
@@ -46,6 +50,7 @@ const PlayerControls = ({
         } else {
             setVideoIndex(0);
         }
+        setPlayed(0);
         setPlaying(true);
     };
     
@@ -60,15 +65,14 @@ const PlayerControls = ({
 
     const handleStartMoment = () => {
         const start = player.current.getCurrentTime();
-        console.log('start: ', start);
+
         setMomentStart(start);
         setRecording(true);
     }
 
     const handleStopMoment = () => {
         const stop = player.current.getCurrentTime();
-        console.log('stop: ', stop);
-        console.log('moment: ', momentStart, stop);
+
         handleCreateMoment(momentStart, stop);
         setMomentStop(stop);
         setMomentStart(0);
@@ -90,17 +94,38 @@ const PlayerControls = ({
         return <PlayCircleFilledIcon color='secondary' fontSize='large'/>;
     };
 
+    const renderMoments = () => {
+        const moments = currentVideo?.moments;
+        if (moments && moments.length) {
+            return moments.map((moment) =>
+                <Moment key={`moment-${moment.id}`} moment={moment} player={player} />
+            );
+        }
+    };
+
+    const renderTime = (totalSeconds) => {
+        if (totalSeconds !== null) {
+            let wholeSeconds = Math.round(totalSeconds); // 347
+    
+            const hours = Math.floor(totalSeconds / 3600);
+            wholeSeconds %= 3600;
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = wholeSeconds % 60;
+    
+            const displayHours = hours <= 0 ? '' : `${hours}:`;
+            const displayMinutes = hours > 0 ? `0${minutes}` : minutes;
+            const displaySeconds = seconds < 10 ? `0${seconds}` : seconds;
+    
+            return `${displayHours}${displayMinutes}:${displaySeconds}`;
+        }
+
+        return '';
+    }
+
     return (
         <div className='player-controls'>
-            {/* <Slider
-                min={0} max={0.999999}
-                value={played}
-                onMouseDown={handleSeekMouseDown}
-                onChange={handleSeekChange}
-                onMouseUp={handleSeekMouseUp}
-            /> */}
             <div className='timeline-slider'>
-                <div id='moments' />
+                {renderMoments()}
                 <input
                     type='range'
                     min={0}
@@ -115,6 +140,9 @@ const PlayerControls = ({
                 />
             </div>
             <Grid container justify='center' align='center'>
+                <Grid item xs={4} align='left' style={{ color: 'white' }}>
+                    {player && renderTime(player?.current?.getCurrentTime())}
+                </Grid>
                 <Grid item xs={1} align='center'>
                     <Button color='secondary' onClick={handleSkipPrevious}><SkipPreviousIcon color='secondary' fontSize='large' /></Button>
                 </Grid>
@@ -137,6 +165,9 @@ const PlayerControls = ({
                                 <PlayCircleFilledIcon color='secondary' fontSize='large'/>
                         </Button>
                     }
+                </Grid>
+                <Grid item xs={4} align='right' style={{ color: 'white' }}>
+                    {player && renderTime(player?.current?.getDuration())}
                 </Grid>
             </Grid>
         </div>

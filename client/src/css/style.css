@@ -3,7 +3,7 @@ body {
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
-  font-family: 'Fjalla One';
+  font-family: 'Roboto';
 }
 
 header {
@@ -71,11 +71,13 @@ h1, h2 {
   background: hsla(0, 0%, 0%, 0.5);
   position: relative;
   padding: 15px;
-  padding-left: 10px;
+  /* padding-left: 10px; */
 }
 
 .slider {
   -webkit-appearance: none;
+  /* position: absolute;
+  top: 6px; */
   width: 100%;
   height: 8px;
   background: #d3d3d3;
@@ -92,17 +94,28 @@ h1, h2 {
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 100%;
-  background: #04AA6D;
+  width: 15px;
+  height: 25px;
+  z-index: 10;
+  opacity: 1;
+  border-radius: 25%;
+  background: hsl(12,98%,49%);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='2.5' height='14.6' viewBox='0 0 2.5 14.6'><style>.st0{opacity:0.15;}</style><path class='st0' d='M0 12.1h2.5v2.5H0zM0 6.1h2.5v2.5H0zM0 0h2.5v2.5H0z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: center center;
   cursor: pointer;
 }
 
 .slider::-moz-range-thumb {
-  width: 25px;
+  width: 15px;
   height: 25px;
-  background: #04AA6D;
+  z-index: 10;
+  opacity: 1;
+  border-radius: 25%;
+  background: hsl(12,98%,49%);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='2.5' height='14.6' viewBox='0 0 2.5 14.6'><style>.st0{opacity:0.15;}</style><path class='st0' d='M0 12.1h2.5v2.5H0zM0 6.1h2.5v2.5H0zM0 0h2.5v2.5H0z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: center center;
   cursor: pointer;
 }
 
@@ -137,11 +150,12 @@ h1, h2 {
 
 .moment {
   position: absolute;
-  top: -22px;
-  height: 50px;
+  top: 6px;
+  height: 8px;
   z-index: 5;
-  background: rgba(255, 209, 0, 0.5);
+  background: rgba(253, 211, 22, 0.733);
   cursor: pointer;
+  margin: 15px;
 }
 
 .likeWindow {
@@ -270,7 +284,6 @@ button.previousComment {
 }
 
 button.nextComment {
-  float: right;
   display: inline-block;
   text-align: center;
   line-height: 1;

@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { findDOMNode } from 'react-dom';
+import { store } from 'react-notifications-component';
 import screenfull from 'screenfull';
 import ReactPlayer from 'react-player';
 
 import PlayerControls from './PlayerControls';
 
 import MomentAPI from '../../api/MomentAPI';
-import useStateCallback from '../../api/lib/useStateCallback';
 
 import AuthContext from '../../contexts/auth';
 
@@ -18,12 +18,10 @@ const YOUTUBE_CONFIG = {
     }
 }
 
-const PlayerWrapper = ({ channelId, videos }) => {
+const PlayerWrapper = ({ channelId, videos, refreshChannel }) => {
     const [videoList, setVideoList] = useState(null);
     const [videoIndex, setVideoIndex] = useState(0);
     const [playing, setPlaying] = useState(false);
-    const [controls, setControls] = useStateCallback(false);
-    const [light, setLight] = useState(false);
     const [volume, setVolume] = useState(0.8);
     const [muted, setMuted] = useState(false);
     const [played, setPlayed] = useState(null);
@@ -52,20 +50,6 @@ const PlayerWrapper = ({ channelId, videos }) => {
     const handleStop = () => {
         setVideoList(null);
         setPlaying(false);
-    };
-
-    const handleToggleControls = () => {
-        const url = state.url
-        setControls(controls => !controls, () => {
-            setVideoList(url);
-            setPlayed(0);
-            setLoaded(0);
-        });
-        setVideoList(null);
-    };
-
-    const handleToggleLight = () => {
-        setLight(!light);
     };
 
     const handleToggleLoop = () => {
@@ -114,6 +98,7 @@ const PlayerWrapper = ({ channelId, videos }) => {
         } else {
             setVideoIndex(0);
         }
+        setPlayed(0);
         setPlaying(true);
     };
 
@@ -133,6 +118,22 @@ const PlayerWrapper = ({ channelId, videos }) => {
         const createdMoment = await MomentAPI.createMoment(newMoment);
 
         console.log('createdMoment: ', createdMoment);
+        
+        store.addNotification({
+            title: "Moment created!",
+            message: `From ${startTime.toFixed(2)} to ${stopTime.toFixed(2)} on video ${videos[videoIndex].id}.`,
+            type: "success",
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+                duration: 5000,
+                onScreen: false
+            }
+        });
+
+        refreshChannel();
     }
 
     const handleClickFullscreen = () => {
@@ -152,8 +153,8 @@ const PlayerWrapper = ({ channelId, videos }) => {
                     }}
                     url={videoList && videoList[videoIndex]}
                     playing={playing}
-                    controls={controls}
-                    light={light}
+                    controls={false}
+                    light={false}
                     loop={loop}
                     playbackRate={playbackRate}
                     volume={volume}
@@ -173,6 +174,7 @@ const PlayerWrapper = ({ channelId, videos }) => {
                     played={played}
                     player={player}
                     playing={playing}
+                    currentVideo={videos && videos[videoIndex]}
                     videoList={videoList}
                     videoIndex={videoIndex}
                     setSeeking={setSeeking}

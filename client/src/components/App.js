@@ -8,7 +8,6 @@ import ChannelAPI from '../api/ChannelAPI';
 import AuthContext from '../contexts/auth';
 
 import Channel from './Channel';
-import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,8 +36,6 @@ const App = () => {
     useEffect(async () => {
         if (isLoadingChannels && authenticated && currentUser.id) {
             const userChannels = await ChannelAPI.getChannelsByUser(currentUser.id);
-            
-            console.log('userChannels: ', userChannels);
             
             setChannels(userChannels);
             setIsLoadingChannels(false);

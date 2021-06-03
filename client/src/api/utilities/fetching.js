@@ -12,7 +12,6 @@ const axiosInstance = axios.create({
 });
 
 export const axiosGET = (url, options = {}) => {
-    console.log('token', token);
     return axiosInstance.get(url, options);
 };
 
