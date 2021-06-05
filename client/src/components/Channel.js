@@ -1,15 +1,18 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Container, Grid, Typography } from '@material-ui/core';
 
 import ChannelAPI from '../api/ChannelAPI';
 import PlayerWrapper from './player/PlayerWrapper';
 
-const Channel = ({ channelId }) => {
+const Channel = () => {
     const [channel, setChannel] = useState({});
     const [videos, setVideos] = useState([]);
     const [videoIndex, setVideoIndex] = useState(0);
     const [currentVideo, setCurrentVideo] = useState({});
     const [isLoadingChannel, setIsLoadingChannel] = useState(true);
+
+    const { channelId } = useParams();
 
     const handleEnded = useCallback(() => {
         const newVideoIndex = videoIndex < videos.length ? videoIndex + 1 : 0;
@@ -46,8 +49,6 @@ const Channel = ({ channelId }) => {
                     />
                 </Grid>
             </Grid>
-            {/* <PlayerWindow videos={videos} channelId={channelId} userId={3}/> */}
-            {/* <ReactPlayerDemo /> */}
         </Container>
     )
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Grid, Slider } from '@material-ui/core';
+import { Button, Grid, Slider, Typography } from '@material-ui/core';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
@@ -141,7 +141,9 @@ const PlayerControls = ({
             </div>
             <Grid container justify='center' align='center'>
                 <Grid item xs={4} align='left' style={{ color: 'white' }}>
-                    {player && renderTime(player?.current?.getCurrentTime())}
+                    <Typography>
+                        {player && renderTime(player?.current?.getCurrentTime())}
+                    </Typography>
                 </Grid>
                 <Grid item xs={1} align='center'>
                     <Button color='secondary' onClick={handleSkipPrevious}><SkipPreviousIcon color='secondary' fontSize='large' /></Button>
@@ -167,7 +169,9 @@ const PlayerControls = ({
                     }
                 </Grid>
                 <Grid item xs={4} align='right' style={{ color: 'white' }}>
-                    {player && renderTime(player?.current?.getDuration())}
+                    <Typography>
+                        {player && renderTime(player?.current?.getDuration())}
+                    </Typography>
                 </Grid>
             </Grid>
         </div>

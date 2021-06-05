@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import ReactNotification from 'react-notifications-component'
 import axios from 'axios';
 
 import 'react-notifications-component/dist/theme.css'
 import './css/style.css';
+import defaultTheme from './theme';
 
 import App from './components/App';
-import UsersPage from './components/UsersPage';
+import Profile from './components/Profile';
 
 import UserAPI from './api/UserAPI';
 
 import AuthContext from './contexts/auth';
+import Header from './components/Header';
 
 const Index = () => {
   const [user, setUser] = useState({});
@@ -41,12 +44,9 @@ const Index = () => {
   return (
     <AuthContext.Provider value={{ authenticated, user }}>
       <ReactNotification />
-      <Router>
-        <Switch>
-          <Route exact path='/users/:userid' component={UsersPage} />
-          <Route path='*' component={App} />
-        </Switch>
-      </Router>
+      <MuiThemeProvider theme={defaultTheme}>
+        <App/>
+      </MuiThemeProvider>
     </AuthContext.Provider>
   );
 };

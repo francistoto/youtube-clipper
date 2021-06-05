@@ -6,39 +6,10 @@ body {
   font-family: 'Roboto';
 }
 
-header {
-  background: rgba(0,0,0,0.75);
-  margin-bottom: 40px;
-  color: white;
-}
-
-h1, h2 {
-  font-family: Bangers;
-  color: #fff;
-  position: relative;
-  z-index: 100;
-  text-shadow: 2px 2px 0px #000;
-}
-.totLike{
-  font-size: 20px;
-  color:white;
-}
-.menu {
-  /*position: relative;*/
-  z-index: 200;
-  font-family: Bangers;
-  font-size: 22px;
-}
-
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
 .player-wrapper {
   height: 500px;
   width: 100%;
-  margin-top: 65px;
+  margin-top: 5px;
   justify-content: center;
 }
 
