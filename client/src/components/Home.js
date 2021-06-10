@@ -1,66 +1,143 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Avatar, Container, Grid, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@material-ui/core';
-import MovieIcon from '@material-ui/icons/Movie';
+import {
+    Avatar,
+    Card,
+    CardContent,
+    CircularProgress,
+    Grid,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemText,
+    Typography
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import VideocamIcon from '@material-ui/icons/Videocam';
 
-import AuthContext from '../contexts/auth';
+import AuthContext from '../contexts/AuthContext';
 
 import ChannelAPI from '../api/ChannelAPI';
+
+const useStyles = makeStyles((theme) => ({
+    loadingContainer: {
+        marginTop: 100,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
+    },
+    loadingCard: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        margin: theme.spacing(2)
+    },
+    progress: {
+        marginTop: theme.spacing(5)
+    },
+    channelListItem: {
+        width: '100%',
+        margin: theme.spacing(2),
+        cursor: 'pointer',
+        border: '1px solid white',
+        borderRadius: '5px',
+        backgroundColor: 'gray'
+    }
+}));
 
 const Home = () => {
     const [channels, setChannels] = useState([]);
     const [isLoadingChannels, setIsLoadingChannels] = React.useState(true);
 
-    const { authenticated, user: currentUser } = useContext(AuthContext);
+    const { authenticated, user } = useContext(AuthContext);
 
     const history = useHistory();
 
+    const classes = useStyles();
+
     useEffect(async () => {
-        if (isLoadingChannels && authenticated && currentUser.id) {
-            const userChannels = await ChannelAPI.getChannelsByUser(currentUser.id);
+        if (!authenticated) {
+            setChannels([]);
+        }
+
+        if (isLoadingChannels && user.id) {
+            const channelResponse = await ChannelAPI.getChannelsByUser(user.id);
             
-            setChannels(userChannels);
+            setChannels(channelResponse);
             setIsLoadingChannels(false);
         }
-    }, [authenticated, isLoadingChannels, currentUser]);
+    }, [authenticated, isLoadingChannels, user]);
 
-    const renderChannelList = () => {
-        if (channels && channels.length > 0) {
-            return channels.map((channel, index) => {
-                const { id, name, videos } = channel;
-                return (
-                    <ListItem 
-                        key={`${name}`}
-                        style={{ 
-                            cursor: 'pointer',
-                            border: '1px solid white',
-                            borderRadius: '5px',
-                            backgroundColor: 'gray'
-                        }}
-                        onClick={() => { history.push(`/channel/${id}`) }}
-                    >
-                        <ListItemAvatar>
-                            <Avatar>
-                                <VideocamIcon fontSize='large' />
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary={<Typography variant='h4'>Name: {name}</Typography>} />
-                    </ListItem>
-                );
-            });
+    const renderLoadingChannels = () => {
+        if (isLoadingChannels && authenticated) {
+            return (
+                <Grid item xs={3} className={classes.loadingContainer}>
+                    <Card>
+                        <CardContent className={classes.loadingCard}>
+                            <Typography variant='h6' align='center'>Loading Channels</Typography>
+                            <CircularProgress className={classes.progress} />
+                        </CardContent>
+                    </Card>
+                </Grid>
+            );
         }
 
-        return <Typography variant='h2'>No Channels Found!</Typography>;
+        return null;
+    };
+
+    const renderChannelList = () => {
+        if (isLoadingChannels || !authenticated) {
+            return null;
+        }
+        
+        if (channels && channels.length > 0 && !isLoadingChannels) {
+            return (
+                <Grid item xs={9}>
+                    <List>
+                    {
+                        channels.map((channel, index) => {
+                            const { id, name, videos } = channel;
+                            return (
+                                <ListItem 
+                                    key={`${name}`}
+                                    className={classes.channelListItem}
+                                    onClick={() => { history.push(`/channel/${id}`) }}
+                                >
+                                    <ListItemAvatar>
+                                        <Avatar>
+                                            <VideocamIcon fontSize='large' />
+                                        </Avatar>
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        primary={<Typography variant='h5'>Name: {name}</Typography>}
+                                    />
+                                </ListItem>
+                            );
+                        })
+                    }
+                    </List>
+                </Grid>
+            );
+        }
+
+        return (
+            <Grid item xs={9}>
+                <Typography variant='h3'>No Channels Found!</Typography>;
+            </Grid>
+        );
     }
 
     return (
         <div>
-            <Container>
-                <List>
-                    {renderChannelList()}
-                </List>
-            </Container>
+            <Grid
+                container
+                direction='column'
+                alignItems='center'
+                justify='center'
+            >
+                {renderLoadingChannels()}
+                {renderChannelList()}
+            </Grid>
         </div>
     );
 };

@@ -12,6 +12,9 @@ module.exports = {
                 include: [
                     {
                         model: Video,
+                        order: [
+                            ['id', 'DESC']
+                        ],
                         attributes: [
                             'id',
                             'url'

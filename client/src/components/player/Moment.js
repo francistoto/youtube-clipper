@@ -1,8 +1,9 @@
 import { ClickAwayListener, Fade, Grid, IconButton, Paper, Popper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
     typography: {
@@ -90,13 +91,20 @@ const Moment = ({ moment, player}) => {
     const handleClickAway = () => {
         setOpen(false);
     };
-
+    
     const handleLike = () => {
         console.log('Moment liked!');
+        setOpen(false);
     }
-
+    
     const handleIgnore = () => {
         console.log('Moment ignored');
+        setOpen(false);
+    }
+    
+    const handleAddToCollection = () => {
+        console.log('Moment added to collection');
+        setOpen(false);
     }
 
     return (
@@ -128,14 +136,19 @@ const Moment = ({ moment, player}) => {
                                 <div>
                                     <span className={classes.arrow} ref={setArrowRef} />
                                     <Grid container align='center' justify='center'>
-                                        <Grid item xs={6}>
+                                        <Grid item xs={4}>
                                             <IconButton onClick={handleLike}>
                                                 <ThumbUpIcon color='primary' />
                                             </IconButton>
                                         </Grid>
-                                        <Grid item xs={6}>
+                                        <Grid item xs={4}>
                                             <IconButton onClick={handleIgnore}>
                                                 <ThumbDownIcon color='primary' />
+                                            </IconButton>
+                                        </Grid>
+                                        <Grid item xs={4}>
+                                            <IconButton onClick={handleAddToCollection}>
+                                                <AddCircleIcon color='primary' />
                                             </IconButton>
                                         </Grid>
                                     </Grid>

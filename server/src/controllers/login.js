@@ -44,5 +44,10 @@ module.exports = {
 
             res.status(200).send({ message: 'Verification successful', authData })
         })
+    },
+    getAuthLogout: (req, res) => {
+        req.logout();
+
+        res.status(205).send();
     }
 };

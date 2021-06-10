@@ -5,8 +5,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import Login from './modals/Login';
 
-import AuthContext from '../contexts/auth';
+import AuthContext from '../contexts/AuthContext';
 import UserMenu from './UserMenu';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,11 +18,13 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
+        textDecoration: 'inherit',
+        color: 'inherit'
     }
 }));
 
 const Header = () => {
-    const { authenticated, user } = useContext(AuthContext);
+    const { authenticated } = useContext(AuthContext);
     const classes = useStyles();
 
     return (
@@ -35,7 +38,7 @@ const Header = () => {
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography variant='h5' className={classes.title}>
+                <Typography component={Link} to='/' variant='h5' className={classes.title} >
                     Welcome to YouTube Mashup!
                 </Typography>
                 {!authenticated

@@ -8,7 +8,8 @@ import PlayerControls from './PlayerControls';
 
 import MomentAPI from '../../api/MomentAPI';
 
-import AuthContext from '../../contexts/auth';
+import AuthContext from '../../contexts/AuthContext';
+import Comments from './Comments';
 
 const YOUTUBE_CONFIG = {
     playerVars: {
@@ -38,10 +39,6 @@ const PlayerWrapper = ({ channelId, videos, refreshChannel }) => {
     const [volume, setVolume] = useState(0.8);
     const [muted, setMuted] = useState(false);
     const [played, setPlayed] = useState(null);
-    const [loaded, setLoaded] = useState(0);
-    const [playedSeconds, setPlayedSeconds] = useState(0);
-    const [loadedSeconds, setLoadedSeconds] = useState(0);
-    const [duration, setDuration] = useState(0);
     const [playbackRate, setPlaybackRate] = useState(1.0);
     const [loop, setLoop] = useState(false);
     const [seeking, setSeeking] = useState(false);
@@ -97,15 +94,10 @@ const PlayerWrapper = ({ channelId, videos, refreshChannel }) => {
             if (played < .999999) {
                 setPlayed(progressPlayed);
             }
-
-            setLoaded(loaded);
-            setPlayedSeconds(playedSeconds);
-            setLoadedSeconds(loadedSeconds);
         }
     };
 
     const handleEnded = () => {
-        console.log('onEnded');
         if (videoIndex < videoList.length - 1) {
             setVideoIndex(videoIndex + 1);
         } else {
@@ -113,11 +105,6 @@ const PlayerWrapper = ({ channelId, videos, refreshChannel }) => {
         }
         setPlayed(0);
         setPlaying(true);
-    };
-
-    const handleDuration = (duration) => {
-        console.log('onDuration', duration);
-        setDuration(duration);
     };
 
     const checkForMomentOverlap = (newMoment) => {
@@ -180,7 +167,7 @@ const PlayerWrapper = ({ channelId, videos, refreshChannel }) => {
                 ...BASE_NOTIFICATION_OPTIONS
             });
         } else {
-            const createdMoment = await MomentAPI.createMoment(newMoment);
+            await MomentAPI.createMoment(newMoment);
             
             store.addNotification({
                 title: "Moment created!",
@@ -196,6 +183,28 @@ const PlayerWrapper = ({ channelId, videos, refreshChannel }) => {
     const handleClickFullscreen = () => {
         screenfull.request(findDOMNode(player.current))
     };
+
+    const renderPlayerControls = () => {
+        if (player.current) {
+            return (
+                <PlayerControls
+                    played={played}
+                    player={player}
+                    playing={playing}
+                    currentVideo={videos && videos[videoIndex]}
+                    videoList={videoList}
+                    videoIndex={videoIndex}
+                    setSeeking={setSeeking}
+                    setPlayed={setPlayed}
+                    setPlaying={setPlaying}
+                    setVideoIndex={setVideoIndex}
+                    handleCreateMoment={handleCreateMoment}
+                />
+            );
+        }
+
+        return null;
+    }
 
     return (
         <div className='player-wrapper'>
@@ -225,21 +234,9 @@ const PlayerWrapper = ({ channelId, videos, refreshChannel }) => {
                 onEnded={handleEnded}
                 onError={e => console.log('onError', e)}
                 onProgress={handleProgress}
-                onDuration={handleDuration}
             />
-            <PlayerControls
-                played={played}
-                player={player}
-                playing={playing}
-                currentVideo={videos && videos[videoIndex]}
-                videoList={videoList}
-                videoIndex={videoIndex}
-                setSeeking={setSeeking}
-                setPlayed={setPlayed}
-                setPlaying={setPlaying}
-                setVideoIndex={setVideoIndex}
-                handleCreateMoment={handleCreateMoment}
-            />
+            {renderPlayerControls()}
+            <Comments />
         </div>
     );
 };

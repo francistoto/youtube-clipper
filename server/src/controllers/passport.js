@@ -18,6 +18,9 @@ const strategyConfig = {
 }
 
 const googleVerifyFunction = async (accessToken, refreshToken, profile, callback) => {
+    console.log('accessToken: ', accessToken);
+    console.log('refreshToken: ', refreshToken);
+
     try {
         const {
             sub: authId,

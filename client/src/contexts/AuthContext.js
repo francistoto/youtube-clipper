@@ -2,6 +2,7 @@ import { createContext } from 'react';
 
 const auth = {
     authenticated: false,
+    setAuthenticated: () => {},
     user: {
         id: 0,
         name: 'Guest User',

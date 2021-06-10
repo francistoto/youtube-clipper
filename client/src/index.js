@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import ReactNotification from 'react-notifications-component'
-import axios from 'axios';
+import ReactNotification from 'react-notifications-component';
 
-import 'react-notifications-component/dist/theme.css'
+import 'react-notifications-component/dist/theme.css';
 import './css/style.css';
 import defaultTheme from './theme';
 
 import App from './components/App';
-import Profile from './components/Profile';
 
 import UserAPI from './api/UserAPI';
 
-import AuthContext from './contexts/auth';
-import Header from './components/Header';
+import AuthContext from './contexts/AuthContext';
 
 const Index = () => {
   const [user, setUser] = useState({});
@@ -23,12 +19,12 @@ const Index = () => {
 
   useEffect(async () => {
     if (!authenticated) {
-      const { data: { token } } = await axios.get('/api/auth/token');
-      if (token) {
-        localStorage.setItem('token', token);
-        const { authenticated, user } = await UserAPI.getCurrentUser();
+      try {
+        const { authenticated } = await UserAPI.getCurrentUser();
   
         setAuthenticated(authenticated);
+      } catch(error) {
+        console.error(error);
       }
     }
   }, []);
@@ -42,10 +38,10 @@ const Index = () => {
   }, [authenticated]);
 
   return (
-    <AuthContext.Provider value={{ authenticated, user }}>
+    <AuthContext.Provider value={{ authenticated, setAuthenticated, user }}>
       <ReactNotification />
       <MuiThemeProvider theme={defaultTheme}>
-        <App/>
+        <App setAuthenticated={setAuthenticated} />
       </MuiThemeProvider>
     </AuthContext.Provider>
   );

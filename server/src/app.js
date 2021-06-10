@@ -1,7 +1,9 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
+const { sequelize } = require('./db/models');
 const passport = require('./controllers/passport');
 
 const { checkAuthentication } = require('./lib/middleware');
@@ -30,11 +32,19 @@ class App {
         this.app.use(cookieParser());
         this.app.use(express.urlencoded({ extended: true }));
 
+        const sessionStore = new SequelizeStore({
+            db: sequelize
+        });
+
         this.app.use(session({
             secret: process.env.SESSION_SECRET || 'funnyMonkey',
             resave: false,
-            saveUninitialized: true
+            saveUninitialized: true,
+            store: sessionStore,
+            proxy: true
         }));
+
+        sessionStore.sync();
 
         this.app.use(passport.initialize());
         this.app.use(passport.session());

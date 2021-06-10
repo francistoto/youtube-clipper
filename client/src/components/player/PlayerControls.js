@@ -63,7 +63,7 @@ const PlayerControls = ({
     };
 
     const handleStartMoment = () => {
-        const startTime = player.current.getCurrentTime();
+        const startTime = player.current.getCurrentTime() - 1;
 
         setMomentStart({ startTime, videoId: currentVideo.id });
         setRecording(true);

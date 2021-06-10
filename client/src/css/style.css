@@ -6,6 +6,11 @@ body {
   font-family: 'Roboto';
 }
 
+.loading-channels {
+  margin: auto;
+  width: 50%;
+}
+
 .player-wrapper {
   height: 500px;
   width: 100%;
@@ -134,6 +139,14 @@ body {
   background: rgba(253, 22, 22, 0.733);
   cursor: pointer;
   /* margin: 15px; */
+}
+
+.comments-input {
+  margin-top: 20px;
+}
+
+.comments {
+  margin-top: 20px;
 }
 
 .likeWindow {

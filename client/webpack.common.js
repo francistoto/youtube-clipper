@@ -5,6 +5,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
 
 module.exports = {
     entry: {
@@ -51,10 +52,14 @@ module.exports = {
     resolve: {
         extensions: [
             '.js',
-            '.jsx'
+            '.jsx',
+            '.css',
+            '.scss',
+            '.sass'
         ]
     },
     plugins: [
+        new NodePolyfillPlugin(),
         new LodashModuleReplacementPlugin(),
         new CleanWebpackPlugin(),   
         new HtmlWebpackPlugin({

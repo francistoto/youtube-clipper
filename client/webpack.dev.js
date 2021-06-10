@@ -10,6 +10,7 @@ module.exports = merge(common, {
         port: 8080,
         host: '0.0.0.0',
         compress: true,
-        disableHostCheck: true
+        disableHostCheck: true,
+        historyApiFallback: true
     }
 });
