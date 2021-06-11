@@ -10,27 +10,7 @@ module.exports = {
         if (req.isAuthenticated()) {
             next();
         } else {
-            res.redirect('/api/auth/login');
+            res.sendStatus(401);
         }
-
-        // if (req.headers['authorization']) {
-        //     const jwt_token = req.headers['authorization'].split(' ')[1];
-
-        //     jwt.verify(jwt_token, JWT_SECRET_KEY, (err, authData) => {
-        //         if (err) {
-        //             console.error('err: ', err);
-        //             res.status(403).send({ token: '' });
-        //         } else {
-        //             next();
-        //         }
-
-        //     })
-        // } else {
-        //     return res.status(403).send({
-        //         authenticated: false,
-        //         message: 'no jwt'
-        //     });
-        // }
-
     }
-}
+};

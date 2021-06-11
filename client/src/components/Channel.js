@@ -1,14 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Grid } from '@material-ui/core';
 
 import ChannelAPI from '../api/ChannelAPI';
 import PlayerWrapper from './player/PlayerWrapper';
+import AuthContext from '../contexts/AuthContext';
 
 const Channel = () => {
     const [channel, setChannel] = useState({});
     const [videos, setVideos] = useState([]);
     const [isLoadingChannel, setIsLoadingChannel] = useState(true);
+
+    const { setAuthenticated } = useContext(AuthContext);
 
     const { channelId } = useParams();
 
@@ -16,13 +19,18 @@ const Channel = () => {
         if (isLoadingChannel) {
             try {
                 const channelResponse = await ChannelAPI.getChannelById(channelId);
-                console.log('channelResponse: ', channelResponse);
     
                 setChannel(channelResponse);
                 setVideos(channelResponse.videos);
-            } catch {
+            } catch (error) {
+                const { response: { status } } = error;
+                
                 setChannel({});
                 setVideos([]);
+
+                if (status === 401) {
+                    setAuthenticated(false);
+                }
             }
 
             setIsLoadingChannel(false);
@@ -32,8 +40,6 @@ const Channel = () => {
     const refreshChannel = useCallback(() => {
         setIsLoadingChannel(true);
     }, [isLoadingChannel]);
-
-    console.log('videos: ', videos);
 
     return (
         <Container>

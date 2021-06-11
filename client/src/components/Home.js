@@ -49,7 +49,7 @@ const Home = () => {
     const [channels, setChannels] = useState([]);
     const [isLoadingChannels, setIsLoadingChannels] = React.useState(true);
 
-    const { authenticated, user } = useContext(AuthContext);
+    const { authenticated, setAuthenticated, user } = useContext(AuthContext);
 
     const history = useHistory();
 
@@ -61,10 +61,18 @@ const Home = () => {
         }
 
         if (isLoadingChannels && user.id) {
-            const channelResponse = await ChannelAPI.getChannelsByUser(user.id);
-            
-            setChannels(channelResponse);
-            setIsLoadingChannels(false);
+            try {
+                const channelResponse = await ChannelAPI.getChannelsByUser(user.id);
+                
+                setChannels(channelResponse);
+                setIsLoadingChannels(false);
+            } catch (error) {
+                const { response: { status } } = error;
+
+                if (status === 401) {
+                    setAuthenticated(false);
+                }
+            }
         }
     }, [authenticated, isLoadingChannels, user]);
 

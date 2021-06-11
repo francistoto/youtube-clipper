@@ -24,7 +24,11 @@ const Index = () => {
   
         setAuthenticated(authenticated);
       } catch(error) {
-        console.error(error);
+        const { response: { status } } = error;
+
+        if (status === 401) {
+            setAuthenticated(false);
+        }
       }
     }
   }, []);
