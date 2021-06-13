@@ -1,23 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import {
-    Avatar,
     Card,
     CardContent,
     CircularProgress,
     Grid,
-    List,
-    ListItem,
-    ListItemAvatar,
-    ListItemText,
     Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import VideocamIcon from '@material-ui/icons/Videocam';
+
+import ChannelCreate from './modals/ChannelCreate';
 
 import AuthContext from '../contexts/AuthContext';
 
 import ChannelAPI from '../api/ChannelAPI';
+import ChannelList from './ChannelList';
 
 const useStyles = makeStyles((theme) => ({
     loadingContainer: {
@@ -34,14 +30,6 @@ const useStyles = makeStyles((theme) => ({
     },
     progress: {
         marginTop: theme.spacing(5)
-    },
-    channelListItem: {
-        width: '100%',
-        margin: theme.spacing(2),
-        cursor: 'pointer',
-        border: '1px solid white',
-        borderRadius: '5px',
-        backgroundColor: 'gray'
     }
 }));
 
@@ -50,8 +38,6 @@ const Home = () => {
     const [isLoadingChannels, setIsLoadingChannels] = React.useState(true);
 
     const { authenticated, setAuthenticated, user } = useContext(AuthContext);
-
-    const history = useHistory();
 
     const classes = useStyles();
 
@@ -101,29 +87,7 @@ const Home = () => {
         if (channels && channels.length > 0 && !isLoadingChannels) {
             return (
                 <Grid item xs={9}>
-                    <List>
-                    {
-                        channels.map((channel, index) => {
-                            const { id, name, videos } = channel;
-                            return (
-                                <ListItem 
-                                    key={`${name}`}
-                                    className={classes.channelListItem}
-                                    onClick={() => { history.push(`/channel/${id}`) }}
-                                >
-                                    <ListItemAvatar>
-                                        <Avatar>
-                                            <VideocamIcon fontSize='large' />
-                                        </Avatar>
-                                    </ListItemAvatar>
-                                    <ListItemText
-                                        primary={<Typography variant='h5'>Name: {name}</Typography>}
-                                    />
-                                </ListItem>
-                            );
-                        })
-                    }
-                    </List>
+                    <ChannelList channels={channels} />
                 </Grid>
             );
         }
@@ -137,9 +101,13 @@ const Home = () => {
 
     return (
         <div>
+            <ChannelCreate
+                setIsLoadingChannels={setIsLoadingChannels}
+                channelNames={channels.map((channel) => channel.name)}
+            />
             <Grid
                 container
-                direction='column'
+                // direction='column'
                 alignItems='center'
                 justify='center'
             >

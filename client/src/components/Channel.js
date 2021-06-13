@@ -43,8 +43,7 @@ const Channel = () => {
 
     return (
         <Container>
-            {
-                videos.length > 0
+            {videos.length > 0
                 ? <Grid container justify='center'>
                     <Grid item xs={10}>
                         <PlayerWrapper

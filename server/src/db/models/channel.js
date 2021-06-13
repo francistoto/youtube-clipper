@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   
   Channel.init({
     name: DataTypes.STRING,
-    background: DataTypes.STRING,
+    backgroundURL: DataTypes.STRING,
     userId: DataTypes.INTEGER
   }, {
     sequelize,

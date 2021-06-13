@@ -1,14 +1,14 @@
 module.exports = {
     channels: [
-        { name: 'land', background: 'https://i.ytimg.com/vi/shTUk4WNWVU/maxresdefault.jpg', userId: 1, createdAt: new Date(), updatedAt: new Date() },
-        { name: 'sea', background: 'https://upload.wikimedia.org/wikipedia/commons/5/53/GabrielMedina-001.jpg', userId: 1, createdAt: new Date(), updatedAt: new Date() },
-        { name: 'air', background: 'https://i.ytimg.com/vi/apYEQlGlUAY/maxresdefault.jpg', userId: 1, createdAt: new Date(), updatedAt: new Date() },
-        { name: 'land', background: 'https://i.ytimg.com/vi/shTUk4WNWVU/maxresdefault.jpg', userId: 2, createdAt: new Date(), updatedAt: new Date() },
-        { name: 'sea', background: 'https://upload.wikimedia.org/wikipedia/commons/5/53/GabrielMedina-001.jpg', userId: 2, createdAt: new Date(), updatedAt: new Date() },
-        { name: 'air', background: 'https://i.ytimg.com/vi/apYEQlGlUAY/maxresdefault.jpg', userId: 2, createdAt: new Date(), updatedAt: new Date() },
-        { name: 'Honest Trailers', background: 'https://i.ytimg.com/vi/shTUk4WNWVU/maxresdefault.jpg', userId: 3, createdAt: new Date(), updatedAt: new Date() },
-        { name: 'sea', background: 'https://upload.wikimedia.org/wikipedia/commons/5/53/GabrielMedina-001.jpg', userId: 3, createdAt: new Date(), updatedAt: new Date() },
-        { name: 'air', background: 'https://i.ytimg.com/vi/apYEQlGlUAY/maxresdefault.jpg', userId: 3, createdAt: new Date(), updatedAt: new Date() }
+        { name: 'land', backgroundURL: 'https://i.ytimg.com/vi/shTUk4WNWVU/maxresdefault.jpg', userId: 1, createdAt: new Date(), updatedAt: new Date() },
+        { name: 'sea', backgroundURL: 'https://upload.wikimedia.org/wikipedia/commons/5/53/GabrielMedina-001.jpg', userId: 1, createdAt: new Date(), updatedAt: new Date() },
+        { name: 'air', backgroundURL: 'https://i.ytimg.com/vi/apYEQlGlUAY/maxresdefault.jpg', userId: 1, createdAt: new Date(), updatedAt: new Date() },
+        { name: 'land', backgroundURL: 'https://i.ytimg.com/vi/shTUk4WNWVU/maxresdefault.jpg', userId: 2, createdAt: new Date(), updatedAt: new Date() },
+        { name: 'sea', backgroundURL: 'https://upload.wikimedia.org/wikipedia/commons/5/53/GabrielMedina-001.jpg', userId: 2, createdAt: new Date(), updatedAt: new Date() },
+        { name: 'air', backgroundURL: 'https://i.ytimg.com/vi/apYEQlGlUAY/maxresdefault.jpg', userId: 2, createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Honest Trailers', backgroundURL: 'https://i.ytimg.com/vi/shTUk4WNWVU/maxresdefault.jpg', userId: 3, createdAt: new Date(), updatedAt: new Date() },
+        { name: 'sea', backgroundURL: 'https://upload.wikimedia.org/wikipedia/commons/5/53/GabrielMedina-001.jpg', userId: 3, createdAt: new Date(), updatedAt: new Date() },
+        { name: 'air', backgroundURL: 'https://i.ytimg.com/vi/apYEQlGlUAY/maxresdefault.jpg', userId: 3, createdAt: new Date(), updatedAt: new Date() }
     ],
     users: [
         { authId: '1', displayName: 'Harold Finch', firstName: 'Harold', lastName: 'Finch', email: 'harold_finch@gmail.com', createdAt: new Date(), updatedAt: new Date() },

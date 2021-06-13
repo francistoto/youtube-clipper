@@ -55,6 +55,9 @@ module.exports = {
                 where: {
                     userId
                 },
+                order: [
+                    ['id', 'ASC']
+                ],
                 include: [
                     {
                         model: Video,
@@ -85,11 +88,10 @@ module.exports = {
             if (channel) {
                 res.status(200).send(channel);
             } else {
-                res.status(404);
                 throw new Error('Failed to create Channel');
             }
         } catch (error) {
-            res.send(error);
+            res.status(404).send(error);
         }
     }
 };
