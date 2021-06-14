@@ -63,7 +63,10 @@ module.exports = {
                         model: Video,
                         attributes: [
                             'id',
-                            'url'
+                            'url',
+                            'title',
+                            'thumbnail',
+                            'platform'
                         ]
                     }
                 ]
@@ -92,6 +95,23 @@ module.exports = {
             }
         } catch (error) {
             res.status(404).send(error);
+        }
+    },
+    deleteChannel: async (req, res) => {
+        const { channelId } = req.body;
+
+        try {
+            const channel = await Channel.findOne({
+                where: {
+                    id: channelId
+                }
+            });
+    
+            await channel.destroy();
+    
+            res.status(200).send({ message: `Channel ${channelId} deleted.`})
+        } catch(error) {
+            res.status(404).send(error.message);
         }
     }
 };

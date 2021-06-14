@@ -1,8 +1,10 @@
-import { axiosGET, axiosPOST } from './utilities/fetching';
+import { axiosDELETE, axiosGET, axiosPOST } from './utilities/fetching';
 
 const ChannelAPI = {
-    getDefaultChannel: () => {
-        return axiosGET('/channels/default');
+    getDefaultChannel: async () => {
+        const response = await axiosGET('/channels/default');
+
+        return response.data;
     },
     getChannelsByUser: async (userId) => {
         const response = await axiosGET(`/channels/user/${userId}`);
@@ -16,6 +18,11 @@ const ChannelAPI = {
     },
     createChannel: async (newChannel) => {
         const response = await axiosPOST('/channels/create', newChannel);
+
+        return response.data;
+    },
+    deleteChannel: async (channelId) => {
+        const response = await axiosDELETE('/channels/delete', { channelId });
 
         return response.data;
     }

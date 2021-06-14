@@ -13,7 +13,7 @@ import ChannelCreate from './modals/ChannelCreate';
 import AuthContext from '../contexts/AuthContext';
 
 import ChannelAPI from '../api/ChannelAPI';
-import ChannelList from './ChannelList';
+import ChannelList from './channel/ChannelList';
 
 const useStyles = makeStyles((theme) => ({
     loadingContainer: {
@@ -87,7 +87,7 @@ const Home = () => {
         if (channels && channels.length > 0 && !isLoadingChannels) {
             return (
                 <Grid item xs={9}>
-                    <ChannelList channels={channels} />
+                    <ChannelList channels={channels} setIsLoadingChannels={setIsLoadingChannels} />
                 </Grid>
             );
         }
@@ -97,7 +97,7 @@ const Home = () => {
                 <Typography variant='h3'>No Channels Found!</Typography>;
             </Grid>
         );
-    }
+    };
 
     return (
         <div>
@@ -107,7 +107,6 @@ const Home = () => {
             />
             <Grid
                 container
-                // direction='column'
                 alignItems='center'
                 justify='center'
             >

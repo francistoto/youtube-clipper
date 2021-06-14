@@ -1,14 +1,8 @@
 import axios from 'axios';
 
-const token = localStorage.getItem('token') || null;
-
 const axiosInstance = axios.create({
     baseURL: '/api',
-    timeout: 5000,
-    // headers: {
-    //     ContentType: 'application/json',
-    //     Authorization: `Bearer ${token}`
-    // }
+    timeout: 5000
 });
 
 export const axiosGET = (url, options = {}) => {
@@ -23,6 +17,6 @@ export const axiosPUT = (url, data, options = {}) => {
     return axiosInstance.put(url, data, options);
 };
 
-export const axiosDELETE = (url, options = {}) => {
-    return axiosInstance.delete(url, options);
+export const axiosDELETE = (url, data, options = {}) => {
+    return axiosInstance.delete(url, { data }, options);
 };

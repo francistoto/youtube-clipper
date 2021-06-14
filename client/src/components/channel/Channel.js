@@ -2,9 +2,9 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Grid } from '@material-ui/core';
 
-import ChannelAPI from '../api/ChannelAPI';
-import PlayerWrapper from './player/PlayerWrapper';
-import AuthContext from '../contexts/AuthContext';
+import ChannelAPI from '../../api/ChannelAPI';
+import PlayerWrapper from '../player/PlayerWrapper';
+import AuthContext from '../../contexts/AuthContext';
 
 const Channel = () => {
     const [channel, setChannel] = useState({});

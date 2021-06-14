@@ -11,6 +11,15 @@ module.exports = {
       url: {
         type: Sequelize.STRING
       },
+      title: {
+        type: Sequelize.STRING
+      },
+      thumbnail: {
+        type: Sequelize.STRING
+      },
+      platform: {
+        type: Sequelize.STRING
+      },
       channelId: {
         type: Sequelize.INTEGER
       },

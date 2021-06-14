@@ -1,7 +1,7 @@
 import React from 'react';
 import { HashRouter as Router, Route, Switch} from 'react-router-dom';
 
-import Channel from './Channel';
+import Channel from './channel/Channel';
 import Header from './Header';
 import Profile from './Profile';
 import Home from './Home';
