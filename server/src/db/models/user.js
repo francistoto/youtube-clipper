@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.hasMany(models.channel);
+      User.hasMany(models.channel, { onDelete: 'cascade', hooks: true });
       User.belongsToMany(models.moment, { through: 'userMoments' });
     }
   };

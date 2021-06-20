@@ -97,6 +97,27 @@ module.exports = {
             res.status(404).send(error);
         }
     },
+    updateChannel: async (req, res) => {
+        const { id, ...newChannel } = req.body;
+
+        try {
+            const channel = await Channel.findOne({
+                where: {
+                    id
+                }
+            });
+
+            const updatedChannel = await channel.update(newChannel);
+        
+            if (updatedChannel) {
+                res.status(200).send(updatedChannel);
+            } else {
+                throw new Error('Failed to create Channel');
+            }
+        } catch (error) {
+            res.status(404).send(error);
+        }
+    },
     deleteChannel: async (req, res) => {
         const { channelId } = req.body;
 

@@ -12,7 +12,7 @@ export const BASE_NOTIFICATION_OPTIONS = {
     animationIn: ["animate__animated", "animate__fadeIn"],
     animationOut: ["animate__animated", "animate__fadeOut"],
     dismiss: {
-        duration: 60000,
+        duration: 5000,
         onScreen: false
     }
 };

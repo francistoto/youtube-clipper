@@ -31,9 +31,7 @@ const UserMenu = () => {
         if(key !== 'logout') {
             history.push(link)
         } else {
-            const response = await axios.get(link);
-
-            console.log('response: ', response);
+            await axios.get(link);
 
             if (location.pathname !== '/') {
                 history.push('/');

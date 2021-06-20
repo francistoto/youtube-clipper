@@ -16,14 +16,30 @@ const SEARCH_PARAMS = {
     videoSyndicated: true
 };
 
+const processSearchResults = (searchResults) => {
+    const { data: { items: videoResults } } = searchResults;
+    return videoResults.map((videoResult) => {
+        const { id: { videoId: url }, snippet: { title, thumbnails: { medium: { url: thumbnail } } } } = videoResult;
+        
+        return {
+            url,
+            title,
+            thumbnail,
+            platform: 'youtube'
+        };
+    });
+}
+
 module.exports = {
     searchVideos: async (req, res) => {
         const { query } = req.body;
 
         try {
             const results = await youtube.search.list({ q: query, ...SEARCH_PARAMS });
+
+            const response = processSearchResults(results)
     
-            res.status(200).send(results.data.items);
+            res.status(200).send(response);
         } catch (error) {
             res.status(404).send(error.message);
         }

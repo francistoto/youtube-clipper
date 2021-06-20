@@ -10,11 +10,11 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import AuthContext from '../../contexts/AuthContext';
+import AuthContext from '../../../contexts/AuthContext';
 
-import ChannelAPI from '../../api/ChannelAPI';
+import ChannelAPI from '../../../api/ChannelAPI';
 
-import { BASE_NOTIFICATION_OPTIONS } from '../../config/constants';
+import { BASE_NOTIFICATION_OPTIONS } from '../../../config/constants';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const ChannelCreate = ({ setIsLoadingChannels, channelNames }) => {
+const ChannelEdit = ({ setIsLoadingChannels, channelNames }) => {
     const [open, setOpen] = useState(false);
     const [name, setName] = useState('');
     const [error, setError] = useState({ status: false, message: '' });
@@ -143,4 +143,4 @@ const ChannelCreate = ({ setIsLoadingChannels, channelNames }) => {
     );
 };
 
-export default ChannelCreate;
+export default ChannelEdit;

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Video.belongsTo(models.channel, { targetKey: 'id', foreignKey: 'channelId' });
-      Video.hasMany(models.moment);
+      Video.hasMany(models.moment, { onDelete: 'cascade', hooks: true });
     }
   };
 

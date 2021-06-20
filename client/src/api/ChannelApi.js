@@ -21,6 +21,11 @@ const ChannelAPI = {
 
         return response.data;
     },
+    updateChannel: async (newChannel) => {
+        const response = await axiosPOST('/channels/update', newChannel);
+
+        return response.data;
+    },
     deleteChannel: async (channelId) => {
         const response = await axiosDELETE('/channels/delete', { channelId });
 

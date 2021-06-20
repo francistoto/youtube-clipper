@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import ChannelCreate from './modals/ChannelCreate';
+import ChannelCreate from './channel/modals/ChannelCreate';
 
 import AuthContext from '../contexts/AuthContext';
 
@@ -102,6 +102,7 @@ const Home = () => {
     return (
         <div>
             <ChannelCreate
+                create={true}
                 setIsLoadingChannels={setIsLoadingChannels}
                 channelNames={channels.map((channel) => channel.name)}
             />
