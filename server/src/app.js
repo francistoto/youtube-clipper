@@ -16,6 +16,7 @@ const channelsRouter = require('./routes/channels');
 const usersRouter = require('./routes/users');
 const momentsRouter = require('./routes/moments');
 const youtubeRouter = require('./routes/youtube');
+const videosRouter = require('./routes/videos');
 
 /**
  * Main server app
@@ -67,6 +68,7 @@ class App {
         this.app.use('/api/channels', checkAuthentication, channelsRouter);
         this.app.use('/api/moments', checkAuthentication, momentsRouter);
         this.app.use('/api/youtube', youtubeRouter);
+        this.app.use('/api/videos', videosRouter);
     }
 }
 

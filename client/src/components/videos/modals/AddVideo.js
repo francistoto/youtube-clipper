@@ -4,8 +4,11 @@ import {
     Dialog,
     DialogContent,
     DialogTitle,
+    Fab,
     IconButton,
     InputAdornment,
+    List,
+    ListItem,
     TextField,
     Toolbar,
     Typography
@@ -15,12 +18,30 @@ import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
 import SearchIcon from '@material-ui/icons/Search';
 
+import VideoList from '../VideoList';
+
+import { searchForVideos } from '../../../api/YouTubeAPI';
+import VideoAPI from '../../../api/VideoAPI';
+
 const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '100%',
+        display: 'flex',
+        marginBottom: theme.spacing(1),
+    },
     appBar: {
         position: 'relative'
     },
+    fabRoot: {
+        position: 'absolute',
+        bottom: theme.spacing(2),
+        right: theme.spacing(2)
+    },
+    fab: {
+        margin: theme.spacing(1)
+    },
     title: {
-      marginLeft: theme.spacing(2),
+      marginLeft: theme.spacing(1),
       flex: 1,
     },
 }));
@@ -28,6 +49,8 @@ const useStyles = makeStyles((theme) => ({
 const AddVideo = ({ component, componentProps }) => {
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState(null);
+    const [searchResults, setSearchResults] = useState([]);
+    const [selectedVideoIndices, setSelectedVideoIndices] = useState([]);
 
     const classes = useStyles();
 
@@ -46,8 +69,10 @@ const AddVideo = ({ component, componentProps }) => {
         setQuery(e.target.value);
     };
 
-    const handleSubmit = () => {
-        console.log('query: ', query);
+    const handleSubmit = async () => {
+        const response = await searchForVideos(query);
+
+        setSearchResults(response);
     };
 
     const handleKeyDown = (e) => {
@@ -55,6 +80,35 @@ const AddVideo = ({ component, componentProps }) => {
             handleSubmit();
             setQuery(null);
         }
+    };
+
+    const handleSelect = (event, index) => {
+        event.preventDefault();
+        let newSelectedVideoIndices = Array.from(selectedVideoIndices);
+
+        if (selectedVideoIndices.includes(index)) {
+            newSelectedVideoIndices = selectedVideoIndices.filter((selectedVideo) => selectedVideo !== index);
+        } else {
+            newSelectedVideoIndices.push(index);
+        }
+
+        setSelectedVideoIndices(newSelectedVideoIndices);
+    }
+
+    const handleClearSelection = (event) => {
+        event.preventDefault();
+
+        setSelectedVideoIndices([]);
+    };
+
+    const handleAddSelectedVideos = async () => {
+        const { channel: { id: channelId }, setIsLoadingChannels } = componentProps;
+        
+        const newVideos = selectedVideoIndices.map((videoIndex) => ({ channelId, ...searchResults[videoIndex] }));
+        
+        await VideoAPI.createVideos(newVideos);
+
+        setIsLoadingChannels(true);
     };
 
     const renderActivatorComponent = () => {
@@ -104,7 +158,28 @@ const AddVideo = ({ component, componentProps }) => {
                     <Typography>Search for new videos to add to your channel</Typography>
                 </DialogTitle>
                 <DialogContent>
+                    <VideoList selectable videos={searchResults} selectedVideos={selectedVideoIndices} handleSelect={handleSelect} />
                 </DialogContent>
+                {selectedVideoIndices.length > 0 &&
+                    <div className={classes.fabRoot}>
+                        <Fab
+                            className={classes.fab}
+                            variant='extended'
+                            color='primary'
+                            onClick={handleClearSelection}
+                        >
+                            Clear Selection
+                        </Fab>
+                        <Fab
+                            className={classes.fab}
+                            variant='extended'
+                            color='primary'
+                            onClick={handleAddSelectedVideos}
+                        >
+                            Add Selected Videos
+                        </Fab>
+                    </div>
+                }
             </Dialog>
         </div>
     );

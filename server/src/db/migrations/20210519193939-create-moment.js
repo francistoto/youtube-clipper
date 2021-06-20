@@ -17,9 +17,9 @@ module.exports = {
       videoId: {
         type: Sequelize.INTEGER
       },
-      channelId: {
-        type: Sequelize.INTEGER
-      },
+      // channelId: {
+      //   type: Sequelize.INTEGER
+      // },
       createdByUser: {
         allowNull: false,
         type: Sequelize.INTEGER

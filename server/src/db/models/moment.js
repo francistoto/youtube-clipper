@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Moment.belongsToMany(models.user, { through: 'userMoments' });
       Moment.belongsTo(models.video, { targetKey: 'id', foreignKey: 'videoId' });
-      Moment.belongsTo(models.channel, { targetKey: 'id', foreignKey: 'channelId' });
+      // Moment.belongsTo(models.channel, { targetKey: 'id', foreignKey: 'channelId' });
     }
   };
 
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     startTime: DataTypes.FLOAT,
     stopTime: DataTypes.FLOAT,
     videoId: DataTypes.INTEGER,
-    channelId: DataTypes.INTEGER,
+    // channelId: DataTypes.INTEGER,
     createdByUser: DataTypes.INTEGER
   }, {
     sequelize,

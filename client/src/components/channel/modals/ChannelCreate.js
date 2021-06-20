@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const ChannelEdit = ({ setIsLoadingChannels, channelNames }) => {
+const ChannelCreate = ({ setIsLoadingChannels, channelNames }) => {
     const [open, setOpen] = useState(false);
     const [name, setName] = useState('');
     const [error, setError] = useState({ status: false, message: '' });
@@ -143,4 +143,4 @@ const ChannelEdit = ({ setIsLoadingChannels, channelNames }) => {
     );
 };
 
-export default ChannelEdit;
+export default ChannelCreate;

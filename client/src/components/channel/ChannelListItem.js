@@ -5,7 +5,6 @@ import {
     AccordionActions,
     Avatar,
     IconButton,
-    List,
     Typography
 } from '@material-ui/core';
 import MuiAccordionDetails from '@material-ui/core/AccordionSummary';
@@ -16,14 +15,9 @@ import ForwardIcon from '@material-ui/icons/Forward';
 import VideocamIcon from '@material-ui/icons/Videocam';
 
 import ChannelActions from './ChannelActions';
-import VideoListItem from '../videos/VideoListItem';
+import VideoList from '../videos/VideoList';
 
 const useStyles = makeStyles((theme) => ({
-    videoList: {
-        width: '100%',
-        margin: theme.spacing(1),
-        marginTop: -1
-    },
     channelDetails: {
         flexGrow: 2,
         marginLeft: theme.spacing(2),
@@ -39,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(3)
     },
     channelListItem: {
-        // cursor: 'pointer',
         backgroundColor: 'gray',
         margin: theme.spacing(1)
     }
@@ -107,13 +100,7 @@ const ChannelListItem = ({ channel, channelNames, setIsLoadingChannels }) => {
                     />
                 </AccordionActions>
                 <AccordionDetails>
-                    <List className={classes.videoList}>
-                        {channel.videos.map((video, index) => {
-                            return (
-                                <VideoListItem key={index} video={video} />
-                            )
-                        })}
-                    </List>
+                    <VideoList deletable videos={channel.videos} setIsLoadingChannels={setIsLoadingChannels} />
                 </AccordionDetails>
             </Accordion>
         </div>

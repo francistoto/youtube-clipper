@@ -54,7 +54,11 @@ const ChannelActions = ({ channel, channelNames, setIsLoadingChannels }) => {
             label: 'Add Video',
             value: 'addVideo',
             action: handleSelect,
-            component: AddVideo
+            component: AddVideo,
+            componentProps: {
+                channel,
+                setIsLoadingChannels
+            }
         },
         {
             label: 'Delete Channel',
@@ -64,17 +68,15 @@ const ChannelActions = ({ channel, channelNames, setIsLoadingChannels }) => {
     ];
 
     return (
-        <div>
-            <DropdownMenu
-                options={CHANNEL_ACTION_OPTIONS}
-                ButtonComponent={IconButton}
-                ButtonComponentProps={{
-                    color: 'inherit',
-                    variant: 'contained'
-                }}
-                buttonText={<MoreVertIcon />}
-            />
-        </div>
+        <DropdownMenu
+            options={CHANNEL_ACTION_OPTIONS}
+            ButtonComponent={IconButton}
+            ButtonComponentProps={{
+                color: 'inherit',
+                variant: 'contained'
+            }}
+            buttonText={<MoreVertIcon />}
+        />
     );
 };
 

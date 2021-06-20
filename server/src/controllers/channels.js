@@ -26,7 +26,7 @@ module.exports = {
                                 'startTime',
                                 'stopTime',
                                 'videoId',
-                                'channelId'
+                                // 'channelId'
                             ],
                             include: {
                                 model: User,
