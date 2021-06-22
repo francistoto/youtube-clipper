@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Grid, Slider, Typography } from '@material-ui/core';
+import { Button, Grid, Typography } from '@material-ui/core';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
@@ -9,18 +9,20 @@ import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 
 import Moment from './Moment';
 
+import { renderTime } from './helpers';
+
 const PlayerControls = ({
+    currentVideo,
+    duration,
     played,
+    playedSeconds,
     player,
     playing,
-    currentVideo,
-    videoList,
-    videoIndex,
     setPlayed,
     setPlaying,
     setSeeking,
-    setVideoIndex,
-    handleCreateMoment
+    handleCreateMoment,
+    handleSkip
 }) => {
     const [momentStart, setMomentStart] = useState({});
     const [recording, setRecording] = useState(false);
@@ -40,25 +42,6 @@ const PlayerControls = ({
     const handleSeekMouseUp = e => {
         setSeeking(false);
         player.current.seekTo(e.target.value);
-        setPlaying(true);
-    };
-    
-    const handleSkipForward = () => {
-        if (videoIndex < videoList.length - 1) {
-            setVideoIndex(videoIndex + 1);
-        } else {
-            setVideoIndex(0);
-        }
-        setPlayed(0);
-        setPlaying(true);
-    };
-    
-    const handleSkipPrevious = () => {
-        if (videoIndex > 0) {
-            setVideoIndex(videoIndex - 1);
-        } else {
-            setVideoIndex(videoList.length - 1);
-        }
         setPlaying(true);
     };
 
@@ -86,39 +69,33 @@ const PlayerControls = ({
     }
 
     const renderRecordButton = () => {
-        if (!playing) {
-            return <PlayCircleOutlineIcon color='secondary' fontSize='large'/>;
+        if (!recording) {
+            return (
+                <Button 
+                    color='secondary'
+                    onClick={handleStartMoment}>
+                        <PlayCircleOutlineIcon color='secondary' fontSize='large'/>
+                </Button>
+            )
         }
-        return <PlayCircleFilledIcon color='secondary' fontSize='large'/>;
+
+        return (
+            <Button 
+                color='secondary'
+                onClick={handleStopMoment}>
+                    <PlayCircleFilledIcon color='secondary' fontSize='large'/>
+            </Button>
+        );
     };
 
     const renderMoments = () => {
         const moments = currentVideo?.moments;
         if (moments && moments.length) {
             return moments.map((moment) =>
-                <Moment key={`moment-${moment.id}`} moment={moment} player={player} />
+                <Moment key={`moment-${moment.id}`} moment={moment} duration={duration} />
             );
         }
     };
-
-    const renderTime = (totalSeconds) => {
-        if (totalSeconds !== null) {
-            let wholeSeconds = Math.round(totalSeconds); // 347
-    
-            const hours = Math.floor(totalSeconds / 3600);
-            wholeSeconds %= 3600;
-            const minutes = Math.floor(totalSeconds / 60);
-            const seconds = wholeSeconds % 60;
-    
-            const displayHours = hours <= 0 ? '' : `${hours}:`;
-            const displayMinutes = hours > 0 ? `0${minutes}` : minutes;
-            const displaySeconds = seconds < 10 ? `0${seconds}` : seconds;
-    
-            return `${displayHours}${displayMinutes}:${displaySeconds}`;
-        }
-
-        return '';
-    }
 
     return (
         <div className='player-controls'>
@@ -142,35 +119,24 @@ const PlayerControls = ({
             <Grid container justify='center' align='center'>
                 <Grid item xs={4} align='left' style={{ color: 'white' }}>
                     <Typography>
-                        {player && renderTime(player?.current?.getCurrentTime())}
+                        {renderTime(playedSeconds)}
                     </Typography>
                 </Grid>
                 <Grid item xs={1} align='center'>
-                    <Button color='secondary' onClick={handleSkipPrevious}><SkipPreviousIcon color='secondary' fontSize='large' /></Button>
+                    <Button color='secondary' onClick={() => handleSkip('previous')}><SkipPreviousIcon color='secondary' fontSize='large' /></Button>
                 </Grid>
                 <Grid item xs={1} align='center'>
                     <Button color='secondary' onClick={handlePlayPause}>{renderPlayPauseButton()}</Button>
                 </Grid>
                 <Grid item xs={1} align='center'>
-                    <Button color='secondary' onClick={handleSkipForward}><SkipNextIcon color='secondary' fontSize='large' /></Button>
+                    <Button color='secondary' onClick={() => handleSkip('next')}><SkipNextIcon color='secondary' fontSize='large' /></Button>
                 </Grid>
                 <Grid item xs={1} align='center'>
-                    {!recording
-                        ? <Button 
-                            color='secondary'
-                            onClick={handleStartMoment}>
-                                <PlayCircleOutlineIcon color='secondary' fontSize='large'/>
-                        </Button>
-                        :  <Button 
-                            color='secondary'
-                            onClick={handleStopMoment}>
-                                <PlayCircleFilledIcon color='secondary' fontSize='large'/>
-                        </Button>
-                    }
+                    {renderRecordButton()}
                 </Grid>
                 <Grid item xs={4} align='right' style={{ color: 'white' }}>
                     <Typography>
-                        {player && renderTime(player?.current?.getDuration())}
+                        {renderTime(duration)}
                     </Typography>
                 </Grid>
             </Grid>

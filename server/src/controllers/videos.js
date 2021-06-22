@@ -1,6 +1,22 @@
 const { video: Video } = require('../db/models');
 
 module.exports = {
+    getVideosByChannel: async (req, res) => {
+        const { channelId } = req.params;
+
+        try {
+            const videos = await Video.findAll({
+                where: { channelId },
+                order: [
+                    ['id', 'ASC']
+                ]
+            });
+
+            res.status(200).send(videos);
+        } catch (error) {
+            res.status(404).send();
+        }
+    },
     createVideos: async (req, res) => {
         const { newVideos } = req.body;
 

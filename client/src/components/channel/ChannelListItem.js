@@ -14,7 +14,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ForwardIcon from '@material-ui/icons/Forward';
 import VideocamIcon from '@material-ui/icons/Videocam';
 
-import ChannelActions from './ChannelActions';
+import ChannelListActions from './ChannelListActions';
 import VideoList from '../videos/VideoList';
 
 const useStyles = makeStyles((theme) => ({
@@ -67,6 +67,12 @@ const ChannelListItem = ({ channel, channelNames, setIsLoadingChannels }) => {
     const history = useHistory();
     const classes = useStyles();
 
+    const handleForward = () => {
+        const { id: videoId } = channel.videos[0];
+
+        history.push(`/channel/${channel.id}/video/${videoId}`);
+    }
+
     return (
         <div>
             <Accordion
@@ -89,18 +95,22 @@ const ChannelListItem = ({ channel, channelNames, setIsLoadingChannels }) => {
                     <IconButton
                         color='inherit'
                         aria-label='Forward'
-                        onClick={() => { history.push(`/channel/${channel.id}`); }}
+                        onClick={handleForward}
                     >
                         <ForwardIcon fontSize='large' />
                     </IconButton>
-                    <ChannelActions
+                    <ChannelListActions
                         channel={channel}
                         channelNames={channelNames}
                         setIsLoadingChannels={setIsLoadingChannels}
                     />
                 </AccordionActions>
                 <AccordionDetails>
-                    <VideoList deletable videos={channel.videos} setIsLoadingChannels={setIsLoadingChannels} />
+                    <VideoList
+                        deletable
+                        videos={channel.videos}
+                        setIsLoadingChannels={setIsLoadingChannels}
+                    />
                 </AccordionDetails>
             </Accordion>
         </div>

@@ -1,9 +1,10 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Grid } from '@material-ui/core';
 
 import ChannelAPI from '../../api/ChannelAPI';
 import PlayerWrapper from '../player/PlayerWrapper';
+
 import AuthContext from '../../contexts/AuthContext';
 
 const Channel = () => {
@@ -37,19 +38,14 @@ const Channel = () => {
         }
     }, [channel, isLoadingChannel]);
 
-    const refreshChannel = useCallback(() => {
-        setIsLoadingChannel(true);
-    }, [isLoadingChannel]);
-
     return (
         <Container>
             {videos.length > 0
                 ? <Grid container justify='center'>
                     <Grid item xs={10}>
                         <PlayerWrapper
-                            channelId={channelId}
                             videos={videos}
-                            refreshChannel={refreshChannel}
+                            setIsLoadingChannel={setIsLoadingChannel}
                         />
                     </Grid>
                 </Grid>

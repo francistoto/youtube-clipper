@@ -9,7 +9,7 @@ import DropdownMenu from '../common/DropdownMenu';
 
 import ChannelAPI from '../../api/ChannelAPI';
 
-const ChannelActions = ({ channel, channelNames, setIsLoadingChannels }) => {
+const ChannelListActions = ({ channel, channelNames, setIsLoadingChannels }) => {
     const [selectedOption, setSelectedOption] = useState(null);
 
     const history = useHistory();
@@ -80,4 +80,4 @@ const ChannelActions = ({ channel, channelNames, setIsLoadingChannels }) => {
     );
 };
 
-export default ChannelActions;
+export default ChannelListActions;

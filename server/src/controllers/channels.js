@@ -9,15 +9,16 @@ module.exports = {
                 where: {
                     id
                 },
+                order: [
+                    [Video, 'id', 'ASC']
+                ],
                 include: [
                     {
                         model: Video,
-                        order: [
-                            ['id', 'DESC']
-                        ],
                         attributes: [
                             'id',
-                            'url'
+                            'url',
+                            'platform'
                         ],
                         include: {
                             model: Moment,
@@ -56,7 +57,8 @@ module.exports = {
                     userId
                 },
                 order: [
-                    ['id', 'ASC']
+                    ['id', 'ASC'],
+                    [Video, 'id', 'ASC']
                 ],
                 include: [
                     {

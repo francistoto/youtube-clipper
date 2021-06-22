@@ -75,14 +75,16 @@ const useStyles = makeStyles((theme) => ({
       }
 }));
 
-const Moment = ({ moment, player}) => {
+const Moment = ({ moment, duration}) => {
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const [arrowRef, setArrowRef] = useState(null);
-    const momentWidth = (moment.stopTime - moment.startTime) / player.current.getDuration();
-    const momentLeftOffset = moment.startTime / player.current.getDuration();
-    const classes = useStyles();
 
+    const classes = useStyles();
+    
+    const momentWidth = (moment.stopTime - moment.startTime) / duration;
+    const momentLeftOffset = moment.startTime / duration;
+    
     const handleShowPopper = (e) => {
         setAnchorEl(e.currentTarget);
         setOpen(true);

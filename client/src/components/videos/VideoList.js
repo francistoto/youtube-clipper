@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Card,
     List,
@@ -34,7 +34,11 @@ const VideoList = ({ deletable, selectable, videos, selectedVideos, handleSelect
                         onClick={selectable && ((event) => handleSelect(event, index))}
                         selected={selectable && selectedVideos.includes(index)}
                     >
-                        <VideoListItem deletable={deletable} video={video} setIsLoadingChannels={setIsLoadingChannels}/>
+                        <VideoListItem
+                            deletable={deletable}
+                            video={video}
+                            setIsLoadingChannels={setIsLoadingChannels}
+                        />
                     </ListItem>
                 ))
             }

@@ -101,7 +101,8 @@ const AddVideo = ({ component, componentProps }) => {
         setSelectedVideoIndices([]);
     };
 
-    const handleAddSelectedVideos = async () => {
+    const handleAddSelectedVideos = async (event) => {
+        event.preventDefault();
         const { channel: { id: channelId }, setIsLoadingChannels } = componentProps;
         
         const newVideos = selectedVideoIndices.map((videoIndex) => ({ channelId, ...searchResults[videoIndex] }));

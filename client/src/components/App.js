@@ -13,7 +13,7 @@ const App = () => {
                 <Header />
                 <Switch>
                     <Route path='/profile' component={Profile} />
-                    <Route path='/channel/:channelId' component={Channel} />
+                    <Route path='/channel/:channelId/video/:videoId' component={Channel} />
                     <Route path='*' component={Home} />
                 </Switch>
             </Router>
